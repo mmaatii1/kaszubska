@@ -1361,9 +1361,21 @@
     }
     .offer-popup-skip:hover { color: var(--text); }
     @media (max-width: 640px) {
-      .offer-popup { grid-template-columns: 1fr; }
-      .offer-popup-left { border-radius: 16px 16px 0 0; padding: 1.8rem 1.4rem; }
-      .offer-popup-right { padding: 1.4rem; }
+      .offer-popup-overlay { padding: .4rem; }
+      .offer-popup { grid-template-columns: 1fr; max-height: 90vh; }
+      .offer-popup-left { border-radius: 16px 16px 0 0; padding: 1.3rem 1.1rem; gap: .7rem; }
+      .offer-popup-right { padding: 1.1rem; gap: .75rem; }
+      .offer-popup-title { font-size: 1.2rem; line-height: 1.2; }
+      .offer-popup-points { gap: .45rem; }
+      .offer-popup-points li { font-size: .78rem; line-height: 1.35; }
+      .offer-popup-points li i { font-size: .92rem; }
+      .offer-popup-form-title { font-size: 1.05rem; }
+      .offer-popup-form-sub { font-size: .76rem; margin-top: -.5rem; }
+      .offer-popup-form label { font-size: .74rem; }
+      .offer-popup-form input { padding: .55rem .75rem; font-size: .88rem; }
+      .offer-popup-form .btn-callback { padding: .75rem 1.1rem; font-size: .88rem; }
+      .offer-popup-privacy { font-size: .68rem; }
+      .offer-popup-skip { font-size: .73rem; }
     }
 
     /* ─── FOOTER SOCIAL ─────────────────────────────────────────── */
