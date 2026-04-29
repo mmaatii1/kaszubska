@@ -45,9 +45,9 @@
         "description": "Kompleks domów całorocznych w sercu Kaszub – nad jeziorem Granicznym, gmina Kołczygłowy.",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "ul. Poznańska 71C",
-          "addressLocality": "Słupsk",
-          "postalCode": "76-200",
+          "streetAddress": "ul. 158",
+          "addressLocality": "Barkocin",
+          "postalCode": "77-140",
           "addressCountry": "PL"
         },
         "contactPoint": {
@@ -986,6 +986,10 @@
       gap: 1rem;
       margin-top: 2rem;
     }
+    @keyframes navBtnPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(30,61,43,.18); }
+      50%       { transform: scale(1.08); box-shadow: 0 0 0 6px rgba(30,61,43,0); }
+    }
     .apt-nav-btn {
       width: 44px; height: 44px;
       border-radius: 50%;
@@ -995,11 +999,18 @@
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem;
-      transition: background .18s, color .18s, opacity .18s;
+      transition: background .18s, color .18s, opacity .18s, transform .18s, box-shadow .18s;
       flex-shrink: 0;
+      animation: navBtnPulse 2.4s ease-in-out infinite;
     }
-    .apt-nav-btn:hover { background: var(--forest); color: var(--white); }
-    .apt-nav-btn:disabled { opacity: .3; cursor: default; }
+    .apt-nav-btn:nth-child(3) { animation-delay: 1.2s; }
+    .apt-nav-btn:hover {
+      background: var(--forest);
+      color: var(--white);
+      animation: none;
+      transform: scale(1.12);
+    }
+    .apt-nav-btn:disabled { opacity: .3; cursor: default; animation: none; }
     .apt-dots {
       display: flex;
       gap: .5rem;
@@ -1140,6 +1151,59 @@
       margin-top: .6rem;
     }
     .apt-btn-cta:hover { background: #b07e25; transform: translateY(-2px); color: #fff; }
+
+    /* ─── STATUS COUNTER ────────────────────────────────────────── */
+    .apt-status-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0 2rem;
+    }
+    .apt-status-item {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      background: var(--white);
+      border: 1px solid var(--cream-dark);
+      border-radius: 8px;
+      padding: .55rem 1rem;
+      font-size: .86rem;
+    }
+    .apt-status-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .apt-status-dot--all    { background: var(--forest); }
+    .apt-status-dot--avail  { background: #2d9c5e; }
+    .apt-status-dot--sold   { background: #c0392b; }
+    .apt-status-dot--res    { background: #e67e22; }
+    .apt-status-count { font-weight: 700; color: var(--forest); }
+    .apt-status-label { color: var(--text-mid); }
+
+    /* ─── SOLD CARD ─────────────────────────────────────────────── */
+    .apt-card.apt-sold { opacity: .72; pointer-events: none; position: relative; }
+    .apt-card.apt-sold::after {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: var(--radius);
+      background: rgba(247,243,236,.35);
+      pointer-events: none;
+    }
+    .apt-sold-badge {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #c0392b;
+      border-radius: 4px;
+      padding: .2rem .5rem;
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+    .apt-card.apt-sold .apt-btn,
+    .apt-card.apt-sold .apt-btn-cta { display: none; }
 
     /* ─── FLOAT PHONE ───────────────────────────────────────────── */
     .float-phone {
@@ -1785,6 +1849,29 @@
       <h2 class="section-title">Dostępne<br><em>apartamenty</em></h2>
       <div class="divider"></div>
       <p class="oferta-lead">8 domów w zabudowie bliźniaczej – 4 pary lustrzanych układów. Każdy z odrębną działką, tarasem i miejscem parkingowym. Pobierz kartę wybranego lokalu.</p>
+
+      <div class="apt-status-bar">
+        <div class="apt-status-item">
+          <span class="apt-status-dot apt-status-dot--all"></span>
+          <span class="apt-status-count">8</span>
+          <span class="apt-status-label">wszystkich</span>
+        </div>
+        <div class="apt-status-item">
+          <span class="apt-status-dot apt-status-dot--avail"></span>
+          <span class="apt-status-count">7</span>
+          <span class="apt-status-label">dostępnych</span>
+        </div>
+        <div class="apt-status-item">
+          <span class="apt-status-dot apt-status-dot--sold"></span>
+          <span class="apt-status-count">1</span>
+          <span class="apt-status-label">sprzedanych</span>
+        </div>
+        <div class="apt-status-item">
+          <span class="apt-status-dot apt-status-dot--res"></span>
+          <span class="apt-status-count">0</span>
+          <span class="apt-status-label">rezerwacji</span>
+        </div>
+      </div>
     </div>
 
     <div class="apt-carousel reveal">
@@ -1803,8 +1890,8 @@
         <p class="apt-desc">Kameralny dom z tarasem od strony ogrodu i widokiem na zieleń. Spokój dla par i rodzin z dziećmi.</p>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>200 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>387 458 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>213 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>393 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -1828,9 +1915,9 @@
         </div>
         <p class="apt-desc">Identyczny układ funkcjonalny co lokal 1, odbity lustrzanie. Taras i wejście po przeciwnej stronie.</p>
         <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>200 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>387 458 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>194 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>408 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -1853,9 +1940,9 @@
         </div>
         <p class="apt-desc">Przestronny salon z dużymi przeszkleniami i antresolą na piętrze. Ogród i strefa relaksu przy tarasie.</p>
         <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>53 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>220 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>398 000 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>258 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>425 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -1868,10 +1955,10 @@
       </div>
 
       <!-- 2a -->
-      <div class="apt-card">
+      <div class="apt-card apt-sold">
         <div class="apt-card-header">
           <div class="apt-number">2a</div>
-          <span class="apt-mirror-badge">lustrzany</span>
+          <span class="apt-sold-badge">sprzedany</span>
         </div>
         <div>
           <div class="apt-card-title">Apartament 2a</div>
@@ -1879,18 +1966,12 @@
         </div>
         <p class="apt-desc">Identyczny układ co lokal 2, odbity lustrzanie. Salon, antresola i taras po przeciwnej stronie.</p>
         <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>53 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>220 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>398 000 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>219 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Status: <strong>Sprzedany</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/2-2a.pdf" download>
-          <i class="ph-bold ph-download-simple"></i> Pobierz kartę lokalu
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o lokal
-        </a>
       </div>
 
       <!-- 3 -->
@@ -1904,9 +1985,9 @@
         </div>
         <p class="apt-desc">Sypialnia na poddaszu, taras na cichym ogrodzie. Doskonała baza do pieszych i rowerowych wycieczek po Kaszubach.</p>
         <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>230 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>403 000 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>176 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>388 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -1930,9 +2011,9 @@
         </div>
         <p class="apt-desc">Odbity lustrzanie wariant lokalu 3. Sypialnia na poddaszu i taras po przeciwnej stronie budynku.</p>
         <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>230 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>403 000 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>262 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>413 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -1953,11 +2034,11 @@
           <div class="apt-card-title">Apartament 4</div>
           <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
         </div>
-        <p class="apt-desc">Największa jednostka z działką 250 m². Oddzielna strefa dzienna i nocna – idealna do zamieszkania lub najmu.</p>
+        <p class="apt-desc">Apartament z największą działką 289 m². Oddzielna strefa dzienna i nocna – idealna do zamieszkania lub najmu.</p>
         <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>56 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>250 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>419 000 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>289 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>387 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -1979,11 +2060,11 @@
           <div class="apt-card-title">Apartament 4a</div>
           <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
         </div>
-        <p class="apt-desc">Lustrzane odbicie lokalu 4 – ten sam metraż i standard, inaczej zorientowany względem stron świata.</p>
+        <p class="apt-desc">Lustrzane odbicie lokalu 4 – ten sam standard, inaczej zorientowany względem stron świata.</p>
         <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>56 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>250 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena od: <strong>419 000 zł</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>238 m²</strong></div>
+          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>409 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2462,7 +2543,7 @@
 </div>
 
 <!-- ─── OFFER POPUP ─────────────────────────────────────────────── -->
-<div class="offer-popup-overlay" id="offerPopup" role="dialog" aria-modal="true" aria-label="Oferta Kaszubska Osada">
+<div class="offer-popup-overlay" id="offerPopup" role="dialog" aria-modal="true" aria-label="Oferta Kaszubska Osada" style="display:none">
   <div class="offer-popup">
     <button class="offer-popup-close" id="offerPopupClose" aria-label="Zamknij">&times;</button>
 
