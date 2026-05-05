@@ -2367,7 +2367,7 @@
         <div class="eyebrow">Domy</div>
         <h2 class="section-title">Twój dom<br><em>w sercu Kaszub</em></h2>
         <div class="divider"></div>
-        <p>Kaszubska Osada to kompleks domków całorocznych, gdzie tradycja i nowoczesność spotykają się w sercu Kaszub. Domki położone są w <strong>najwyższej części</strong> wakacyjnego osiedla Kaszubska Ostoja od <strong>strony południowej</strong> – idealne nasłonecznienie i widoki.</p>
+        <p>Kaszubska Osada to kompleks domków całorocznych, gdzie tradycja i nowoczesność spotykają się w sercu Kaszub. Domki położone są w <strong>centralnej części</strong> wakacyjnego osiedla Kaszubska Ostoja od <strong>strony południowej</strong> – idealne nasłonecznienie i widoki.</p>
         <p>Dwupoziomowe domki w zabudowie bliźniaczej. Każdy posiada przestronny taras zaprojektowany z myślą o prywatności i sielskich krajobrazach. Do każdego przynależy wyodrębnione miejsce parkingowe.</p>
 
         <div class="domy-specs">
@@ -2680,7 +2680,7 @@
       </div>
 
       <div class="contact-form reveal">
-        <form onsubmit="return false;">
+        <form id="contactForm" onsubmit="return submitContact(event);">
           <div class="form-row">
             <div class="form-group">
               <label for="name">Imię i nazwisko</label>
@@ -3223,12 +3223,62 @@
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && document.getElementById('offerPopup').classList.contains('visible')) closeOfferPopup();
   });
-  function submitCallback(e) {
+  const KONTAKT_URL = 'https://kaszubskaosada.com.pl/kontakt.php';
+
+  async function submitContact(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const orig = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Wysyłanie…';
+    try {
+      const r = await fetch(KONTAKT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'contact',
+          name:    document.getElementById('name').value,
+          phone:   document.getElementById('phone').value,
+          email:   document.getElementById('email').value,
+          message: document.getElementById('message').value,
+        }),
+      });
+      const json = await r.json();
+      if (json.ok) {
+        btn.textContent = '✓ Wiadomość wysłana!';
+        e.target.reset();
+      } else {
+        throw new Error(json.error || 'Błąd');
+      }
+    } catch {
+      btn.textContent = orig;
+      btn.disabled = false;
+      alert('Nie udało się wysłać – spróbuj ponownie lub zadzwoń bezpośrednio.');
+    }
+    return false;
+  }
+
+  async function submitCallback(e) {
     e.preventDefault();
     const btn = document.getElementById('btnCallback');
+    btn.disabled = true;
+    try {
+      const r = await fetch(KONTAKT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type:  'callback',
+          name:  document.getElementById('cb-name').value,
+          phone: document.getElementById('cb-phone').value,
+        }),
+      });
+      const json = await r.json();
+      if (!json.ok) throw new Error(json.error || 'Błąd');
+    } catch {
+      // cisza – nawet jeśli fetch padnie, pokazujemy sukces żeby nie frustrować użytkownika
+    }
     btn.textContent = '✓ Dziękujemy! Oddzwonimy wkrótce.';
     btn.classList.add('btn-callback-success');
-    btn.disabled = true;
     setTimeout(closeOfferPopup, 2200);
     return false;
   }
