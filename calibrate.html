@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Kalibracja hotspotów</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: monospace; background: #111; color: #eee; display: flex; flex-direction: column; align-items: center; padding: 1rem; gap: 1rem; }
+  h1 { font-size: 1rem; color: #aaa; }
+  #wrap { position: relative; display: inline-block; user-select: none; }
+  #wrap img { display: block; max-width: 90vw; }
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+  .spot { fill: rgba(220,53,69,.18); stroke: #dc3545; stroke-width: 2; cursor: move; }
+  .spot:hover { fill: rgba(220,53,69,.35); }
+  .spot.active { stroke: #ffd700; stroke-width: 3; fill: rgba(255,215,0,.15); }
+
+  .pt-handle { fill: #ffd700; stroke: #333; stroke-width: 1; cursor: grab; }
+  .pt-handle:hover { fill: #fff; }
+  .pt-handle.dragging { cursor: grabbing; }
+
+  .preview-line { stroke: #dc3545; stroke-width: 1.5; stroke-dasharray: 6 3; fill: none; pointer-events: none; }
+  .preview-dot  { fill: #dc3545; pointer-events: none; }
+
+  .bld-label { fill: #fff; font-size: 14px; font-weight: bold; pointer-events: none; }
+
+  #toolbar { display: flex; gap: .75rem; align-items: center; }
+  button {
+    background: #2a2a2a; border: 1px solid #555; color: #eee;
+    padding: .4rem .9rem; border-radius: 6px; cursor: pointer; font-size: .85rem;
+  }
+  button:hover { background: #3a3a3a; }
+  button.active { background: #dc3545; border-color: #dc3545; color: #fff; }
+  #bldInput { width: 3rem; background: #2a2a2a; border: 1px solid #555; color: #eee; padding: .35rem .5rem; border-radius: 6px; font-size: .85rem; text-align: center; }
+
+  #out { background: #1a1a1a; border: 1px solid #333; padding: 1rem; width: 100%; max-width: 900px; font-size: .82rem; line-height: 2; white-space: pre-wrap; }
+  #out .val { color: #7dd3a8; }
+  p.hint { color: #777; font-size: .78rem; max-width: 900px; text-align: center; }
+</style>
+</head>
+<body>
+<h1>Kalibracja hotspotów — nieregularne kształty</h1>
+
+<div id="toolbar">
+  <span style="color:#aaa">Budynek:</span>
+  <input id="bldInput" type="number" value="1" min="1" max="8" />
+  <button id="btnDraw" class="active">✏ Rysuj polygon</button>
+  <button id="btnDelete">🗑 Usuń zaznaczony</button>
+  <button id="btnUndo">↩ Cofnij punkt</button>
+</div>
+
+<p class="hint">
+  Kliknij kolejne narożniki budynku → <strong>dwuklik</strong> zamyka kształt &nbsp;|&nbsp;
+  Przeciągnij żółty punkt → przesuń narożnik &nbsp;|&nbsp;
+  Kliknij gotowy kształt → zaznacz (do usunięcia)
+</p>
+
+<div id="wrap">
+  <img src="zdjecia/wiz-lot-hq-new.webp" id="img" alt="lot map" draggable="false" />
+  <svg id="svg" viewBox="0 0 1024 678" preserveAspectRatio="xMidYMid meet"></svg>
+</div>
+
+<pre id="out">← zacznij rysować</pre>
+
+<script>
+const svg      = document.getElementById('svg');
+const img      = document.getElementById('img');
+const out      = document.getElementById('out');
+const bldInput = document.getElementById('bldInput');
+const btnUndo  = document.getElementById('btnUndo');
+const btnDel   = document.getElementById('btnDelete');
+
+// ── State ──────────────────────────────────────────────────────────────────
+let shapes   = [];   // { bld, pts:[{x,y}], el, lblEl, handles:[] }
+let drawing  = null; // { bld, pts, previewEl, cursorEl }
+let selected = -1;
+let ptDrag   = null; // { shapeIdx, ptIdx, ox, oy }
+
+// ── SVG coords ──────────────────────────────────────────────────────────────
+function svgPt(e) {
+  const r  = img.getBoundingClientRect();
+  const sx = 1024 / r.width;
+  const sy = 678  / r.height;
+  return { x: (e.clientX - r.left) * sx, y: (e.clientY - r.top) * sy };
+}
+
+function ptsStr(pts) { return pts.map(p => `${Math.round(p.x)},${Math.round(p.y)}`).join(' '); }
+
+// ── Render a finished shape ─────────────────────────────────────────────────
+function renderShape(idx) {
+  const s = shapes[idx];
+
+  if (!s.el) {
+    s.el = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    s.el.classList.add('spot');
+    s.el.addEventListener('click', e => { e.stopPropagation(); selectShape(idx); });
+    svg.appendChild(s.el);
+
+    s.lblEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    s.lblEl.classList.add('bld-label');
+    svg.appendChild(s.lblEl);
+  }
+
+  s.el.setAttribute('points', ptsStr(s.pts));
+  s.el.classList.toggle('active', idx === selected);
+
+  // centroid for label
+  const cx = s.pts.reduce((a, p) => a + p.x, 0) / s.pts.length;
+  const cy = s.pts.reduce((a, p) => a + p.y, 0) / s.pts.length;
+  s.lblEl.setAttribute('x', cx - 8);
+  s.lblEl.setAttribute('y', cy + 6);
+  s.lblEl.textContent = 'B' + s.bld;
+
+  // handles
+  (s.handles || []).forEach(h => h.remove());
+  s.handles = s.pts.map((p, pi) => {
+    const h = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    h.classList.add('pt-handle');
+    h.setAttribute('cx', p.x); h.setAttribute('cy', p.y); h.setAttribute('r', 6);
+    svg.appendChild(h);
+    h.addEventListener('mousedown', e => {
+      e.stopPropagation();
+      ptDrag = { shapeIdx: idx, ptIdx: pi };
+      h.classList.add('dragging');
+    });
+    return h;
+  });
+}
+
+function renderAll() { shapes.forEach((_, i) => renderShape(i)); printCode(); }
+
+function selectShape(idx) {
+  selected = (selected === idx) ? -1 : idx;
+  shapes.forEach((s, i) => s.el && s.el.classList.toggle('active', i === selected));
+}
+
+// ── Preview while drawing ───────────────────────────────────────────────────
+function updatePreview(pt) {
+  if (!drawing) return;
+  const all = [...drawing.pts, pt];
+  drawing.previewEl.setAttribute('points', ptsStr(all));
+  drawing.cursorEl.setAttribute('cx', pt.x);
+  drawing.cursorEl.setAttribute('cy', pt.y);
+}
+
+function startDrawing() {
+  drawing = {
+    bld: parseInt(bldInput.value) || 1,
+    pts: [],
+    previewEl: null,
+    cursorEl: null,
+  };
+  const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+  poly.classList.add('preview-line');
+  svg.appendChild(poly);
+  drawing.previewEl = poly;
+
+  const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  dot.classList.add('preview-dot');
+  dot.setAttribute('r', 4);
+  svg.appendChild(dot);
+  drawing.cursorEl = dot;
+}
+
+function finishDrawing() {
+  if (!drawing || drawing.pts.length < 3) return;
+  drawing.previewEl.remove();
+  drawing.cursorEl.remove();
+  const idx = shapes.length;
+  shapes.push({ bld: drawing.bld, pts: drawing.pts, el: null, lblEl: null, handles: [] });
+  drawing = null;
+  renderShape(idx);
+  printCode();
+}
+
+function undoPoint() {
+  if (!drawing || drawing.pts.length === 0) return;
+  drawing.pts.pop();
+}
+
+// ── Output code ──────────────────────────────────────────────────────────────
+function printCode() {
+  if (shapes.length === 0) { out.textContent = '← zacznij rysować'; return; }
+  out.innerHTML = shapes.map(s => {
+    const pts = s.pts.map(p => `${Math.round(p.x)},${Math.round(p.y)}`).join(' ');
+    return `&lt;polygon class="lot-spot" data-building="<span class="val">${s.bld}</span>" points="<span class="val">${pts}</span>" /&gt;`;
+  }).join('\n');
+}
+
+// ── Mouse events ──────────────────────────────────────────────────────────────
+img.addEventListener('click', e => {
+  if (ptDrag) return;
+  const pt = svgPt(e);
+
+  if (!drawing) startDrawing();
+  drawing.pts.push(pt);
+  updatePreview(pt);
+});
+
+img.addEventListener('dblclick', e => {
+  if (!drawing) return;
+  // remove the last point added by the preceding click of the dblclick
+  drawing.pts.pop();
+  finishDrawing();
+});
+
+svg.addEventListener('mousemove', e => {
+  if (ptDrag) {
+    const pt = svgPt(e);
+    shapes[ptDrag.shapeIdx].pts[ptDrag.ptIdx] = pt;
+    renderShape(ptDrag.shapeIdx);
+    printCode();
+    return;
+  }
+  if (drawing) updatePreview(svgPt(e));
+});
+
+window.addEventListener('mouseup', () => {
+  if (ptDrag) { ptDrag = null; document.querySelectorAll('.pt-handle').forEach(h => h.classList.remove('dragging')); }
+});
+
+// ── Toolbar ──────────────────────────────────────────────────────────────────
+btnUndo.addEventListener('click', undoPoint);
+
+btnDel.addEventListener('click', () => {
+  if (selected < 0) return;
+  const s = shapes[selected];
+  s.el.remove(); s.lblEl.remove(); (s.handles || []).forEach(h => h.remove());
+  shapes.splice(selected, 1);
+  selected = -1;
+  printCode();
+});
+
+// Escape cancels drawing
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && drawing) {
+    drawing.previewEl.remove(); drawing.cursorEl.remove(); drawing = null;
+  }
+  if (e.key === 'z' && (e.ctrlKey || e.metaKey) && drawing) undoPoint();
+  if (e.key === 'Delete' && selected >= 0) btnDel.click();
+});
+
+// ── Load initial rects as polygons ────────────────────────────────────────────
+const INIT = [
+  { bld: 1, pts: [{x:142,y:97},{x:437,y:97},{x:437,y:325},{x:142,y:325}] },
+  { bld: 3, pts: [{x:515,y:76},{x:787,y:76},{x:787,y:316},{x:515,y:316}] },
+  { bld: 2, pts: [{x:120,y:347},{x:442,y:347},{x:442,y:561},{x:120,y:561}] },
+  { bld: 4, pts: [{x:527,y:357},{x:810,y:357},{x:810,y:567},{x:527,y:567}] },
+];
+INIT.forEach((d, i) => {
+  shapes.push({ bld: d.bld, pts: d.pts, el: null, lblEl: null, handles: [] });
+  renderShape(i);
+});
+printCode();
+</script>
+</body>
+</html>
