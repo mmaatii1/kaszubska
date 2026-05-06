@@ -2986,6 +2986,7 @@
 
   let activeTab = 'zewnetrze';
   let gIdx = 0;
+  let galleryReady = false;
 
   function updateGalleryUI() {
     const images = TABS[activeTab];
@@ -3000,7 +3001,7 @@
         <img src="${img.src}" alt="${img.label}" loading="lazy" />
       </div>`).join('');
     const activeThumb = thumbsEl.children[gIdx];
-    if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    if (galleryReady && activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
 
     dotsEl.innerHTML = images.map((_, i) =>
       `<button class="gallery-dot ${i === gIdx ? 'active' : ''}" onclick="goToSlide(${i})" aria-label="Zdjęcie ${i+1}"></button>`
@@ -3089,6 +3090,7 @@
 
   // Init gallery
   buildGallery();
+  galleryReady = true;
 
   // ── Lightbox ────────────────────────────────────────────────
   let lbImages = [];
