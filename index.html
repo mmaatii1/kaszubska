@@ -6,6 +6,15 @@
   <title>Kaszubska Osada – Domy całoroczne na Kaszubach od 387 458 zł</title>
   <meta name="description" content="Odkryj niepowtarzalne połączenie komfortu i bliskości natury. Zamieszkaj na Kaszubach. Inwestuj i zarabiaj!" />
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YM5FV534P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9YM5FV534P');
+  </script>
+
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s)
@@ -2783,7 +2792,7 @@
       <a href="#inwestycja">Inwestycja</a>
       <a href="#lokalizacja">Lokalizacja</a>
       <a href="#wizualizacje">Wizualizacje</a>
-      <a href="https://kaszubskaosada.com.pl/polityka-prywatnosci" target="_blank" rel="noopener">Polityka prywatności</a>
+      <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityka prywatności</a>
     </div>
     <div class="footer-social-block">
       <span class="footer-social-name">Jarosław Szreder</span>
@@ -2867,6 +2876,10 @@
 </div>
 
 <script>
+  // Always start at top — disable browser scroll restoration
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
   // ── Nav mobile toggle
   function toggleMenu() {
     document.getElementById('nav-links').classList.toggle('open');
