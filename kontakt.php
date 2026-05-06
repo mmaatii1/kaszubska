@@ -73,7 +73,7 @@ if ($type === 'callback') {
         TEXT;
 }
 
-$recipients = ['biuro@kaszubskaosada.com.pl', 'mmaatii122@gmail.com'];
+$recipients = ['kontakt@kaszubskaosada.com.pl', 'mmaatii122@gmail.com'];
 $headers = implode("\r\n", [
     'From: Kaszubska Osada <noreply@kaszubskaosada.com.pl>',
     'Reply-To: ' . ($email ?? $recipients[0]),
