@@ -73,15 +73,20 @@ if ($type === 'callback') {
         TEXT;
 }
 
-$to      = 'biuro@kaszubskaosada.com.pl';
+$recipients = ['biuro@kaszubskaosada.com.pl', 'mmaatii122@gmail.com'];
 $headers = implode("\r\n", [
     'From: Kaszubska Osada <noreply@kaszubskaosada.com.pl>',
-    'Reply-To: ' . ($email ?? $to),
+    'Reply-To: ' . ($email ?? $recipients[0]),
     'Content-Type: text/plain; charset=UTF-8',
     'X-Mailer: PHP/' . PHP_VERSION,
 ]);
 
-$sent = mail($to, $subject, $body, $headers);
+$sent = true;
+foreach ($recipients as $to) {
+    if (!mail($to, $subject, $body, $headers)) {
+        $sent = false;
+    }
+}
 
 if (!$sent) {
     http_response_code(500);
