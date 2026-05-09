@@ -897,6 +897,13 @@
       transition: all .2s;
     }
     .btn-submit:hover { background: #b8852e; transform: translateY(-2px); }
+    .btn-submit { display: flex; align-items: center; justify-content: center; gap: .5rem; }
+    .btn-submit-loading { opacity: .85; pointer-events: none; cursor: default; }
+    .btn-submit-loading:hover { transform: none; background: var(--gold); }
+    .btn-submit-success { background: var(--forest) !important; cursor: default; pointer-events: none; }
+    .btn-submit-success:hover { transform: none; background: var(--forest) !important; }
+    .btn-submit-error { background: #c0392b !important; cursor: default; }
+    .btn-submit-error:hover { transform: none; background: #c0392b !important; }
 
     /* ─── FOOTER ──────────────────────────────────────────────── */
     footer {
@@ -1541,7 +1548,8 @@
     }
     .offer-popup-form .form-group { display: flex; flex-direction: column; gap: .4rem; }
     .offer-popup-form label { font-size: .8rem; font-weight: 600; color: var(--text-light); }
-    .offer-popup-form input {
+    .offer-popup-form input,
+    .offer-popup-form textarea {
       border: 1.5px solid rgba(30,61,43,.2);
       border-radius: 8px;
       padding: .7rem .9rem;
@@ -1551,7 +1559,9 @@
       transition: border-color .2s;
       outline: none;
     }
-    .offer-popup-form input:focus { border-color: var(--forest); }
+    .offer-popup-form textarea { resize: vertical; min-height: 72px; font-family: inherit; }
+    .offer-popup-form input:focus,
+    .offer-popup-form textarea:focus { border-color: var(--forest); }
     .offer-popup-form .btn-callback {
       display: flex;
       align-items: center;
@@ -1578,6 +1588,22 @@
       box-shadow: none;
       cursor: default;
       transform: none;
+    }
+    .offer-popup-form .btn-callback-loading {
+      background: var(--gold);
+      box-shadow: none;
+      cursor: default;
+      opacity: .85;
+      pointer-events: none;
+    }
+    @keyframes cb-spin { to { transform: rotate(360deg); } }
+    .btn-callback-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: cb-spin .7s linear infinite;
+      flex-shrink: 0;
     }
     .offer-popup-consent {
       display: flex;
@@ -2851,6 +2877,10 @@
           <label for="cb-phone">Telefon</label>
           <input type="tel" id="cb-phone" name="cb-phone" placeholder="+48 000 000 000" required />
         </div>
+        <div class="form-group">
+          <label for="cb-message">Wiadomość <span style="font-weight:400;opacity:.7">(opcjonalnie)</span></label>
+          <textarea id="cb-message" name="cb-message" placeholder="Np. interesuje mnie domek nr 3, chciałbym/chciałabym…"></textarea>
+        </div>
         <div class="offer-popup-consent">
           <input type="checkbox" id="cb-rodo" name="cb-rodo" required />
           <label for="cb-rodo">Wyrażam zgodę na przetwarzanie moich danych osobowych (imię, numer telefonu) przez Kaszubska Osada Sp. z o.o. w celu kontaktu w sprawie oferty. <a href="https://kaszubskaosada.com.pl/polityka-prywatnosci" target="_blank" rel="noopener">Polityka prywatności</a>.</label>
@@ -3265,15 +3295,15 @@
   async function submitContact(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
-    const orig = btn.textContent;
     btn.disabled = true;
-    btn.textContent = 'Wysyłanie…';
+    btn.classList.add('btn-submit-loading');
+    btn.innerHTML = '<span class="btn-callback-spinner"></span> Wysyłam…';
     try {
       const r = await fetch(KONTAKT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          type: 'contact',
+          type:    'contact',
           name:    document.getElementById('name').value,
           phone:   document.getElementById('phone').value,
           email:   document.getElementById('email').value,
@@ -3282,15 +3312,22 @@
       });
       const json = await r.json();
       if (json.ok) {
-        btn.textContent = '✓ Wiadomość wysłana!';
+        btn.classList.remove('btn-submit-loading');
+        btn.classList.add('btn-submit-success');
+        btn.innerHTML = '<i class="ph-bold ph-check"></i> Wiadomość wysłana!';
         e.target.reset();
       } else {
         throw new Error(json.error || 'Błąd');
       }
     } catch {
-      btn.textContent = orig;
+      btn.classList.remove('btn-submit-loading');
+      btn.classList.add('btn-submit-error');
+      btn.innerHTML = '<i class="ph-bold ph-warning"></i> Błąd – spróbuj ponownie';
       btn.disabled = false;
-      alert('Nie udało się wysłać – spróbuj ponownie lub zadzwoń bezpośrednio.');
+      setTimeout(() => {
+        btn.classList.remove('btn-submit-error');
+        btn.innerHTML = 'Wyślij zapytanie →';
+      }, 3000);
     }
     return false;
   }
@@ -3299,14 +3336,17 @@
     e.preventDefault();
     const btn = document.getElementById('btnCallback');
     btn.disabled = true;
+    btn.classList.add('btn-callback-loading');
+    btn.innerHTML = '<span class="btn-callback-spinner"></span> Wysyłam…';
     try {
       const r = await fetch(KONTAKT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          type:  'callback',
-          name:  document.getElementById('cb-name').value,
-          phone: document.getElementById('cb-phone').value,
+          type:    'callback',
+          name:    document.getElementById('cb-name').value,
+          phone:   document.getElementById('cb-phone').value,
+          message: document.getElementById('cb-message').value || '',
         }),
       });
       const json = await r.json();
@@ -3314,8 +3354,9 @@
     } catch {
       // cisza – nawet jeśli fetch padnie, pokazujemy sukces żeby nie frustrować użytkownika
     }
-    btn.textContent = '✓ Dziękujemy! Oddzwonimy wkrótce.';
+    btn.classList.remove('btn-callback-loading');
     btn.classList.add('btn-callback-success');
+    btn.innerHTML = '<i class="ph-bold ph-check"></i> Dziękujemy! Oddzwonimy wkrótce.';
     setTimeout(closeOfferPopup, 2200);
     return false;
   }

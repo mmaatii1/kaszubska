@@ -33,8 +33,9 @@ function clean(mixed $v): string {
 $type = clean($data['type'] ?? 'contact'); // 'contact' | 'callback'
 
 if ($type === 'callback') {
-    $name  = clean($data['name'] ?? '');
-    $phone = clean($data['phone'] ?? '');
+    $name    = clean($data['name'] ?? '');
+    $phone   = clean($data['phone'] ?? '');
+    $message = clean($data['message'] ?? '');
 
     if ($name === '' || $phone === '') {
         http_response_code(422);
@@ -43,11 +44,12 @@ if ($type === 'callback') {
     }
 
     $subject = "Prośba o oddzwonienie – {$name}";
+    $msgLine = $message !== '' ? "\n        Wiadomość:\n        {$message}" : '';
     $body = <<<TEXT
         Nowe zgłoszenie z formularza popup (oddzwonienie):
 
         Imię:    {$name}
-        Telefon: {$phone}
+        Telefon: {$phone}{$msgLine}
         TEXT;
 } else {
     $name    = clean($data['name'] ?? '');
@@ -93,5 +95,27 @@ if (!$sent) {
     echo json_encode(['ok' => false, 'error' => 'Błąd serwera – spróbuj ponownie']);
     exit;
 }
+
+$ch = curl_init('https://script.google.com/macros/s/AKfycbzthHk3Ef454ee72Ye6FTTZJ4RfM0jaWEt5UMNRX5ABotKDgrB43fltA3swTXfF7eGo/exec');                                            
+  curl_setopt_array($ch, [                                                                                                                                                        
+      CURLOPT_POST           => true,                                                                                                                                             
+      CURLOPT_POSTFIELDS     => json_encode([                                                                                                                                     
+          'id'           => uniqid('web_', true),                 
+          'created_time' => date('Y-m-d H:i:s'),
+          'form_name'    => $type,                                                                                                                                                
+          'is_organic'   => true,
+          'platform'     => 'website',                                                                                                                                            
+          'full_name'    => $name,                                
+          'email'        => ($email !== false) ? $email : '',                                                                                                                     
+          'phone_number' => $phone,
+      ]),                                                                                                                                                                         
+      CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_TIMEOUT        => 5,                                                                                                                                                
+      CURLOPT_FOLLOWLOCATION => true,
+  ]);                                                                                                                                                                             
+  curl_exec($ch);                                                 
+  curl_close($ch);
+
 
 echo json_encode(['ok' => true]);
