@@ -1,74 +1,51 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-T4VCGMDB');</script>
-<!-- End Google Tag Manager -->
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" id="silktide-consent-manager-css" href="https://cdn.jsdelivr.net/gh/silktide/consent-manager@v2.0.1/silktide-consent-manager.css" integrity="sha384-EdMq+R+YOnsbelo08wPenoTlnxbAyxI11NMIxzugx/qAsbh64KcOkqxYqq6pfvO/" crossorigin="anonymous">
-<!-- Cookie Consent by TermsFeed https://www.TermsFeed.com -->
-<script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.2.0/cookie-consent.js" charset="UTF-8"></script>
-<script type="text/javascript" charset="UTF-8">
-document.addEventListener('DOMContentLoaded', function () {
-cookieconsent.run({"notice_banner_type":"simple","consent_type":"express","palette":"light","language":"pl","page_load_consent_levels":["strictly-necessary"],"notice_banner_reject_button_hide":false,"preferences_center_close_button_hide":false,"page_refresh_confirmation_buttons":false,"website_name":"kaszubskaosada","website_privacy_policy_url":"https://kaszubskaosada.com.pl/polityka-prywatnosci.html"});
-});
-</script>
+  <!-- Analytics / marketing scripts – ładowane dopiero po zgodzie w banerze cookies (patrz #cookieBanner) -->
+  <script>
+    function loadAnalyticsScripts() {
+      if (window.__analyticsLoaded) return;
+      window.__analyticsLoaded = true;
 
-<!-- gtm -->
-<script type="text/plain" data-cookie-consent="targeting">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-T4VCGMDB');</script>
-<!-- end of gtm-->
+      // Google Tag Manager
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-T4VCGMDB');
 
-<noscript>Free cookie consent management tool by <a href="https://www.termsfeed.com/">TermsFeed Generator</a></noscript>
-<!-- End Cookie Consent by TermsFeed https://www.TermsFeed.com -->
+      // Google tag (gtag.js)
+      var gtagEl = document.createElement('script');
+      gtagEl.async = true;
+      gtagEl.src = 'https://www.googletagmanager.com/gtag/js?id=G-9YM5FV534P';
+      document.head.appendChild(gtagEl);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-9YM5FV534P');
 
-
-
-
-
-<!-- Below is the link that users can use to open Preferences Center to change their preferences. Do not modify the ID parameter. Place it where appropriate, style it as needed. -->
-
-<a href="#" id="open_preferences_center">Update cookies preferences</a>
+      // Meta Pixel
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '277048115453058');
+      fbq('track', 'PageView');
+    }
+    if (localStorage.getItem('cookieConsent') === 'accepted') {
+      loadAnalyticsScripts();
+    }
+  </script>
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaszubska Osada – Domy całoroczne na Kaszubach od 387 458 zł</title>
   <meta name="description" content="Odkryj niepowtarzalne połączenie komfortu i bliskości natury. Zamieszkaj na Kaszubach. Inwestuj i zarabiaj!" />
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YM5FV534P"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9YM5FV534P');
-  </script>
-
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window,document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '277048115453058');
-  fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=277048115453058&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Meta Pixel Code -->
 
   <!-- SEO -->
   <link rel="canonical" href="https://kaszubskaosada.com.pl/" />
@@ -83,9 +60,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta property="og:url" content="https://kaszubskaosada.com.pl/" />
   <meta property="og:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 458 zł" />
   <meta property="og:description" content="Domy całoroczne w sercu Kaszub nad jeziorem Granicznym. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
-  <meta property="og:image" content="https://kaszubskaosada.com.pl/wp-content/uploads/2024/12/hero_3.webp" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:image" content="https://kaszubskaosada.com.pl/zdjecia/hero_3.webp" />
+  <meta property="og:image:width" content="2560" />
+  <meta property="og:image:height" content="1440" />
   <meta property="og:image:alt" content="Kaszubska Osada – domy całoroczne na Kaszubach" />
   <meta property="og:locale" content="pl_PL" />
   <meta property="og:site_name" content="Kaszubska Osada" />
@@ -94,7 +71,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 458 zł" />
   <meta name="twitter:description" content="Domy całoroczne w sercu Kaszub nad jeziorem Granicznym. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
-  <meta name="twitter:image" content="https://kaszubskaosada.com.pl/wp-content/uploads/2024/12/hero_3.webp" />
+  <meta name="twitter:image" content="https://kaszubskaosada.com.pl/zdjecia/hero_3.webp" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="zdjecia/favicon.png" />
@@ -159,8 +136,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <!-- Hero image preload — krytyczny LCP -->
+  <link rel="preload" as="image" href="zdjecia/hero_3.webp" fetchpriority="high" />
+  <!-- Fonty async — nieblokowalny render -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" onload="this.rel='stylesheet'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
+  <!-- Phosphor — nieblokowalny, ładowany po parsowaniu HTML -->
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -283,12 +266,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: none; }
     }
-    .hero-badge   { animation: heroUp .8s cubic-bezier(.22,1,.36,1) .15s both; }
+    .hero-badge-row { animation: heroUp .8s cubic-bezier(.22,1,.36,1) .15s both; }
     .hero h1      { animation: heroUp .9s cubic-bezier(.22,1,.36,1) .3s  both; }
     .hero-price   { animation: heroUp .9s cubic-bezier(.22,1,.36,1) .48s both; }
     .hero-desc    { animation: heroUp .8s cubic-bezier(.22,1,.36,1) .62s both; }
     .hero-btns    { animation: heroUp .8s cubic-bezier(.22,1,.36,1) .76s both; }
 
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 1.4rem;
+    }
     .hero-badge {
       display: inline-block;
       background: rgba(201,149,58,.25);
@@ -300,7 +290,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       text-transform: uppercase;
       padding: .35rem .9rem;
       border-radius: 100px;
-      margin-bottom: 1.4rem;
+    }
+    .hero-location-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.45);
+      color: var(--white);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+      padding: .35rem .9rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background .18s ease, border-color .18s ease, color .18s ease;
+    }
+    .hero-location-link i { font-size: .9rem; }
+    .hero-location-link:hover {
+      background: rgba(255,255,255,.14);
+      border-color: var(--gold-light);
+      color: var(--gold-light);
     }
     .hero h1 {
       font-size: clamp(2.4rem, 5vw, 4.2rem);
@@ -314,6 +324,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       font-family: 'Playfair Display', serif;
       color: var(--gold-light);
       font-weight: 600;
+      margin-bottom: .3rem;
+    }
+    .hero-price-note {
+      font-size: .78rem;
+      color: rgba(247,243,236,.65);
       margin-bottom: 1.6rem;
     }
     .hero-desc {
@@ -532,11 +547,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       font-size: 1.05rem; color: var(--text-mid);
       margin-bottom: .6rem; line-height: 1.6;
     }
-    .lot-selector-label {
-      font-size: .82rem; font-weight: 600; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--forest);
-      margin-bottom: .75rem; display: flex; align-items: center; gap: .5rem;
-    }
+    .lot-selector-lead i { color: var(--forest); margin-right: .3rem; }
+    .hl-gold { color: var(--gold); font-weight: 700; }
     .lot-map-wrap {
       position: relative; width: 100%; max-width: 700px;
       border-radius: var(--radius); overflow: hidden;
@@ -1158,9 +1170,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       color: var(--text-mid);
       font-size: 1.05rem;
       max-width: 600px;
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
       line-height: 1.7;
     }
+    .oferta-facts {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      max-width: 600px;
+      margin-top: 2.5rem;
+    }
+    .oferta-fact {
+      display: flex;
+      align-items: flex-start;
+      gap: .65rem;
+      font-size: .98rem;
+      font-weight: 600;
+      color: var(--forest);
+      background: var(--white);
+      border: 1px solid var(--cream-dark);
+      border-radius: 8px;
+      padding: .7rem 1rem;
+      line-height: 1.45;
+    }
+    .oferta-fact i { font-size: 1.2rem; color: var(--gold); flex-shrink: 0; margin-top: .1rem; }
     .apt-carousel {
       position: relative;
     }
@@ -1242,6 +1275,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       gap: 1rem;
     }
     .apt-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(30,61,43,.16); }
+    .apt-card-eyebrow {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: -.5rem;
+    }
+    .apt-price-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: .75rem;
+    }
+    .apt-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+      margin-top: .5rem;
+    }
+    .apt-card.apt-sold .apt-price { color: #c0392b; }
     .apt-card-header {
       display: flex;
       align-items: flex-start;
@@ -1287,23 +1343,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       letter-spacing: .03em;
       text-transform: uppercase;
     }
-    .apt-features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .4rem;
-    }
-    .apt-feature {
-      display: inline-flex;
-      align-items: center;
-      gap: .3rem;
-      font-size: .72rem;
-      font-weight: 600;
-      color: var(--forest);
-      background: rgba(30,61,43,.07);
-      padding: .28rem .65rem;
-      border-radius: 20px;
-    }
-    .apt-feature i { font-size: .85rem; flex-shrink: 0; }
     .apt-specs {
       display: flex;
       flex-direction: column;
@@ -1371,7 +1410,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      margin: 1.5rem 0 2rem;
+      margin: 1.5rem 0 .75rem;
+    }
+    .price-vat-note {
+      font-size: .8rem;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
     }
     .apt-status-item {
       display: flex;
@@ -1420,6 +1464,65 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .apt-card.apt-sold .apt-btn-cta { display: none; }
 
     /* ─── FLOAT PHONE ───────────────────────────────────────────── */
+    /* ─── COOKIE BANNER ─────────────────────────────────────────── */
+    .cookie-banner {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 300;
+      background: var(--forest);
+      color: var(--cream);
+      padding: 1.1rem 1.5rem;
+      box-shadow: 0 -4px 24px rgba(0,0,0,.25);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem 1.5rem;
+      transform: translateY(100%);
+      transition: transform .4s ease;
+    }
+    .cookie-banner.visible { transform: translateY(0); }
+    .cookie-banner-text {
+      flex: 1 1 320px;
+      font-size: .88rem;
+      line-height: 1.5;
+      color: var(--cream);
+      max-width: 640px;
+    }
+    .cookie-banner-text a { color: var(--gold-light); text-decoration: underline; }
+    .cookie-banner-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+    }
+    .cookie-banner-actions button {
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      padding: .6rem 1.2rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept {
+      background: var(--gold);
+      color: #fff;
+      border: 1px solid var(--gold);
+    }
+    .cookie-btn-accept:hover { background: #b07e25; }
+    .cookie-btn-reject {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,.45);
+    }
+    .cookie-btn-reject:hover { border-color: var(--gold-light); color: var(--gold-light); }
+    @media (max-width: 640px) {
+      .cookie-banner { padding: 1rem; justify-content: flex-start; }
+      .cookie-banner-actions { width: 100%; }
+      .cookie-banner-actions button { flex: 1 1 auto; }
+    }
+
     .float-phone {
       position: fixed;
       right: 1.5rem;
@@ -1557,21 +1660,43 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       flex-direction: column;
       gap: 1.2rem;
     }
+    .offer-popup-banner {
+      grid-column: 1 / -1;
+      background: var(--gold);
+      color: #fff;
+      text-align: center;
+      padding: .65rem 3rem;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      border-radius: 16px 16px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .offer-popup-banner i { font-size: 1.1rem; }
     .offer-popup-close {
       position: absolute;
-      top: .9rem;
-      right: 1rem;
-      background: transparent;
+      top: .6rem;
+      right: .7rem;
+      background: rgba(255,255,255,.92);
       border: none;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       line-height: 1;
-      color: var(--text-light);
+      color: var(--text);
       cursor: pointer;
-      padding: .25rem .4rem;
-      border-radius: 6px;
-      transition: background .2s, color .2s;
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+      transition: background .2s, color .2s, transform .15s;
+      z-index: 2;
     }
-    .offer-popup-close:hover { background: rgba(0,0,0,.08); color: var(--text); }
+    .offer-popup-close:hover { background: #fff; color: var(--forest); transform: scale(1.1); }
     .offer-popup-form-title {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
@@ -1665,33 +1790,39 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     .offer-popup-privacy a { color: var(--forest); text-decoration: underline; }
     .offer-popup-skip {
-      font-size: .78rem;
-      color: var(--text-light);
+      font-size: .82rem;
+      color: var(--text);
       background: transparent;
-      border: none;
+      border: 1.5px solid rgba(30,61,43,.25);
+      border-radius: 100px;
       cursor: pointer;
-      text-decoration: underline;
       text-align: center;
-      padding: 0;
+      padding: .55rem 1rem;
+      font-weight: 500;
+      transition: border-color .2s, color .2s;
     }
-    .offer-popup-skip:hover { color: var(--text); }
+    .offer-popup-skip:hover { border-color: var(--forest); color: var(--forest); }
     @media (max-width: 640px) {
-      .offer-popup-overlay { padding: .4rem; }
-      .offer-popup { grid-template-columns: 1fr; max-height: 90vh; }
-      .offer-popup-left { border-radius: 16px 16px 0 0; padding: 1.3rem 1.1rem; gap: .7rem; }
-      .offer-popup-right { padding: 1.1rem; gap: .75rem; }
-      .offer-popup-title { font-size: 1.2rem; line-height: 1.2; }
-      .offer-popup-points { gap: .45rem; }
-      .offer-popup-points li { font-size: .78rem; line-height: 1.35; }
-      .offer-popup-points li i { font-size: .92rem; }
-      .offer-popup-form-title { font-size: 1.05rem; }
-      .offer-popup-form-sub { font-size: .76rem; margin-top: -.5rem; }
-      .offer-popup-form label { font-size: .74rem; }
-      .offer-popup-form input { padding: .55rem .75rem; font-size: .88rem; }
-      .offer-popup-form .btn-callback { padding: .75rem 1.1rem; font-size: .88rem; }
-      .offer-popup-consent { font-size: .72rem; }
-      .offer-popup-privacy { font-size: .68rem; }
-      .offer-popup-skip { font-size: .73rem; }
+      .offer-popup-overlay { padding: .35rem; }
+      .offer-popup { grid-template-columns: 1fr; max-height: 88vh; max-width: 96vw; }
+      .offer-popup-banner { padding: .5rem 2.8rem; font-size: .78rem; border-radius: 12px 12px 0 0; }
+      .offer-popup-left { border-radius: 0; padding: .85rem .95rem; gap: .45rem; }
+      .offer-popup-right { padding: .85rem .95rem; gap: .55rem; }
+      .offer-popup-eyebrow { font-size: .62rem; }
+      .offer-popup-title { font-size: 1.05rem; line-height: 1.2; }
+      .offer-popup-points { gap: .3rem; }
+      .offer-popup-points li { font-size: .73rem; line-height: 1.3; }
+      .offer-popup-points li i { font-size: .85rem; }
+      .offer-popup-form-title { font-size: .95rem; }
+      .offer-popup-form-sub { font-size: .72rem; margin-top: -.4rem; }
+      .offer-popup-form label { font-size: .7rem; }
+      .offer-popup-form input { padding: .45rem .65rem; font-size: .83rem; }
+      .offer-popup-form textarea { min-height: 52px; font-size: .83rem; padding: .45rem .65rem; }
+      .offer-popup-form .btn-callback { padding: .65rem 1rem; font-size: .83rem; }
+      .offer-popup-consent { font-size: .68rem; }
+      .offer-popup-privacy { font-size: .64rem; }
+      .offer-popup-skip { font-size: .71rem; padding: .45rem .8rem; }
+      .offer-popup-close { width: 1.7rem; height: 1.7rem; font-size: 1.1rem; top: .45rem; right: .5rem; }
     }
 
     /* ─── FOOTER SOCIAL ─────────────────────────────────────────── */
@@ -2020,9 +2151,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <div class="hero-badge">Kaszubska Ostoja · Gmina Kołczygłowy</div>
+    <div class="hero-badge-row">
+      <div class="hero-badge">Kaszubska Ostoja · Gmina Kołczygłowy</div>
+      <a href="#lokalizacja" class="hero-location-link">
+        <i class="ph-bold ph-map-pin"></i> Sprawdź lokalizację
+      </a>
+    </div>
     <h1>Domy całoroczne<br><em>na Kaszubach</em></h1>
     <div class="hero-price">od 387 458 zł</div>
+    <div class="hero-price-note">cena brutto, zawiera 8% VAT</div>
     <p class="hero-desc">Niepowtarzalne połączenie komfortu i bliskości natury. Zamieszkaj lub zainwestuj – i zarabiaj.</p>
     <div class="hero-btns">
       <a href="#kontakt" class="btn btn-primary">Wyślij zapytanie</a>
@@ -2103,7 +2240,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="eyebrow">Oferta</div>
       <h2 class="section-title">Dostępne<br><em>domki</em></h2>
       <div class="divider"></div>
-      <p class="oferta-lead">8 domków w zabudowie bliźniaczej – 4 pary lustrzanych układów. Każdy z odrębną działką, tarasem i miejscem parkingowym. Pobierz kartę wybranego domku.</p>
+      <p class="oferta-lead">Ta oferta to <strong class="hl-gold">4 budynki (8 domków)</strong> – najnowsza część Kaszubskiej Osady. Reszta osiedla powstała wcześniej i jest już w całości sprzedana. Każdy dom to osobna nieruchomość na <strong class="hl-gold">2 piętrach</strong> – ma własne wejście, własną działkę, taras i miejsce parkingowe. Wybierz domek poniżej i <strong class="hl-gold">pobierz jego kartę</strong>.</p>
 
       <div class="apt-status-bar">
         <div class="apt-status-item">
@@ -2127,17 +2264,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="apt-status-label">rezerwacji</span>
         </div>
       </div>
+      <p class="price-vat-note">Wszystkie ceny domków są cenami brutto i zawierają 8% VAT.</p>
     </div>
 
     <div class="lot-selector reveal">
       <div class="lot-selector-intro">
-        <p class="lot-selector-lead">Kliknij budynek na mapie, aby pobrać rzut — lub przewiń niżej i&nbsp;przeglądaj karty wszystkich domków.</p>
-        <div class="lot-selector-label">
-          <i class="ph-bold ph-cursor-click"></i> Kliknij budynek, który Cię interesuje
-        </div>
+        <p class="lot-selector-lead"><i class="ph-bold ph-cursor-click"></i> <strong class="hl-gold">Kliknij budynek</strong> na planie, aby zobaczyć układ i&nbsp;<strong class="hl-gold">pobrać kartę domku</strong> — lub przewiń niżej i&nbsp;przeglądaj karty wszystkich domków.</p>
       </div>
       <div class="lot-map-wrap">
-        <img src="zdjecia/wiz-lot-hq-new-1024x678.webp" alt="Plan budynków Kaszubska Osada" loading="lazy" />
+        <img src="zdjecia/wiz-lot-hq-new-1024x678.webp" alt="Plan budynków Kaszubska Osada" loading="lazy" width="1024" height="678" />
         <svg class="lot-hotspots" viewBox="0 0 1024 678" xmlns="http://www.w3.org/2000/svg">
           <polygon class="lot-spot" data-building="1" points="321,161 466,212 440,277 291,253" />
           <polygon class="lot-spot" data-building="3" points="563,196 712,220 707,288 550,295" />
@@ -2153,21 +2288,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 1 -->
       <div class="apt-card">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">1</div>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 1</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-sun"></i> Taras od ogrodu</span>
-          <span class="apt-feature"><i class="ph-bold ph-leaf"></i> Widok na zieleń</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 1</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">393 000 zł</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>213 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>393 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2181,22 +2315,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 1a -->
       <div class="apt-card">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">1a</div>
           <span class="apt-mirror-badge">lustrzany</span>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 1a</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-sun"></i> Taras od ulicy</span>
-          <span class="apt-feature"><i class="ph-bold ph-leaf"></i> Widok na zieleń</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 1a</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">408 000 zł</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>194 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>408 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2210,21 +2343,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 2 -->
       <div class="apt-card">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">2</div>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 2</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-stairs"></i> Antresola</span>
-          <span class="apt-feature"><i class="ph-bold ph-frame-corners"></i> Duże przeszklenia</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 2</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">425 000 zł</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>258 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>425 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2238,22 +2370,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 2a -->
       <div class="apt-card apt-sold">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">2a</div>
           <span class="apt-sold-badge">sprzedany</span>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 2a</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-stairs"></i> Antresola</span>
-          <span class="apt-feature"><i class="ph-bold ph-frame-corners"></i> Duże przeszklenia</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 2a</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">Sprzedany</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>219 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Status: <strong>Sprzedany</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2261,21 +2392,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 3 -->
       <div class="apt-card">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">3</div>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 3</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-moon"></i> Cicha okolica</span>
-          <span class="apt-feature"><i class="ph-bold ph-person-simple-hike"></i> Blisko szlaków</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 3</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">388 000 zł</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>176 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>388 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2289,22 +2419,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 3a -->
       <div class="apt-card">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">3a</div>
           <span class="apt-mirror-badge">lustrzany</span>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 3a</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-moon"></i> Cicha okolica</span>
-          <span class="apt-feature"><i class="ph-bold ph-person-simple-hike"></i> Blisko szlaków</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 3a</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">413 000 zł</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>262 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>413 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2318,21 +2447,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 4 -->
       <div class="apt-card">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">4</div>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 4</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-layout"></i> Dwie strefy</span>
-          <span class="apt-feature"><i class="ph-bold ph-tree"></i> Największa działka</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 4</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">387 000 zł</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>289 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>387 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2346,22 +2474,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- 4a -->
       <div class="apt-card">
+        <div class="apt-card-eyebrow">Karta domku</div>
         <div class="apt-card-header">
           <div class="apt-number">4a</div>
           <span class="apt-mirror-badge">lustrzany</span>
         </div>
-        <div>
-          <div class="apt-card-title">Domek 4a</div>
-          <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-        </div>
-        <div class="apt-features">
-          <span class="apt-feature"><i class="ph-bold ph-layout"></i> Dwie strefy</span>
-          <span class="apt-feature"><i class="ph-bold ph-sun"></i> Inna orientacja</span>
+        <div class="apt-price-row">
+          <div>
+            <div class="apt-card-title">Domek 4a</div>
+            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+          </div>
+          <div class="apt-price">409 000 zł</div>
         </div>
         <div class="apt-specs">
           <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>238 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tag"></i> Cena: <strong>409 000 zł</strong></div>
           <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
         </div>
         <div class="apt-divider"></div>
@@ -2386,12 +2513,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </button>
       </div>
     </div><!-- /.apt-carousel -->
+
+    <div class="oferta-facts">
+      <div class="oferta-fact"><i class="ph-bold ph-tree"></i> <strong class="hl-gold">Własna działka, taras i parking</strong> przy każdym domku</div>
+      <div class="oferta-fact"><i class="ph-bold ph-tag"></i> Cena brutto od <strong class="hl-gold">387 458 zł</strong> (w tym 8% VAT) – czyli od ok. 7 500 zł/m²</div>
+      <div class="oferta-fact"><i class="ph-bold ph-users-three"></i> W cenie też udział we wspólnej części osiedla – boiska, plac zabaw, miejsca na ognisko</div>
+    </div>
   </div>
 </section>
 
 <!-- ─── AERIAL / PLAN ─────────────────────────────────────────── -->
 <div class="aerial-section">
-  <img src="zdjecia/osada_hero_1-2048x1139.webp" alt="Kaszubska Osada z lotu ptaka" loading="lazy" />
+  <img src="zdjecia/osada_hero_1-2048x1139.webp" alt="Kaszubska Osada z lotu ptaka" loading="lazy" width="2048" height="1139" />
   <div class="aerial-overlay">
     <div class="aerial-text">
       <h2>Kaszubska Osada z lotu ptaka</h2>
@@ -2489,9 +2622,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="domy-gallery reveal">
-        <img src="zdjecia/hero_3.webp" alt="Dom w Kaszubskiej Osadzie" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/home-4-4.webp" alt="Dom – widok z tarasu" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/osada_hero_1.webp" alt="Kaszubska Osada" loading="lazy" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/hero_3.webp" alt="Dom w Kaszubskiej Osadzie" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/home-4-4.webp" alt="Dom – widok z tarasu" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/osada_hero_1.webp" alt="Kaszubska Osada" loading="lazy" width="2560" height="1424" onclick="openLightbox(this.src)" />
       </div>
     </div>
   </div>
@@ -2509,11 +2642,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="section-inner">
     <div class="osada-grid">
       <div class="osada-gallery reveal">
-        <img src="zdjecia/ostoja_galeria_15.webp" alt="Jezioro Graniczne" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/ostoja_galeria_8.webp" alt="Kaszuby – natura" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/kaszubska_osada_6.webp" alt="Okolica osady" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/ostoja_galeria_7.webp" alt="Zachód słońca" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/ostoja_galeria_12.webp" alt="Plaża" loading="lazy" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/ostoja_galeria_15.webp" alt="Jezioro Graniczne" loading="lazy" width="1680" height="1120" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/ostoja_galeria_8.webp" alt="Kaszuby – natura" loading="lazy" width="1595" height="1064" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/kaszubska_osada_6.webp" alt="Okolica osady" loading="lazy" width="1064" height="1262" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/ostoja_galeria_7.webp" alt="Zachód słońca" loading="lazy" width="1585" height="1057" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/ostoja_galeria_12.webp" alt="Plaża" loading="lazy" width="1680" height="1120" onclick="openLightbox(this.src)" />
       </div>
 
       <div class="osada-text reveal">
@@ -2690,13 +2823,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="inv-gallery reveal">
-        <img src="zdjecia/interior_6.webp" alt="Wnętrze domku" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_1-scaled.webp" alt="Wnętrze – salon" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_2-scaled.webp" alt="Wnętrze – sypialnia" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_3-1-scaled.webp" alt="Wnętrze – kuchnia" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_4-scaled.webp" alt="Wnętrze – łazienka" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_5.webp" alt="Wnętrze – detal" loading="lazy" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_4-1.webp" alt="Wnętrze – detal" loading="lazy" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_6.webp" alt="Wnętrze domku" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_1-scaled.webp" alt="Wnętrze – salon" loading="lazy" width="2560" height="1441" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_2-scaled.webp" alt="Wnętrze – sypialnia" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_3-1-scaled.webp" alt="Wnętrze – kuchnia" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_4-scaled.webp" alt="Wnętrze – łazienka" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_5.webp" alt="Wnętrze – detal" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_4-1.webp" alt="Wnętrze – detal" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
       </div>
     </div>
   </div>
@@ -2728,7 +2861,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- Carousel -->
     <div class="gallery-carousel-wrap reveal">
       <div class="gallery-main" id="gallery-main" onclick="openGalleryLightbox()">
-        <img id="gallery-main-img" src="zdjecia/hero_3.webp" alt="Kaszubska Osada" />
+        <img id="gallery-main-img" src="zdjecia/hero_3.webp" alt="Kaszubska Osada" loading="lazy" width="2560" height="1440" />
       </div>
       <div class="gallery-counter" id="gallery-counter">1 / 6</div>
       <button class="gallery-arrow gallery-arrow-prev" onclick="galleryNav(-1)" aria-label="Poprzednie">&#8249;</button>
@@ -2874,8 +3007,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="footer-legal">
     <p>Kaszubska Osada spółka z o.o. z siedzibą w Słupsku. KRS 0000892338, Sąd Rejonowy Gdańsk-Północ w Gdańsku, VIII Wydział Gospodarczy. Kapitał zakładowy: 12 000 zł. NIP: 586-236-74-68, REGON: 388568375</p>
     <p style="margin-top:.5rem">Treść całego serwisu ma charakter informacyjny i nie stanowi oferty handlowej w rozumieniu Art. 66 §1 Kodeksu Cywilnego.</p>
+    <p style="margin-top:.5rem">Wszystkie ceny podane na stronie są cenami brutto i zawierają podatek VAT w stawce 8%.</p>
   </div>
 </footer>
+
+<!-- ─── COOKIE BANNER ──────────────────────────────────────────── -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Zgoda na pliki cookies">
+  <p class="cookie-banner-text">
+    Używamy plików cookies, aby zapewnić prawidłowe działanie strony oraz do celów analitycznych i marketingowych. Szczegóły znajdziesz w
+    <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>.
+  </p>
+  <div class="cookie-banner-actions">
+    <button type="button" class="cookie-btn-reject" onclick="setCookieConsent(false)">Tylko niezbędne</button>
+    <button type="button" class="cookie-btn-accept" onclick="setCookieConsent(true)">Akceptuję</button>
+  </div>
+</div>
 
 <!-- ─── FLOAT PHONE ────────────────────────────────────────────── -->
 <div class="float-phone">
@@ -2891,12 +3037,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="offer-popup">
     <button class="offer-popup-close" id="offerPopupClose" aria-label="Zamknij">&times;</button>
 
+    <div class="offer-popup-banner">
+      <i class="ph-bold ph-house-simple"></i>
+      Sprawdź dostępność – ostatnie wolne domki!
+    </div>
+
     <div class="offer-popup-left">
       <div class="offer-popup-eyebrow">Kaszubska Osada</div>
       <div class="offer-popup-title">8 domów<br>nad jeziorami <em>Kaszub</em></div>
       <ul class="offer-popup-points">
         <li><i class="ph-bold ph-house-simple"></i><span>8 domów w zabudowie bliźniaczej – każdy z odrębną działką i tarasem</span></li>
-        <li><i class="ph-bold ph-tag"></i><span>Ceny od <strong>387 458 zł</strong> – własna działka, parking w cenie</span></li>
+        <li><i class="ph-bold ph-tag"></i><span>Ceny brutto od <strong>387 458 zł</strong> (w tym 8% VAT) – własna działka, parking w cenie</span></li>
         <li><i class="ph-bold ph-ruler"></i><span>51–56 m² użytkowej, działki 176-289 m²</span></li>
         <li><i class="ph-bold ph-chart-line-up"></i><span>Szacowana rentowność <strong>~7,5% rocznie</strong> z najmu</span></li>
         <li><i class="ph-bold ph-fork-knife"></i><span>Restauracja, plac zabaw, przystań rybacka na terenie osady</span></li>
@@ -2917,12 +3068,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <input type="tel" id="cb-phone" name="cb-phone" placeholder="+48 000 000 000" required />
         </div>
         <div class="form-group">
+          <label for="cb-email">E-mail <span style="font-weight:400;opacity:.7">(opcjonalnie)</span></label>
+          <input type="email" id="cb-email" name="cb-email" placeholder="jan@kowalski.pl" />
+        </div>
+        <div class="form-group">
           <label for="cb-message">Wiadomość <span style="font-weight:400;opacity:.7">(opcjonalnie)</span></label>
           <textarea id="cb-message" name="cb-message" placeholder="Np. interesuje mnie domek nr 3, chciałbym/chciałabym…"></textarea>
         </div>
         <div class="offer-popup-consent">
           <input type="checkbox" id="cb-rodo" name="cb-rodo" required />
-          <label for="cb-rodo">Wyrażam zgodę na przetwarzanie moich danych osobowych (imię, numer telefonu) przez Kaszubska Osada Sp. z o.o. w celu kontaktu w sprawie oferty. <a href="https://kaszubskaosada.com.pl/polityka-prywatnosci" target="_blank" rel="noopener">Polityka prywatności</a>.</label>
+          <label for="cb-rodo">Wyrażam zgodę na przetwarzanie moich danych osobowych (imię, numer telefonu, e-mail) przez Kaszubska Osada Sp. z o.o. w celu kontaktu w sprawie oferty. <a href="https://kaszubskaosada.com.pl/polityka-prywatnosci" target="_blank" rel="noopener">Polityka prywatności</a>.</label>
         </div>
         <button type="submit" class="btn-callback" id="btnCallback">
           <i class="ph-bold ph-phone-call"></i> Zadzwońcie do mnie
@@ -2948,6 +3103,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // Always start at top — disable browser scroll restoration
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
+
+  // ── Cookie consent banner
+  const cookieBanner = document.getElementById('cookieBanner');
+  if (cookieBanner && !localStorage.getItem('cookieConsent')) {
+    setTimeout(() => cookieBanner.classList.add('visible'), 600);
+  }
+  function setCookieConsent(accepted) {
+    localStorage.setItem('cookieConsent', accepted ? 'accepted' : 'rejected');
+    cookieBanner.classList.remove('visible');
+    if (accepted) loadAnalyticsScripts();
+  }
 
   // ── Nav mobile toggle
   function toggleMenu() {
@@ -3385,6 +3551,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           type:    'callback',
           name:    document.getElementById('cb-name').value,
           phone:   document.getElementById('cb-phone').value,
+          email:   document.getElementById('cb-email').value || '',
           message: document.getElementById('cb-message').value || '',
         }),
       });
