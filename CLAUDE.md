@@ -42,7 +42,9 @@ Cards are a static grid (`#aptGrid`, 4/3/2 columns at >1100/≤1100/≤900px; at
 
 The standard section (`#standard`) describes the developer standard (stan deweloperski) and links `OPIS STANDARDU WYKOŃCZENIA.pdf`; `#pod-klucz` presents turnkey finishing as a paid option priced individually.
 
-Any element with `data-carousel` (`#aptGrid`, `.standard-grid`, `.attractions`) turns into a horizontal scroll-snap carousel with generated dots (`.m-dots`) at ≤600px; on wider screens it keeps its normal layout. Call `window.mCarousels.rebuild(el)` after changing which children are visible.
+Any element with `data-carousel` (`#aptGrid`, `.standard-grid`, `.attractions`, `.atuty-grid`, `.domy-gallery`, `.osada-gallery`, `.inv-gallery`, `.seo-grid`, `.pk-photos`) turns into a horizontal scroll-snap carousel at ≤600px, with generated prev/next arrows and dots (`.m-nav`) inserted right after it; on wider screens it keeps its normal layout and the nav is hidden. Call `window.mCarousels.rebuild(el)` after changing which children are visible.
+
+The floating call button (`.float-phone`) sits above the cookie banner: `syncCookieOffset()` sets `--cookie-h` to the banner height while it is visible.
 
 ## Gallery tabs
 

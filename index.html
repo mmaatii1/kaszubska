@@ -1372,36 +1372,53 @@
     }
 
     /* ─── MOBILE CAROUSELS (data-carousel) ──────────────────────── */
-    .m-dots { display: none; }
+    .m-nav { display: none; }
     @media (max-width: 600px) {
       [data-carousel] {
-        display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: .9rem; overflow-x: auto; scroll-snap-type: x mandatory;
+        display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important;
+        gap: .9rem; overflow-x: auto; scroll-snap-type: x mandatory;
         margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: .25rem 7vw .5rem;
         scrollbar-width: none; -webkit-overflow-scrolling: touch;
       }
       [data-carousel]::-webkit-scrollbar { display: none; }
-      [data-carousel] > * { flex: 0 0 86%; scroll-snap-align: center; min-width: 0; }
+      [data-carousel] > * { flex: 0 0 86%; scroll-snap-align: center; min-width: 0; margin: 0; }
       [data-carousel] > [hidden] { display: none; }
+      [data-carousel] > .reveal { opacity: 1; transform: none; }
+      [data-carousel] > img {
+        width: auto; height: 240px !important; object-fit: cover; border-radius: 14px;
+        grid-row: auto !important; grid-column: auto !important;
+      }
       .ko-card:hover { transform: none; }
+      .atuty-grid[data-carousel] > *, .seo-grid[data-carousel] > * { flex-basis: 78%; }
       .attractions[data-carousel] > * { flex-basis: 62%; scroll-snap-align: start; scroll-margin-left: 7vw; }
       .attractions[data-carousel] .attraction {
-        flex-direction: column; align-items: flex-start; gap: .5rem; padding: 1rem;
+        flex-direction: column; align-items: flex-start; gap: .5rem; padding: 1rem; transition: none;
         border: 1px solid rgba(247,243,236,.14); border-radius: 14px; background: rgba(247,243,236,.05);
       }
       .attractions[data-carousel] .attraction:hover { padding-left: 1rem; }
       .attractions[data-carousel] .attraction-bar { flex: 0 0 auto; width: 100%; height: 4px; margin-top: auto; }
-      .attractions[data-carousel] .attraction { transition: none; }
-      .m-dots { display: flex; justify-content: center; gap: .1rem; margin-top: .6rem; }
+
+      .m-nav { display: flex; align-items: center; justify-content: center; gap: .4rem; margin-top: .6rem; }
+      .m-dots { display: flex; justify-content: center; flex-wrap: wrap; max-width: 60vw; }
       .m-dots button {
-        width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer;
+        width: 22px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer;
         display: flex; align-items: center; justify-content: center;
       }
       .m-dots button::before {
         content: ''; width: 8px; height: 8px; border-radius: 999px; background: #cfc6b2; transition: width .25s, background .25s;
       }
-      .m-dots button.active::before { width: 22px; background: var(--forest); }
-      #standard .m-dots button::before, #lokalizacja .m-dots button::before { background: rgba(247,243,236,.3); }
-      #standard .m-dots button.active::before, #lokalizacja .m-dots button.active::before { background: var(--gold-light); }
+      .m-dots button.active::before { width: 20px; background: var(--forest); }
+      .m-arrow {
+        width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        background: var(--white); color: var(--forest); border: 1.5px solid #d8cfbd;
+        transition: opacity .2s, background .2s;
+      }
+      .m-arrow svg { width: 18px; height: 18px; }
+      .m-arrow:disabled { opacity: .35; cursor: default; }
+      .m-dark .m-dots button::before { background: rgba(247,243,236,.3); }
+      .m-dark .m-dots button.active::before { background: var(--gold-light); }
+      .m-dark .m-arrow { background: rgba(247,243,236,.08); color: var(--cream); border-color: rgba(247,243,236,.3); }
     }
 
     /* ─── FLOAT PHONE ───────────────────────────────────────────── */
@@ -1467,8 +1484,9 @@
     .float-phone {
       position: fixed;
       right: 1.5rem;
-      bottom: 2rem;
-      z-index: 97;
+      bottom: calc(2rem + var(--cookie-h, 0px));
+      z-index: 310;
+      transition: bottom .4s ease;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -1898,7 +1916,7 @@
       .gallery-dots { display: flex; }
       .float-phone-num { font-size: .8rem; }
       .float-phone-link { padding: .75rem 1.1rem .75rem .95rem; font-size: .82rem; }
-      .float-phone { right: 1rem; bottom: 1.5rem; }
+      .float-phone { right: 1rem; bottom: calc(1.5rem + var(--cookie-h, 0px)); }
       .footer-social-block { flex-wrap: wrap; gap: .6rem; }
     }
 
@@ -2619,7 +2637,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>Nie masz czasu na ekipy i hurtownie? Wykończymy dom przed odbiorem, a Ty dostaniesz klucze do miejsca gotowego do zamieszkania albo wynajmu.</p>
     </div>
     <div class="pk-body reveal">
-      <div class="pk-photos">
+      <div class="pk-photos" data-carousel>
         <figure><img src="zdjecia/interior_1-768x432.webp" alt="Przykładowa aranżacja salonu pod klucz" loading="lazy" width="768" height="432" /><figcaption>Przykładowa aranżacja</figcaption></figure>
         <figure><img src="zdjecia/interior_2-768x432.webp" alt="Przykładowa aranżacja kuchni pod klucz" loading="lazy" width="768" height="432" /><figcaption>Przykładowa aranżacja</figcaption></figure>
       </div>
@@ -2669,7 +2687,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="#kontakt" class="btn btn-primary">Zapytaj o dom</a>
       </div>
 
-      <div class="domy-gallery reveal">
+      <div class="domy-gallery reveal" data-carousel>
         <img src="zdjecia/hero_3.webp" alt="Dom w Kaszubskiej Osadzie" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
         <img src="zdjecia/home-4-4.webp" alt="Dom – widok z tarasu" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
         <img src="zdjecia/osada_hero_1.webp" alt="Kaszubska Osada" loading="lazy" width="2560" height="1424" onclick="openLightbox(this.src)" />
@@ -2689,7 +2707,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section id="o-osadzie">
   <div class="section-inner">
     <div class="osada-grid">
-      <div class="osada-gallery reveal">
+      <div class="osada-gallery reveal" data-carousel>
         <img src="zdjecia/ostoja_galeria_15.webp" alt="Jezioro Graniczne" loading="lazy" width="1680" height="1120" onclick="openLightbox(this.src)" />
         <img src="zdjecia/ostoja_galeria_8.webp" alt="Kaszuby – natura" loading="lazy" width="1595" height="1064" onclick="openLightbox(this.src)" />
         <img src="zdjecia/kaszubska_osada_6.webp" alt="Okolica osady" loading="lazy" width="1064" height="1262" onclick="openLightbox(this.src)" />
@@ -2727,7 +2745,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="divider"></div>
     </div>
 
-    <div class="atuty-grid">
+    <div class="atuty-grid" data-carousel>
       <div class="atut-card reveal">
         <div class="atut-icon">
           <i class="ph ph-house" aria-hidden="true" style="font-size:18px"></i>
@@ -2879,7 +2897,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
-      <div class="inv-gallery reveal">
+      <div class="inv-gallery reveal" data-carousel>
         <img src="zdjecia/interior_6.webp" alt="Wnętrze domku" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
         <img src="zdjecia/interior_1-scaled.webp" alt="Wnętrze – salon" loading="lazy" width="2560" height="1441" onclick="openLightbox(this.src)" />
         <img src="zdjecia/interior_2-scaled.webp" alt="Wnętrze – sypialnia" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
@@ -3008,7 +3026,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="seo-info">
   <div class="seo-info-inner">
     <div class="seo-info-intro">Często wyszukiwane</div>
-    <div class="seo-grid">
+    <div class="seo-grid" data-carousel>
       <div class="seo-block">
         <h2>Domy na sprzedaż Kaszuby</h2>
         <p>Kaszubska Osada oferuje domy całoroczne na Kaszubach w gminie Kołczygłowy – idealne zarówno do zamieszkania, jak i pod inwestycję z wynajmem.</p>
@@ -3164,11 +3182,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // ── Cookie consent banner
   const cookieBanner = document.getElementById('cookieBanner');
   if (cookieBanner && !localStorage.getItem('cookieConsent')) {
-    setTimeout(() => cookieBanner.classList.add('visible'), 600);
+    setTimeout(() => {
+      cookieBanner.classList.add('visible');
+      syncCookieOffset();
+    }, 600);
+    window.addEventListener('resize', syncCookieOffset);
+  }
+  // keep the floating "Zadzwoń teraz" button above the cookie banner
+  function syncCookieOffset() {
+    const h = cookieBanner && cookieBanner.classList.contains('visible') ? cookieBanner.offsetHeight : 0;
+    document.documentElement.style.setProperty('--cookie-h', h + 'px');
   }
   function setCookieConsent(accepted) {
     localStorage.setItem('cookieConsent', accepted ? 'accepted' : 'rejected');
     cookieBanner.classList.remove('visible');
+    syncCookieOffset();
     if (accepted) loadAnalyticsScripts();
   }
 
@@ -3466,13 +3494,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <script>
-  /* ── Mobile carousels with dots ── */
+  /* ── Mobile carousels: dots + arrows (CSS shows them only ≤600px) ── */
   window.mCarousels = (function () {
+    const ARROW = d => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"></path></svg>';
     const list = [];
     document.querySelectorAll('[data-carousel]').forEach(track => {
-      const dots = document.createElement('div');
-      dots.className = 'm-dots';
-      track.after(dots);
+      const nav = document.createElement('div');
+      nav.className = 'm-nav' + (track.closest('#standard, #lokalizacja') ? ' m-dark' : '');
+      nav.innerHTML = '<button type="button" class="m-arrow" aria-label="Poprzedni">' + ARROW('M15 18l-6-6 6-6') + '</button>' +
+        '<div class="m-dots"></div>' +
+        '<button type="button" class="m-arrow" aria-label="Następny">' + ARROW('M9 6l6 6-6 6') + '</button>';
+      track.after(nav);
+      const [prev, dots, next] = nav.children;
       const items = () => Array.from(track.children).filter(c => !c.hidden);
       const pos = (item) => {
         const left = item.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
@@ -3480,13 +3513,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           ? left - (track.clientWidth - item.offsetWidth) / 2
           : left - parseFloat(getComputedStyle(track).paddingLeft);
       };
+      let idx = 0;
+      const go = (i) => { const its = items(); if (its[i]) track.scrollTo({ left: pos(its[i]), behavior: 'smooth' }); };
       function build() {
+        // in a grid/flex parent the nav becomes its own item – cancel the parent's gap
+        const ps = getComputedStyle(track.parentElement);
+        const stacked = /grid/.test(ps.display) || (/flex/.test(ps.display) && (ps.flexDirection.startsWith('column') || ps.flexWrap === 'wrap'));
+        const gap = stacked ? parseFloat(ps.rowGap) || 0 : 0;
+        nav.style.marginTop = gap ? 'calc(.6rem - ' + gap + 'px)' : '';
         dots.innerHTML = '';
         items().forEach((item, i) => {
           const b = document.createElement('button');
           b.type = 'button';
           b.setAttribute('aria-label', 'Pozycja ' + (i + 1));
-          b.addEventListener('click', () => track.scrollTo({ left: pos(item), behavior: 'smooth' }));
+          b.addEventListener('click', () => go(i));
           dots.appendChild(b);
         });
         update();
@@ -3494,13 +3534,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       function update() {
         const its = items();
         const max = track.scrollWidth - track.clientWidth;
-        let idx = 0;
+        idx = 0;
         if (max > 0) {
           idx = track.scrollLeft >= max - 4 ? its.length - 1
             : its.reduce((best, it, i) => Math.abs(pos(it) - track.scrollLeft) < Math.abs(pos(its[best]) - track.scrollLeft) ? i : best, 0);
         }
         Array.from(dots.children).forEach((d, i) => d.classList.toggle('active', i === idx));
+        prev.disabled = idx <= 0;
+        next.disabled = idx >= its.length - 1;
       }
+      prev.addEventListener('click', () => go(idx - 1));
+      next.addEventListener('click', () => go(idx + 1));
       track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
       list.push({ track, build });
       build();
