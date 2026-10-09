@@ -14,11 +14,11 @@ Everything lives in one file with three logical zones:
 
 1. **`<head>`** — SEO meta tags, Open Graph, JSON-LD structured data, Google Fonts (`Playfair Display`, `Inter`), Phosphor Icons CDN (`@phosphor-icons/web`), and all CSS in a single `<style>` block.
 
-2. **`<body>`** — HTML sections in this order: nav, offer bar (`#offer-bar`), hero, offer/apartments (`#oferta`), aerial image, domy (`#o-projekcie`), osada (`#o-osadzie`), lokalizacja (`#lokalizacja`), inwestycja (`#inwestycja`), gallery (`#galeria`), kontakt (`#kontakt`), footer, lightbox overlay, offer popup overlay.
+2. **`<body>`** — HTML sections in this order: nav, offer bar (`#offer-bar`), hero, offer/apartments (`#oferta`), aerial image, standard (`#standard`), pod klucz (`#pod-klucz`), domy (`#o-projekcie`), osada (`#o-osadzie`), lokalizacja (`#lokalizacja`), inwestycja (`#inwestycja`), gallery (`#galeria`), kontakt (`#kontakt`), footer, lightbox overlay, offer popup overlay.
 
 3. **Two `<script>` blocks** at end of `<body>`:
    - First (larger): nav toggle, scroll behaviour, aerial parallax, hero Ken Burns slider, IntersectionObserver reveal animations, count-up stat animations, tab gallery with lightbox, touch swipe for gallery.
-   - Second (IIFE): apartment carousel logic (`#aptTrack`) — 3/2/1 cards per view at 1024/640/mobile breakpoints, dot navigation, swipe support. Followed by offer popup logic.
+   - Second: apartment grid filter/sort (`#aptGrid`), offer popup logic, lot/half selector modal, Meta Pixel events.
 
 ## Design tokens (CSS variables)
 
@@ -32,14 +32,15 @@ Everything lives in one file with three logical zones:
 
 ## Apartment cards
 
-Each `.apt-card` inside `#aptTrack` corresponds to one unit. Key patterns:
+Cards are a static grid (`#aptGrid`, 4/3/2/1 columns at >1100/≤1100/≤900/≤600px) of `article.ko-card` elements, one per unit. Key patterns:
 
-- **Normal unit**: `<div class="apt-card">` with `apt-mirror-badge` (lustrzany) badge optional.
-- **Sold unit**: add `apt-sold` class → card grays out, buttons hidden, badge becomes `apt-sold-badge`.
-- Specs live in `.apt-specs > .apt-spec` divs — ruler (area), tree (działka), tag (price/status), car (parking).
-- PDF data sheets are in `karty/` and follow the pattern `karty/{pair}-{unit}.pdf` (e.g. `karty/1-1.pdf`, `karty/2-2a.pdf`).
+- Data attributes drive filtering/sorting JS: `data-num` (display order), `data-status` (`avail` | `sold`), `data-price` (promo price, 0 when sold), `data-plot` (m²). Status counts in the filter pills are computed from these.
+- **Promo pricing**: `.ko-price` is the current (promo) price, `<s class="ko-old">` is the catalogue price before the promotion, `.ko-pct` is the discount badge, `.ko-save` the saving, followed by price per m². Keep the promo panel (`.ko-promo`) and "od X zł" headline copy (title, OG/Twitter meta, JSON-LD, hero, lead, atuty, SEO text, popup) in sync.
+- **Sold unit**: add `ko-sold` class + `data-status="sold"`, replace the price box with `.ko-sold-note`, drop `.ko-actions`.
+- Image: the 3D model `zdjecia/budynek-wiz-new-size-768x509.webp` twice — grey base + coloured copy clipped to one half (`.ko-left` for units 1–4, `.ko-right` for 1a–4a; split position via `--split` on `.ko-card`).
+- PDF data sheets are in `karty/` (`karty/{n}-{n}A-New.pdf`, one per building).
 
-The status counter (`.apt-status-bar`) above the carousel must be updated manually when unit statuses change — it is not computed from the cards.
+The standard section (`#standard`) describes the developer standard (stan deweloperski) and links `OPIS STANDARDU WYKOŃCZENIA.pdf`; `#pod-klucz` presents turnkey finishing as a paid option priced individually.
 
 ## Gallery tabs
 

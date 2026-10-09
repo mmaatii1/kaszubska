@@ -45,7 +45,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Language" content="pl" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kaszubska Osada – Domy całoroczne na Kaszubach od 387 458 zł</title>
+  <title>Kaszubska Osada – Domy całoroczne na Kaszubach od 387 000 zł</title>
   <meta name="description" content="Odkryj niepowtarzalne połączenie komfortu i bliskości natury. Zamieszkaj na Kaszubach. Inwestuj i zarabiaj!" />
 
   <!-- SEO -->
@@ -59,7 +59,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kaszubskaosada.com.pl/" />
-  <meta property="og:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 458 zł" />
+  <meta property="og:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 000 zł" />
   <meta property="og:description" content="Domy całoroczne w sercu Kaszub nad jeziorem Granicznym. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
   <meta property="og:image" content="https://kaszubskaosada.com.pl/zdjecia/hero_3.webp" />
   <meta property="og:image:width" content="2560" />
@@ -70,7 +70,7 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 458 zł" />
+  <meta name="twitter:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 000 zł" />
   <meta name="twitter:description" content="Domy całoroczne w sercu Kaszub nad jeziorem Granicznym. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
   <meta name="twitter:image" content="https://kaszubskaosada.com.pl/zdjecia/hero_3.webp" />
 
@@ -117,8 +117,8 @@
         "@type": "RealEstateAgent",
         "name": "Kaszubska Osada",
         "url": "https://kaszubskaosada.com.pl/",
-        "description": "Domy całoroczne na Kaszubach od 387 458 zł. Inwestycja z ~7,5% roczną stopą zwrotu.",
-        "priceRange": "od 387 458 zł",
+        "description": "Domy całoroczne na Kaszubach od 387 000 zł. Inwestycja z ~7,5% roczną stopą zwrotu.",
+        "priceRange": "od 387 000 zł",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Kołczygłowy",
@@ -426,47 +426,72 @@
 
     /* ─── STANDARD ──────────────────────────────────────────────── */
     #standard { background: var(--forest); }
-    .standard-intro { text-align: center; max-width: 560px; margin: 0 auto 2.8rem; }
-    .standard-intro .eyebrow { color: var(--gold-light); }
-    .standard-intro .section-title { color: var(--cream); }
-    .standard-intro .section-title em { color: var(--gold-light); font-style: italic; }
-    .standard-intro .divider { margin: 0 auto 0; }
-    .standard-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-bottom: 2.8rem;
+    .std-wrap { display: flex; flex-wrap: wrap; gap: 3.5rem; }
+    .std-left { flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 1.2rem; }
+    .std-right { flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .std-tag { background: var(--gold-light); color: var(--forest); }
+    #standard .section-title { color: var(--cream); margin: 0; }
+    #standard .section-title em { color: var(--gold-light); font-style: italic; }
+    .std-lead { color: #d9e2da; font-size: 1.05rem; line-height: 1.65; }
+    .std-lead strong { color: var(--cream); }
+    .std-file { background: var(--cream); border-radius: 18px; padding: 1.4rem; display: flex; flex-direction: column; gap: 1rem; margin-top: .4rem; }
+    .std-file-head { display: flex; gap: 1rem; align-items: center; }
+    .std-file-icon {
+      width: 56px; height: 68px; flex-shrink: 0; border-radius: 8px; background: var(--white); border: 1px solid #e3dccd;
+      display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; box-sizing: border-box;
     }
+    .std-file-icon span { font-size: .68rem; font-weight: 800; color: var(--white); background: #7a2e14; padding: 2px 6px; border-radius: 4px; }
+    .std-file-title { font-weight: 700; font-size: 1.05rem; color: var(--forest); }
+    .std-file-sub { font-size: .8rem; color: var(--text-mid); margin-top: .2rem; }
+    .std-file-btns { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+    .std-btn-dark, .std-btn-ghost {
+      display: flex; justify-content: center; align-items: center; gap: .5rem; min-height: 48px;
+      border-radius: 10px; font-weight: 600; font-size: .94rem; text-decoration: none;
+    }
+    .std-btn-dark { background: var(--forest); color: var(--white); }
+    .std-btn-dark:hover { background: var(--forest-mid); color: var(--white); }
+    .std-btn-ghost { border: 1.5px solid #c9b88f; color: var(--forest); }
+    .std-btn-ghost:hover { background: var(--white); }
+    .standard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
     .standard-card {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(201,168,76,.18);
-      border-radius: 12px;
-      padding: 1.5rem 1.4rem;
-      display: flex;
-      flex-direction: column;
-      gap: .55rem;
+      background: rgba(247,243,236,.06); border: 1px solid rgba(247,243,236,.14); border-radius: 16px;
+      padding: 1.35rem; display: flex; flex-direction: column; gap: .7rem;
     }
-    .standard-card-icon { color: var(--gold-light); font-size: 1.55rem; }
-    .standard-card-title { font-weight: 700; font-size: .95rem; color: var(--cream); }
-    .standard-card-note { font-size: .8rem; color: rgba(247,243,236,.6); line-height: 1.55; }
-    .standard-download { text-align: center; }
-    .standard-download-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      background: var(--gold);
-      color: var(--forest);
-      font-weight: 700;
-      font-size: .92rem;
-      padding: .85rem 2rem;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background .2s, transform .2s, box-shadow .2s;
-      box-shadow: 0 4px 18px rgba(201,149,58,.35);
+    .standard-card-title { font-weight: 700; font-size: 1.05rem; color: var(--gold-light); display: flex; align-items: center; gap: .5rem; }
+    .standard-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .35rem; }
+    .standard-list li { font-size: .88rem; line-height: 1.55; color: #d9e2da; padding-left: 1rem; position: relative; }
+    .standard-list li::before { content: ''; position: absolute; left: 0; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: var(--gold-light); }
+    .std-excluded { background: var(--cream); border-radius: 16px; padding: 1.3rem 1.4rem; display: flex; flex-wrap: wrap; gap: .8rem 1.6rem; align-items: center; }
+    .std-excluded-title { font-weight: 700; color: var(--forest); flex: 1 1 200px; }
+    .std-chips { flex: 999 1 400px; display: flex; flex-wrap: wrap; gap: .5rem; }
+    .std-chips span { font-size: .8rem; font-weight: 600; padding: .35rem .6rem; border-radius: 8px; background: var(--white); border: 1px solid #e3dccd; color: var(--text); }
+
+    /* ─── POD KLUCZ ─────────────────────────────────────────────── */
+    #pod-klucz { background: var(--cream); }
+    .pk-head { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: flex-end; justify-content: space-between; margin-bottom: 2.25rem; }
+    .pk-head > div { flex: 1 1 520px; min-width: 0; }
+    .pk-head .pk-tag { margin-bottom: 1rem; }
+    .pk-head .section-title { margin: 0; }
+    .pk-head p { flex: 1 1 360px; color: var(--text-mid); font-size: 1.05rem; line-height: 1.65; }
+    .pk-body { display: flex; flex-wrap: wrap; gap: 1.75rem; }
+    .pk-photos { flex: 1 1 520px; min-width: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .pk-photos figure { margin: 0; position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; background: #dcd4c3; }
+    .pk-photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pk-photos figcaption { position: absolute; left: 10px; bottom: 10px; font-size: .75rem; font-weight: 600; color: var(--forest); background: rgba(247,243,236,.95); padding: .3rem .55rem; border-radius: 6px; }
+    .pk-steps { flex: 1 1 400px; min-width: 0; background: var(--white); border: 1px solid #ece5d6; border-radius: 20px; padding: 1.75rem; display: flex; flex-direction: column; gap: 1.1rem; }
+    .pk-step { display: flex; gap: .9rem; align-items: flex-start; }
+    .pk-step > span { width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: var(--forest); color: var(--cream); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .pk-step strong { color: var(--text); }
+    .pk-step p { font-size: .88rem; color: var(--text-mid); line-height: 1.55; margin-top: .2rem; }
+    .pk-foot { border-top: 1px solid #f0ebe0; padding-top: 1rem; display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; }
+    .pk-foot span { display: block; font-size: .8rem; color: var(--text-mid); }
+    .pk-foot strong { font-size: 1.2rem; font-weight: 800; color: var(--forest); }
+    .pk-btn { display: inline-flex; align-items: center; min-height: 46px; padding: 0 1.25rem; border-radius: 10px; background: var(--forest); color: var(--white); font-weight: 600; text-decoration: none; }
+    .pk-btn:hover { background: var(--forest-mid); color: var(--white); }
+    @media (max-width: 600px) {
+      .standard-grid { grid-template-columns: 1fr; }
+      .pk-photos { grid-template-columns: 1fr; }
     }
-    .standard-download-btn:hover { background: #c9a032; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,149,58,.5); }
-    @media (max-width: 900px) { .standard-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 600px) { .standard-grid { grid-template-columns: 1fr; } }
 
     /* ─── DOMY ────────────────────────────────────────────────── */
     #o-projekcie { background: var(--white); }
@@ -701,6 +726,23 @@
       box-shadow: var(--shadow);
     }
     .lok-map iframe { display: block; width: 100%; height: 480px; border: none; }
+    .lok-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0 1.75rem; }
+    .lok-chips span {
+      display: inline-flex; align-items: center; gap: .4rem; font-size: .82rem; font-weight: 600;
+      color: var(--cream); background: rgba(247,243,236,.08); border: 1px solid rgba(247,243,236,.18);
+      padding: .4rem .7rem; border-radius: 999px;
+    }
+    .lok-chips i { color: var(--gold-light); }
+    .lok-sub { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-light); margin-bottom: .25rem; }
+    .attraction { flex-wrap: wrap; }
+    .attraction-bar { flex-basis: 100%; height: 4px; border-radius: 2px; background: rgba(247,243,236,.1); position: relative; margin-top: .45rem; overflow: hidden; }
+    .attraction-bar::after { content: ''; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--gold); border-radius: 2px; }
+    .attraction-bar.near::after { background: var(--gold-light); }
+    .lok-nav-btn {
+      display: flex; justify-content: center; align-items: center; gap: .5rem; min-height: 48px;
+      background: var(--gold-light); color: var(--forest); font-weight: 700; text-decoration: none;
+    }
+    .lok-nav-btn:hover { filter: brightness(1.06); color: var(--forest); }
 
     /* ─── INWESTYCJA ──────────────────────────────────────────── */
     #inwestycja { background: var(--white); }
@@ -1158,6 +1200,13 @@
       transition: opacity .2s;
     }
     #offer-bar a:hover { opacity: .85; }
+    .offer-bar-tag { background: var(--forest); color: var(--gold-light); padding: .15rem .5rem; border-radius: 999px; margin-right: .35rem; font-size: .7rem; }
+    @media (max-width: 600px) { .offer-bar-long { display: none; } #offer-bar a { font-size: .7rem; letter-spacing: .06em; } }
+    .hero-promo {
+      display: inline-block; vertical-align: middle; margin-left: .6rem; font-family: 'Inter', sans-serif;
+      font-size: .8rem; font-weight: 700; letter-spacing: .04em; color: var(--forest); background: var(--gold-light);
+      padding: .3rem .7rem; border-radius: 999px;
+    }
     .offer-bar-arrow { transition: transform .22s ease; }
     #offer-bar a:hover .offer-bar-arrow { transform: translateX(5px); }
     @keyframes offerBarPulse {
@@ -1174,274 +1223,144 @@
       margin-bottom: 1.5rem;
       line-height: 1.7;
     }
-    .apt-carousel {
-      position: relative;
+    /* ─── PROMO + FACTS ─────────────────────────────────────────── */
+    .ko-promo {
+      display: inline-flex; align-items: center; gap: 1.4rem;
+      background: var(--white); border: 1px solid #e3dccd; border-radius: 16px;
+      padding: 1.3rem 1.6rem; margin: .5rem 0 1.5rem;
     }
-    .apt-carousel-viewport {
-      overflow: hidden;
+    .ko-promo-pct { font-family: 'Playfair Display', serif; font-size: 3.6rem; font-weight: 700; line-height: 1; color: var(--forest); }
+    .ko-promo-txt { display: flex; flex-direction: column; gap: .2rem; font-size: 1.05rem; color: var(--forest); }
+    .ko-promo-tag {
+      align-self: flex-start; background: var(--gold-light); color: var(--forest);
+      font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: .2rem .6rem; border-radius: 999px; margin-bottom: .2rem;
     }
-    .apt-track {
-      display: flex;
-      gap: 1.25rem;
-      transition: transform .45s cubic-bezier(.25,.8,.25,1);
-      will-change: transform;
+    .ko-promo-sub { font-size: .84rem; color: var(--text-mid); }
+    .ko-facts {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: #e3dccd; border: 1px solid #e3dccd; border-radius: 14px; overflow: hidden;
+      margin-bottom: 2.5rem;
     }
-    .apt-track .apt-card {
-      flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
-      min-width: 0;
-    }
-    .apt-carousel-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    @keyframes navBtnPulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(30,61,43,.18); }
-      50%       { transform: scale(1.08); box-shadow: 0 0 0 6px rgba(30,61,43,0); }
-    }
-    .apt-nav-btn {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      border: 1.5px solid var(--forest);
-      background: var(--white);
-      color: var(--forest);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-      transition: background .18s, color .18s, opacity .18s, transform .18s, box-shadow .18s;
-      flex-shrink: 0;
-      animation: navBtnPulse 2.4s ease-in-out infinite;
-    }
-    .apt-nav-btn:nth-child(3) { animation-delay: 1.2s; }
-    .apt-nav-btn:hover {
-      background: var(--forest);
-      color: var(--white);
-      animation: none;
-      transform: scale(1.12);
-    }
-    .apt-nav-btn:disabled { opacity: .3; cursor: default; animation: none; }
-    .apt-dots {
-      display: flex;
-      gap: .5rem;
-      align-items: center;
-    }
-    .apt-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--cream-dark);
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: background .18s, transform .18s;
-    }
-    .apt-dot.active {
-      background: var(--forest);
-      transform: scale(1.3);
-    }
-    .apt-card {
-      background:
-        linear-gradient(var(--white), var(--white)) padding-box,
-        linear-gradient(90deg, var(--gold), var(--forest-light)) border-box;
-      border-radius: var(--radius);
-      padding: 1.6rem 1.5rem 1.5rem;
-      border: 1px solid transparent;
-      border-top-width: 4px;
-      box-shadow: 0 6px 28px rgba(30,61,43,.1);
-      transition: transform .22s ease, box-shadow .22s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .apt-card:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(30,61,43,.16); }
-    .apt-card-eyebrow {
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--text-light);
-      margin-bottom: -.5rem;
-    }
-    .apt-price-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: .75rem;
-    }
-    .apt-price {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--gold);
-      white-space: nowrap;
-      margin-top: .5rem;
-    }
-    .apt-card.apt-sold .apt-price { color: #c0392b; }
-    .apt-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: .5rem;
-    }
-    .apt-number {
-      width: 48px; height: 48px;
-      background: var(--forest);
-      color: var(--gold-light);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      flex-shrink: 0;
-      box-shadow: 0 3px 10px rgba(30,61,43,.25);
-    }
-    .apt-mirror-badge {
-      font-size: .72rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(201,149,58,.1);
-      border: 1px solid rgba(201,149,58,.25);
-      border-radius: 4px;
-      padding: .2rem .5rem;
-      white-space: nowrap;
-      align-self: flex-start;
-    }
-    .apt-card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.22rem;
-      color: var(--forest);
-      font-weight: 700;
-      margin-top: .5rem;
-    }
-    .apt-card-subtitle {
-      font-size: .78rem;
-      color: var(--text-light);
-      margin-top: .12rem;
-      letter-spacing: .03em;
-      text-transform: uppercase;
-    }
-    .apt-specs {
-      display: flex;
-      flex-direction: column;
-      gap: .45rem;
-    }
-    .apt-spec {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      font-size: .86rem;
-      color: var(--text-mid);
-    }
-    .apt-spec i {
-      font-size: 1rem;
-      color: var(--forest);
-      flex-shrink: 0;
-      width: 16px;
-      text-align: center;
-    }
-    .apt-spec strong { color: var(--text); font-weight: 600; }
-    .apt-divider {
-      height: 1px;
-      background: var(--cream-dark);
-      margin-top: auto;
-    }
-    .apt-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      padding: .65rem 1rem;
-      border-radius: 8px;
-      font-size: .84rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background .18s ease, color .18s ease;
-      background: var(--forest);
-      color: var(--white);
-      width: 100%;
-    }
-    .apt-btn:hover { background: var(--forest-mid); }
-    .apt-btn i { font-size: 1rem; }
-    .apt-btn-cta {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      background: var(--gold);
-      color: #fff;
-      font-size: .88rem;
-      font-weight: 700;
-      padding: .75rem 1rem;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      text-decoration: none;
-      transition: background .25s, transform .2s;
-      margin-top: .6rem;
-    }
-    .apt-btn-cta:hover { background: #b07e25; transform: translateY(-2px); color: #fff; }
+    .ko-fact { background: #fbf9f4; padding: 1.1rem 1.2rem; display: flex; gap: .85rem; align-items: center; }
+    .ko-fact i { font-size: 1.6rem; color: var(--forest-mid); flex-shrink: 0; }
+    .ko-fact strong { display: block; font-size: 1.02rem; color: var(--text); }
+    .ko-fact span { font-size: .8rem; color: var(--text-mid); }
+    .ko-fact a { color: var(--forest); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 
-    /* ─── STATUS COUNTER ────────────────────────────────────────── */
-    .apt-status-bar {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 1.5rem 0 .75rem;
+    /* ─── FILTERS ───────────────────────────────────────────────── */
+    .ko-toolbar { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; align-items: center; margin: 2.5rem 0 1.5rem; }
+    .ko-pills { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+    .ko-pills-label { font-size: .88rem; color: var(--text-mid); }
+    .ko-pill {
+      min-height: 44px; padding: 0 1rem; border-radius: 999px; cursor: pointer;
+      font: 600 .88rem 'Inter', sans-serif; background: var(--white); color: var(--forest);
+      border: 1.5px solid #d8cfbd; transition: background .2s, color .2s, border-color .2s;
     }
-    .price-vat-note {
-      font-size: .8rem;
-      color: var(--text-light);
-      margin-bottom: 1.5rem;
-    }
-    .apt-status-item {
-      display: flex;
-      align-items: center;
-      gap: .55rem;
-      background: var(--white);
-      border: 1px solid var(--cream-dark);
-      border-radius: 8px;
-      padding: .55rem 1rem;
-      font-size: .86rem;
-    }
-    .apt-status-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .apt-status-dot--all    { background: var(--forest); }
-    .apt-status-dot--avail  { background: #2d9c5e; }
-    .apt-status-dot--sold   { background: #c0392b; }
-    .apt-status-dot--res    { background: #e67e22; }
-    .apt-status-count { font-weight: 700; color: var(--forest); }
-    .apt-status-label { color: var(--text-mid); }
+    .ko-pill span { opacity: .7; font-weight: 500; }
+    .ko-pill.active { background: var(--forest); color: var(--white); border-color: var(--forest); }
 
-    /* ─── SOLD CARD ─────────────────────────────────────────────── */
-    .apt-card.apt-sold { opacity: .72; pointer-events: none; position: relative; }
-    .apt-card.apt-sold::after {
-      content: '';
-      position: absolute; inset: 0;
-      border-radius: var(--radius);
-      background: rgba(247,243,236,.35);
-      pointer-events: none;
+    /* ─── CARDS ─────────────────────────────────────────────────── */
+    .ko-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+    .ko-card {
+      --split: 51%;
+      background: var(--white); border: 1px solid #ece5d6; border-radius: 18px; overflow: hidden;
+      display: flex; flex-direction: column; box-shadow: 0 6px 24px rgba(30,61,43,.08);
+      transition: transform .25s ease, box-shadow .25s ease;
     }
-    .apt-sold-badge {
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: #fff;
-      background: #c0392b;
-      border-radius: 4px;
-      padding: .2rem .5rem;
-      white-space: nowrap;
-      align-self: flex-start;
+    .ko-card:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(30,61,43,.16); }
+    .ko-card[hidden] { display: none; }
+    .ko-media { position: relative; aspect-ratio: 16 / 11; background: var(--white); border-bottom: 1px solid #f0ebe0; }
+    .ko-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+    .ko-img-base { filter: grayscale(1) brightness(1.08); opacity: .45; }
+    .ko-img-color.ko-left  { clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+    .ko-img-color.ko-right { clip-path: inset(0 0 0 var(--split)); }
+    .ko-sold .ko-img-color { filter: grayscale(1); opacity: .45; }
+    .ko-media-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .ko-status { background: #e7f1ea; color: var(--forest); font-size: .75rem; font-weight: 700; padding: .35rem .65rem; border-radius: 999px; }
+    .ko-sold .ko-status { background: #7a2e14; color: var(--white); }
+    .ko-pct { background: var(--gold-light); color: var(--forest); font-weight: 800; font-size: .95rem; padding: .4rem .7rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+    .ko-side { position: absolute; bottom: 12px; font-size: .7rem; font-weight: 600; color: var(--text-mid); background: rgba(247,243,236,.95); padding: .25rem .5rem; border-radius: 6px; }
+    .ko-side-left { left: 78px; }
+    .ko-side-right { right: 12px; }
+    .ko-num {
+      position: absolute; left: 14px; bottom: -22px; width: 52px; height: 52px; border-radius: 14px;
+      background: var(--forest); color: var(--cream); border: 3px solid var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700;
     }
-    .apt-card.apt-sold .apt-btn,
-    .apt-card.apt-sold .apt-btn-cta { display: none; }
+    .ko-body { padding: 2.1rem 1.25rem 1.25rem; display: flex; flex-direction: column; gap: 1rem; flex: 1; }
+    .ko-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 600; color: var(--forest); margin: 0; }
+    .ko-sub { font-size: .8rem; color: var(--text-mid); margin-top: .2rem; }
+    .ko-price-box { background: var(--cream); border-radius: 12px; padding: .9rem .9rem .75rem; }
+    .ko-price-row { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+    .ko-price { font-size: 1.6rem; font-weight: 800; color: var(--forest); letter-spacing: -.01em; }
+    .ko-old { font-size: .95rem; color: #6b6b63; }
+    .ko-price-meta { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; margin-top: .5rem; font-size: .75rem; color: var(--text-mid); }
+    .ko-save { font-weight: 700; color: #7a2e14; background: #f6dfd3; padding: .25rem .5rem; border-radius: 6px; }
+    .ko-sold-note { background: #f1efe9; border-radius: 12px; padding: .9rem; font-size: .88rem; color: var(--text-mid); }
+    .ko-specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem .75rem; }
+    .ko-spec { display: flex; gap: .55rem; align-items: center; }
+    .ko-spec i { font-size: 1.25rem; color: var(--forest-light); flex-shrink: 0; }
+    .ko-spec strong { display: block; font-size: .94rem; color: var(--text); }
+    .ko-spec span { font-size: .75rem; color: var(--text-mid); }
+    .ko-actions { display: flex; flex-direction: column; gap: .5rem; margin-top: auto; }
+    .ko-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .ko-btn-primary, .ko-btn-ghost {
+      display: flex; justify-content: center; align-items: center; gap: .45rem;
+      min-height: 44px; border-radius: 10px; font-weight: 600; text-decoration: none; transition: background .2s, filter .2s;
+    }
+    .ko-btn-primary { background: var(--forest); color: var(--white); font-size: .94rem; }
+    .ko-btn-primary:hover { background: var(--forest-mid); color: var(--white); }
+    .ko-btn-ghost { border: 1.5px solid #c9b88f; color: var(--forest); font-size: .82rem; }
+    .ko-btn-ghost:hover { background: var(--cream); }
+    .ko-footnote { margin-top: 1.25rem; font-size: .75rem; color: #6b6b63; line-height: 1.6; }
+
+    /* ─── INCLUDED vs TURNKEY BANNER ────────────────────────────── */
+    .ko-included { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 3.5rem; }
+    .ko-included h3 { font-family: 'Playfair Display', serif; font-weight: 600; line-height: 1.15; margin: 0; }
+    .ko-included-main {
+      flex: 1 1 520px; min-width: 0; background: var(--forest); color: var(--cream); border-radius: 22px;
+      padding: 2.5rem 2.75rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .ko-included-main .eyebrow { color: var(--gold-light); margin: 0; }
+    .ko-included-main h3 { font-size: 2.1rem; color: var(--cream); }
+    .ko-included-main p { color: #d9e2da; line-height: 1.65; max-width: 520px; }
+    .ko-included-btns { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .4rem; }
+    .ko-btn-gold, .ko-btn-outline-light {
+      display: inline-flex; align-items: center; gap: .6rem; min-height: 48px; padding: 0 1.4rem;
+      border-radius: 10px; font-weight: 700; font-size: .94rem; text-decoration: none;
+    }
+    .ko-btn-gold { background: var(--gold-light); color: var(--forest); }
+    .ko-btn-gold:hover { filter: brightness(1.06); color: var(--forest); }
+    .ko-btn-outline-light { border: 1.5px solid rgba(247,243,236,.45); color: var(--cream); font-weight: 600; }
+    .ko-btn-outline-light:hover { color: var(--gold-light); }
+    .ko-included-opt {
+      flex: 1 1 380px; min-width: 0; background: var(--white); border: 1.5px dashed #c9b88f; border-radius: 22px;
+      padding: 2.5rem 2.75rem; display: flex; flex-direction: column; gap: .9rem;
+    }
+    .ko-included-opt h3 { font-size: 1.85rem; color: var(--forest); }
+    .ko-included-opt p { color: var(--text-mid); line-height: 1.65; font-size: .95rem; }
+    .ko-opt-tag, .pk-tag, .std-tag {
+      align-self: flex-start; display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: .3rem .65rem; border-radius: 999px;
+    }
+    .ko-opt-tag, .pk-tag { color: #8a6420; background: #f0e3c8; }
+    .ko-link { margin-top: auto; color: var(--forest); font-weight: 700; }
+
+    @media (max-width: 1100px) {
+      .ko-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .ko-facts { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) { .ko-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 600px) {
+      .ko-grid { grid-template-columns: 1fr; }
+      .ko-facts { grid-template-columns: 1fr; }
+      .ko-promo { display: flex; padding: 1.1rem 1.2rem; gap: 1rem; }
+      .ko-promo-pct { font-size: 2.8rem; }
+      .ko-included-main, .ko-included-opt { padding: 1.8rem 1.4rem; }
+      .ko-included-main h3 { font-size: 1.6rem; }
+    }
 
     /* ─── FLOAT PHONE ───────────────────────────────────────────── */
     /* ─── COOKIE BANNER ─────────────────────────────────────────── */
@@ -1918,7 +1837,6 @@
 
     /* ─── RESPONSIVE ──────────────────────────────────────────── */
     @media (max-width: 900px) {
-      .apt-track .apt-card { flex: 0 0 calc((100% - 1.25rem) / 2); }
       .atuty-grid { grid-template-columns: 1fr 1fr; }
       .seo-grid { grid-template-columns: 1fr 1fr; }
       .domy-grid, .osada-grid, .inv-grid, .lok-grid, .contact-grid { grid-template-columns: 1fr; }
@@ -1999,7 +1917,6 @@
     }
 
     @media (max-width: 600px) {
-      .apt-track .apt-card { flex: 0 0 100%; }
       /* ── Hero: full bleed, text anchored to bottom ── */
       .hero {
         min-height: 100svh;
@@ -2116,7 +2033,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ─── CTA OFFER BAR ─────────────────────────────────────────── -->
 <div id="offer-bar">
   <a href="#oferta">
-    <span>Sprawdź ofertę</span>
+    <span><span class="offer-bar-tag">Promocja</span> Rabaty 3–7%<span class="offer-bar-long"> na dostępne domy</span> · Sprawdź ofertę</span>
     <i class="ph ph-arrow-right offer-bar-arrow" aria-hidden="true" style="font-size:15px"></i>
   </a>
 </div>
@@ -2138,7 +2055,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
     </div>
     <h1>Domy całoroczne<br><em>na Kaszubach</em></h1>
-    <div class="hero-price">od 387 458 zł</div>
+    <div class="hero-price">od 387 000 zł <span class="hero-promo">Promocja do −7%</span></div>
     <div class="hero-price-note">cena brutto, zawiera 8% VAT</div>
     <p class="hero-desc">Niepowtarzalne połączenie komfortu i bliskości natury. Zamieszkaj lub zainwestuj – i zarabiaj.</p>
     <div class="hero-btns">
@@ -2220,31 +2137,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="eyebrow">Oferta</div>
       <h2 class="section-title">Dostępne<br><em>domki</em></h2>
       <div class="divider"></div>
-      <p class="oferta-lead">Ta oferta to <strong class="hl-gold">4 budynki (8 domków)</strong> – najnowsza część Kaszubskiej Osady. Reszta osiedla powstała wcześniej i jest już w całości sprzedana. Każdy dom to osobna nieruchomość na <strong class="hl-gold">2 piętrach</strong> – ma własne wejście, własną działkę, taras i miejsce parkingowe. Ceny brutto zaczynają się od <strong class="hl-gold">387 458 zł</strong> (w tym 8% VAT) – czyli od ok. <strong class="hl-gold">7 500 zł/m²</strong> – a w cenie jest też udział we wspólnej części osiedla: boiska, plac zabaw i miejsce na ognisko. Wybierz domek poniżej i <strong class="hl-gold">pobierz jego kartę</strong>.</p>
+      <p class="oferta-lead">Ta oferta to <strong class="hl-gold">4 budynki (8 domków)</strong> – najnowsza część Kaszubskiej Osady. Reszta osiedla jest już w całości sprzedana. Każdy dom to osobna nieruchomość na <strong class="hl-gold">2 piętrach</strong> z własną działką i księgą wieczystą, tarasem i miejscem parkingowym. Ceny brutto (z 8% VAT) w stanie deweloperskim zaczynają się od <strong class="hl-gold">387 000 zł</strong>, a w promocji oszczędzasz <strong class="hl-gold">od 3% do 7%</strong>.</p>
 
-      <div class="apt-status-bar">
-        <div class="apt-status-item">
-          <span class="apt-status-dot apt-status-dot--all"></span>
-          <span class="apt-status-count">8</span>
-          <span class="apt-status-label">wszystkich</span>
-        </div>
-        <div class="apt-status-item">
-          <span class="apt-status-dot apt-status-dot--avail"></span>
-          <span class="apt-status-count">7</span>
-          <span class="apt-status-label">dostępnych</span>
-        </div>
-        <div class="apt-status-item">
-          <span class="apt-status-dot apt-status-dot--sold"></span>
-          <span class="apt-status-count">1</span>
-          <span class="apt-status-label">sprzedanych</span>
-        </div>
-        <div class="apt-status-item">
-          <span class="apt-status-dot apt-status-dot--res"></span>
-          <span class="apt-status-count">0</span>
-          <span class="apt-status-label">rezerwacji</span>
+      <div class="ko-promo">
+        <div class="ko-promo-pct">−7%</div>
+        <div class="ko-promo-txt">
+          <span class="ko-promo-tag">Promocja</span>
+          <div>Rabat do <strong>32 000 zł</strong></div>
+          <div class="ko-promo-sub">Ceny już od <strong>387 000 zł</strong> · oferta ważna do [DATA KOŃCA PROMOCJI]</div>
         </div>
       </div>
-      <p class="price-vat-note">Wszystkie ceny domków są cenami brutto i zawierają 8% VAT.</p>
+
+      <div class="ko-facts">
+        <div class="ko-fact"><i class="ph-bold ph-trend-up"></i><div><strong>~7,5% rocznie</strong><span>szacowany zwrot z najmu*</span></div></div>
+        <div class="ko-fact"><i class="ph-bold ph-house-line"></i><div><strong>od 7 429 zł/m²</strong><span>cena promocyjna, brutto</span></div></div>
+        <div class="ko-fact"><i class="ph-bold ph-map-pin"></i><div><strong>Jezioro Graniczne</strong><span>2 plaże · 1h 10 min do Ustki</span></div></div>
+        <div class="ko-fact"><i class="ph-bold ph-file-text"></i><div><strong>Stan deweloperski</strong><span><a href="#standard">co dokładnie jest w cenie</a></span></div></div>
+      </div>
     </div>
 
     <div class="lot-selector reveal">
@@ -2262,253 +2171,326 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <div class="apt-carousel reveal">
-      <div class="apt-carousel-viewport">
-        <div class="apt-track" id="aptTrack">
-
-      <!-- 1 -->
-      <div class="apt-card">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">1</div>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 1</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
-          </div>
-          <div class="apt-price">393 000 zł</div>
-        </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>213 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
-        </div>
-        <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/1-1A-New.pdf" target="_blank">
-          <i class="ph-bold ph-file-pdf"></i> Zobacz kartę domku
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek
-        </a>
+    <div class="ko-toolbar reveal">
+      <div class="ko-pills" role="group" aria-label="Filtr statusu">
+        <button type="button" class="ko-pill active" data-filter="all">Wszystkie <span data-count="all"></span></button>
+        <button type="button" class="ko-pill" data-filter="avail">Dostępne <span data-count="avail"></span></button>
+        <button type="button" class="ko-pill" data-filter="sold">Sprzedane <span data-count="sold"></span></button>
       </div>
+      <div class="ko-pills" role="group" aria-label="Sortowanie">
+        <span class="ko-pills-label">Sortuj:</span>
+        <button type="button" class="ko-pill active" data-sort="num">Numer</button>
+        <button type="button" class="ko-pill" data-sort="price">Cena rosnąco</button>
+        <button type="button" class="ko-pill" data-sort="plot">Największa działka</button>
+      </div>
+    </div>
+
+    <div class="ko-grid" id="aptGrid">
+      <!-- 1 -->
+      <article class="ko-card" data-num="0" data-status="avail" data-price="393000" data-plot="213">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-left" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 1" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Dostępny</span>
+            <span class="ko-pct">−3%</span>
+          </div>
+          <span class="ko-side ko-side-left">Lewa część bliźniaka</span>
+          <div class="ko-num">1</div>
+        </div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 1</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ standard</div>
+          </div>
+          <div class="ko-price-box">
+            <div class="ko-price-row"><span class="ko-price">393 000 zł</span><s class="ko-old">405 000 zł</s></div>
+            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 706 zł/m²</span></div>
+          </div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>213 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
+          <div class="ko-actions">
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 1</a>
+            <div class="ko-btn-row">
+              <a class="ko-btn-ghost" href="karty/1-1A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+            </div>
+          </div>
+        </div>
+      </article>
 
       <!-- 1a -->
-      <div class="apt-card">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">1a</div>
-          <span class="apt-mirror-badge">lustrzany</span>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 1a</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+      <article class="ko-card" data-num="1" data-status="avail" data-price="408000" data-plot="194">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-right" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 1a" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Dostępny</span>
+            <span class="ko-pct">−5%</span>
           </div>
-          <div class="apt-price">408 000 zł</div>
+          <span class="ko-side ko-side-right">Prawa część bliźniaka</span>
+          <div class="ko-num">1a</div>
         </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>194 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 1a</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ lustrzany</div>
+          </div>
+          <div class="ko-price-box">
+            <div class="ko-price-row"><span class="ko-price">408 000 zł</span><s class="ko-old">429 000 zł</s></div>
+            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 21 000 zł</span><span>7 429 zł/m²</span></div>
+          </div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>194 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
+          <div class="ko-actions">
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 1a</a>
+            <div class="ko-btn-row">
+              <a class="ko-btn-ghost" href="karty/1-1A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+            </div>
+          </div>
         </div>
-        <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/1-1A-New.pdf" target="_blank">
-          <i class="ph-bold ph-file-pdf"></i> Zobacz kartę domku
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek
-        </a>
-      </div>
+      </article>
 
       <!-- 2 -->
-      <div class="apt-card">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">2</div>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 2</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+      <article class="ko-card" data-num="2" data-status="avail" data-price="425000" data-plot="258">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-left" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 2" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Dostępny</span>
+            <span class="ko-pct">−7%</span>
           </div>
-          <div class="apt-price">425 000 zł</div>
+          <span class="ko-side ko-side-left">Lewa część bliźniaka</span>
+          <div class="ko-num">2</div>
         </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>258 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 2</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ standard</div>
+          </div>
+          <div class="ko-price-box">
+            <div class="ko-price-row"><span class="ko-price">425 000 zł</span><s class="ko-old">457 000 zł</s></div>
+            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 32 000 zł</span><span>8 333 zł/m²</span></div>
+          </div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>258 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
+          <div class="ko-actions">
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 2</a>
+            <div class="ko-btn-row">
+              <a class="ko-btn-ghost" href="karty/2-2A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+            </div>
+          </div>
         </div>
-        <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/2-2A-New.pdf" target="_blank">
-          <i class="ph-bold ph-file-pdf"></i> Zobacz kartę domku
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek
-        </a>
-      </div>
+      </article>
 
       <!-- 2a -->
-      <div class="apt-card apt-sold">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">2a</div>
-          <span class="apt-sold-badge">sprzedany</span>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 2a</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+      <article class="ko-card ko-sold" data-num="3" data-status="sold" data-price="0" data-plot="219">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-right" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 2a" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Sprzedany</span>
           </div>
-          <div class="apt-price">Sprzedany</div>
+          <span class="ko-side ko-side-right">Prawa część bliźniaka</span>
+          <div class="ko-num">2a</div>
         </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>219 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 2a</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ lustrzany</div>
+          </div>
+          <div class="ko-sold-note">Ten dom znalazł już właściciela. Zapytaj o podobny układ – domki 1a, 3a, 4a.</div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>219 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
         </div>
-        <div class="apt-divider"></div>
-      </div>
+      </article>
 
       <!-- 3 -->
-      <div class="apt-card">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">3</div>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 3</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+      <article class="ko-card" data-num="4" data-status="avail" data-price="388000" data-plot="176">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-left" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 3" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Dostępny</span>
+            <span class="ko-pct">−3%</span>
           </div>
-          <div class="apt-price">388 000 zł</div>
+          <span class="ko-side ko-side-left">Lewa część bliźniaka</span>
+          <div class="ko-num">3</div>
         </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>176 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 3</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ standard</div>
+          </div>
+          <div class="ko-price-box">
+            <div class="ko-price-row"><span class="ko-price">388 000 zł</span><s class="ko-old">400 000 zł</s></div>
+            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 608 zł/m²</span></div>
+          </div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>176 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
+          <div class="ko-actions">
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 3</a>
+            <div class="ko-btn-row">
+              <a class="ko-btn-ghost" href="karty/3-3A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+            </div>
+          </div>
         </div>
-        <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/3-3A-New.pdf" target="_blank">
-          <i class="ph-bold ph-file-pdf"></i> Zobacz kartę domku
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek
-        </a>
-      </div>
+      </article>
 
       <!-- 3a -->
-      <div class="apt-card">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">3a</div>
-          <span class="apt-mirror-badge">lustrzany</span>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 3a</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+      <article class="ko-card" data-num="5" data-status="avail" data-price="413000" data-plot="262">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-right" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 3a" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Dostępny</span>
+            <span class="ko-pct">−5%</span>
           </div>
-          <div class="apt-price">413 000 zł</div>
+          <span class="ko-side ko-side-right">Prawa część bliźniaka</span>
+          <div class="ko-num">3a</div>
         </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>262 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 3a</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ lustrzany</div>
+          </div>
+          <div class="ko-price-box">
+            <div class="ko-price-row"><span class="ko-price">413 000 zł</span><s class="ko-old">435 000 zł</s></div>
+            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 520 zł/m²</span></div>
+          </div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>262 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
+          <div class="ko-actions">
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 3a</a>
+            <div class="ko-btn-row">
+              <a class="ko-btn-ghost" href="karty/3-3A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+            </div>
+          </div>
         </div>
-        <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/3-3A-New.pdf" target="_blank">
-          <i class="ph-bold ph-file-pdf"></i> Zobacz kartę domku
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek
-        </a>
-      </div>
+      </article>
 
       <!-- 4 -->
-      <div class="apt-card">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">4</div>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 4</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+      <article class="ko-card" data-num="6" data-status="avail" data-price="387000" data-plot="289">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-left" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 4" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Dostępny</span>
+            <span class="ko-pct">−3%</span>
           </div>
-          <div class="apt-price">387 000 zł</div>
+          <span class="ko-side ko-side-left">Lewa część bliźniaka</span>
+          <div class="ko-num">4</div>
         </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>51 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>289 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 4</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ standard</div>
+          </div>
+          <div class="ko-price-box">
+            <div class="ko-price-row"><span class="ko-price">387 000 zł</span><s class="ko-old">399 000 zł</s></div>
+            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 588 zł/m²</span></div>
+          </div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>289 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
+          <div class="ko-actions">
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 4</a>
+            <div class="ko-btn-row">
+              <a class="ko-btn-ghost" href="karty/4-4A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+            </div>
+          </div>
         </div>
-        <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/4-4A-New.pdf" target="_blank">
-          <i class="ph-bold ph-file-pdf"></i> Zobacz kartę domku
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek
-        </a>
-      </div>
+      </article>
 
       <!-- 4a -->
-      <div class="apt-card">
-        <div class="apt-card-eyebrow">Karta domku</div>
-        <div class="apt-card-header">
-          <div class="apt-number">4a</div>
-          <span class="apt-mirror-badge">lustrzany</span>
-        </div>
-        <div class="apt-price-row">
-          <div>
-            <div class="apt-card-title">Domek 4a</div>
-            <div class="apt-card-subtitle">Dom bliźniaczy · 2 kondygnacje</div>
+      <article class="ko-card" data-num="7" data-status="avail" data-price="409000" data-plot="238">
+        <div class="ko-media">
+          <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
+          <img class="ko-img-color ko-right" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 4a" loading="lazy" width="768" height="509" />
+          <div class="ko-media-top">
+            <span class="ko-status">Dostępny</span>
+            <span class="ko-pct">−5%</span>
           </div>
-          <div class="apt-price">409 000 zł</div>
+          <span class="ko-side ko-side-right">Prawa część bliźniaka</span>
+          <div class="ko-num">4a</div>
         </div>
-        <div class="apt-specs">
-          <div class="apt-spec"><i class="ph-bold ph-ruler"></i> Pow. użytkowa: <strong>54,92 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-tree"></i> Działka: <strong>238 m²</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-car"></i> Parking: <strong>1 miejsce</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-umbrella"></i> Taras: <strong>tak</strong></div>
-          <div class="apt-spec"><i class="ph-bold ph-stairs"></i> Kondygnacje: <strong>2</strong></div>
+        <div class="ko-body">
+          <div>
+            <h3 class="ko-title">Domek 4a</h3>
+            <div class="ko-sub">Bliźniak · 2 kondygnacje · układ lustrzany</div>
+          </div>
+          <div class="ko-price-box">
+            <div class="ko-price-row"><span class="ko-price">409 000 zł</span><s class="ko-old">431 000 zł</s></div>
+            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 447 zł/m²</span></div>
+          </div>
+          <div class="ko-specs">
+            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>238 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+          </div>
+          <div class="ko-actions">
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 4a</a>
+            <div class="ko-btn-row">
+              <a class="ko-btn-ghost" href="karty/4-4A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+            </div>
+          </div>
         </div>
-        <div class="apt-divider"></div>
-        <a class="apt-btn" href="karty/4-4A-New.pdf" target="_blank">
-          <i class="ph-bold ph-file-pdf"></i> Zobacz kartę domku
-        </a>
-        <a class="apt-btn-cta" href="#kontakt">
-          <i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek
-        </a>
-      </div>
+      </article>
+    </div>
 
-        </div><!-- /.apt-track -->
-      </div><!-- /.apt-carousel-viewport -->
+    <p class="ko-footnote">Ceny brutto z 8% VAT, w stanie deweloperskim. Ceny przekreślone – ceny katalogowe sprzed promocji. *Szacunkowa roczna stopa zwrotu z najmu krótkoterminowego, nie stanowi gwarancji. Oferta nie stanowi oferty handlowej w rozumieniu Kodeksu cywilnego.</p>
 
-      <div class="apt-carousel-nav">
-        <button class="apt-nav-btn" id="aptPrev" aria-label="Poprzedni" disabled>
-          <i class="ph-bold ph-caret-left"></i>
-        </button>
-        <div class="apt-dots" id="aptDots"></div>
-        <button class="apt-nav-btn" id="aptNext" aria-label="Następny">
-          <i class="ph-bold ph-caret-right"></i>
-        </button>
+    <div class="ko-included reveal">
+      <div class="ko-included-main">
+        <div class="eyebrow">W cenie domu</div>
+        <h3>Stan deweloperski – zobacz, co dokładnie dostajesz</h3>
+        <p>Gotowa bryła, dach, okna, drzwi, schody, taras i rozprowadzone instalacje. Podłogi, łazienka i kuchnia są do wykończenia – samodzielnie albo z nami.</p>
+        <div class="ko-included-btns">
+          <a class="ko-btn-gold" href="OPIS STANDARDU WYKOŃCZENIA.pdf" target="_blank"><i class="ph-bold ph-download-simple"></i> Pobierz opis standardu (PDF)</a>
+          <a class="ko-btn-outline-light" href="#standard">Zobacz online →</a>
+        </div>
       </div>
-    </div><!-- /.apt-carousel -->
+      <div class="ko-included-opt">
+        <span class="ko-opt-tag">Opcja za dopłatą</span>
+        <h3>Wolisz od razu pod klucz?</h3>
+        <p>Wykończymy dom przed odbiorem: podłogi, łazienka, kuchnia, malowanie. Gotowy do zamieszkania lub wynajmu od pierwszego dnia.</p>
+        <a class="ko-link" href="#pod-klucz">Jak to działa →</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2532,48 +2514,82 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ─── STANDARD WYKOŃCZENIA ────────────────────────────────── -->
 <section id="standard">
+  <div class="section-inner std-wrap">
+    <div class="std-left reveal">
+      <span class="std-tag">W cenie domu</span>
+      <h2 class="section-title">Stan deweloperski –<br><em>bez niespodzianek</em></h2>
+      <p class="std-lead">Dom oddajemy z gotową bryłą, dachem, stolarką i rozprowadzonymi instalacjami. <strong>To nie jest wykończenie pod klucz</strong> – podłogi, łazienkę i kuchnię urządzasz po swojemu albo zlecasz nam.</p>
+      <div class="std-file">
+        <div class="std-file-head">
+          <div class="std-file-icon"><span>PDF</span></div>
+          <div>
+            <div class="std-file-title">Opis standardu wykończenia</div>
+            <div class="std-file-sub">Budynek, wnętrze, instalacje, teren, kwestie prawne · 2 strony</div>
+          </div>
+        </div>
+        <div class="std-file-btns">
+          <a class="std-btn-dark" href="OPIS STANDARDU WYKOŃCZENIA.pdf" download><i class="ph-bold ph-download-simple"></i> Pobierz</a>
+          <a class="std-btn-ghost" href="OPIS STANDARDU WYKOŃCZENIA.pdf" target="_blank"><i class="ph-bold ph-eye"></i> Podgląd</a>
+        </div>
+      </div>
+    </div>
+    <div class="std-right reveal">
+      <div class="standard-grid">
+        <div class="standard-card">
+          <div class="standard-card-title"><i class="ph-bold ph-house-line"></i> Bryła i dach</div>
+          <ul class="standard-list"><li>Ściany z gazobetonu + 20 cm ocieplenia</li><li>Elewacja: tynk mineralny z szachulcem, cokół klinkier/kamień</li><li>Dachówka ceramiczna, wełna 18 + 5 cm</li><li>Okna dachowe Velux 118×78 cm</li></ul>
+        </div>
+        <div class="standard-card">
+          <div class="standard-card-title"><i class="ph-bold ph-stairs"></i> Stolarka i schody</div>
+          <ul class="standard-list"><li>Okna PCV drewnopodobne, U ≤ 1,0</li><li>Drzwi wejściowe stalowe, ocieplane</li><li>Schody ażurowe z drewna sosnowego</li><li>Strop z desek strugowanych na belkach</li></ul>
+        </div>
+        <div class="standard-card">
+          <div class="standard-card-title"><i class="ph-bold ph-drop"></i> Instalacje</div>
+          <ul class="standard-list"><li>Woda zimna i ciepła (bojler 50 L), kanalizacja – rozprowadzone, zakończone korkami</li><li>Grzejniki elektryczne</li><li>Elektryka z gniazdami i włącznikami, RTV w salonie</li></ul>
+        </div>
+        <div class="standard-card">
+          <div class="standard-card-title"><i class="ph-bold ph-tree"></i> Teren</div>
+          <ul class="standard-list"><li>Taras z ryflowanej deski sosnowej</li><li>Miejsce parkingowe i ścieżka z kostki</li><li>Trawnik i zieleń urządzona</li></ul>
+        </div>
+      </div>
+      <div class="std-excluded">
+        <div class="std-excluded-title">Do wykończenia przez nabywcę:</div>
+        <div class="std-chips">
+          <span>Podłogi (jest posadzka betonowa)</span>
+          <span>Malowanie (ściany szpachlowane Q2)</span>
+          <span>Łazienka i biały montaż</span>
+          <span>Kuchnia</span>
+          <span>Drzwi wewnętrzne</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── POD KLUCZ (OPCJA) ────────────────────────────────────── -->
+<section id="pod-klucz">
   <div class="section-inner">
-    <div class="standard-intro reveal">
-      <div class="eyebrow">Standard wykończenia</div>
-      <h2 class="section-title">Jakość<br><em>w każdym detalu</em></h2>
-      <div class="divider"></div>
+    <div class="pk-head reveal">
+      <div>
+        <span class="pk-tag">Opcja za dopłatą</span>
+        <h2 class="section-title">Wykończenie <em>pod klucz</em> –<br>też to zrobimy</h2>
+      </div>
+      <p>Nie masz czasu na ekipy i hurtownie? Wykończymy dom przed odbiorem, a Ty dostaniesz klucze do miejsca gotowego do zamieszkania albo wynajmu.</p>
     </div>
-    <div class="standard-grid reveal">
-      <div class="standard-card">
-        <i class="ph-bold ph-house-line standard-card-icon"></i>
-        <div class="standard-card-title">Dach ceramiczny</div>
-        <div class="standard-card-note">Dachówka ceramiczna w kolorze ceglastym, konstrukcja krokwiowa. Ocieplenie wełną mineralną 18+5 cm. Okna dachowe Velux 118×78 cm.</div>
+    <div class="pk-body reveal">
+      <div class="pk-photos">
+        <figure><img src="zdjecia/interior_1-768x432.webp" alt="Przykładowa aranżacja salonu pod klucz" loading="lazy" width="768" height="432" /><figcaption>Przykładowa aranżacja</figcaption></figure>
+        <figure><img src="zdjecia/interior_2-768x432.webp" alt="Przykładowa aranżacja kuchni pod klucz" loading="lazy" width="768" height="432" /><figcaption>Przykładowa aranżacja</figcaption></figure>
       </div>
-      <div class="standard-card">
-        <i class="ph-bold ph-wall standard-card-icon"></i>
-        <div class="standard-card-title">Elewacja z szachulcem</div>
-        <div class="standard-card-note">Tynk mineralny z imitacją szachulca z deski. Cokół z płytki klinkierowej lub okładziny kamiennej.</div>
+      <div class="pk-steps">
+        <div class="pk-step"><span>1</span><div><strong>Wybierasz zakres i materiały</strong><p>Podłogi, płytki, armatura, kuchnia, drzwi – z gotowych zestawów albo indywidualnie.</p></div></div>
+        <div class="pk-step"><span>2</span><div><strong>Ustalamy wycenę indywidualnie</strong><p>Cena zależy od wybranego zakresu i materiałów – dogadujemy ją razem, przed startem prac.</p></div></div>
+        <div class="pk-step"><span>3</span><div><strong>Odbierasz gotowy dom</strong><p>Gotowy do zamieszkania lub wynajmu od pierwszego dnia.</p></div></div>
+        <div class="pk-foot">
+          <div><span>Cena wykończenia</span><strong>ustalana indywidualnie</strong></div>
+          <a href="#kontakt" class="pk-btn">Zapytaj o wycenę</a>
+        </div>
       </div>
-      <div class="standard-card">
-        <i class="ph-bold ph-frame-corners standard-card-icon"></i>
-        <div class="standard-card-title">Okna drewnopodobne</div>
-        <div class="standard-card-note">PCV dwustronnie barwione z okleiną imitującą drewno. Współczynnik przenikania ciepła U ≤ 1,0.</div>
-      </div>
-      <div class="standard-card">
-        <i class="ph-bold ph-stairs standard-card-icon"></i>
-        <div class="standard-card-title">Schody drewniane</div>
-        <div class="standard-card-note">Ażurowe, drewno sosnowe, lakier naturalny z opcją wyboru koloru. Parapety wewnętrzne drewniane.</div>
-      </div>
-      <div class="standard-card">
-        <i class="ph-bold ph-tree standard-card-icon"></i>
-        <div class="standard-card-title">Taras impregnowany</div>
-        <div class="standard-card-note">Deska sosnowa ryflowana impregnowana. Ścieżka z kostki brukowej od parkingu do drzwi wejściowych.</div>
-      </div>
-      <div class="standard-card">
-        <i class="ph-bold ph-drop standard-card-icon"></i>
-        <div class="standard-card-title">Pełna instalacja</div>
-        <div class="standard-card-note">Woda zimna i ciepła (bojler 50L), kanalizacja, ogrzewanie elektryczne, instalacja elektryczna i RTV w salonie.</div>
-      </div>
-    </div>
-    <div class="standard-download reveal">
-      <a class="standard-download-btn" href="OPIS STANDARDU WYKOŃCZENIA.pdf" target="_blank">
-        <i class="ph-bold ph-file-pdf"></i> Zobacz pełny opis standardu wykończenia
-      </a>
     </div>
   </div>
 </section>
@@ -2681,7 +2697,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="atut-icon">
           <i class="ph ph-currency-dollar" aria-hidden="true" style="font-size:18px"></i>
         </div>
-        <div class="atut-title">Od 387 458 zł</div>
+        <div class="atut-title">Od 387 000 zł</div>
         <p class="atut-desc">Dom całoroczny w sercu Kaszub w tej cenie – jeden z najlepszych stosunków ceny do lokalizacji w całym regionie.</p>
       </div>
       <div class="atut-card reveal">
@@ -2750,15 +2766,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <p>Z Kaszubskiej Osady można rowerem eksplorować krainę jezior, wzgórz i lasów oraz odkrywać regionalne atrakcje.</p>
         </div>
 
+        <div class="lok-chips">
+          <span><i class="ph-bold ph-waves"></i> 2 plaże przy jeziorze Granicznym</span>
+          <span><i class="ph-bold ph-fish"></i> Łowisko specjalne</span>
+          <span><i class="ph-bold ph-fire"></i> Wiata grillowa i ognisko</span>
+          <span><i class="ph-bold ph-barbell"></i> Outdoor fitness i plac zabaw</span>
+        </div>
+        <div class="lok-sub">Czas dojazdu samochodem</div>
+
         <div class="attractions">
-          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Zamek_w_Bytowie" target="_blank" rel="noopener">Zamek Krzyżacki w Bytowie</a><span class="attraction-dist">30 min</span></div>
-          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Park_Krajobrazowy_Dolina_S%C5%82upi" target="_blank" rel="noopener">Spływ kajakowy Doliną Słupi</a><span class="attraction-dist">30 min</span></div>
-          <div class="attraction"><span>Stary Młyn w Dywanie</span><span class="attraction-dist">50 min</span></div>
-          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Kaszubski_Park_Etnograficzny_we_Wdzydzach" target="_blank" rel="noopener">Kaszubski Park Etnograficzny</a><span class="attraction-dist">1h 10 min</span></div>
-          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/S%C5%82owi%C5%84ski_Park_Narodowy" target="_blank" rel="noopener">Słowiński Park Narodowy</a><span class="attraction-dist">1h 10 min</span></div>
-          <div class="attraction"><span>Morze Bałtyckie – Ustka</span><span class="attraction-dist">1h 10 min</span></div>
-          <div class="attraction"><a href="http://www.strusie-garczyn.pl" target="_blank" rel="noopener">Farma Strusi w Garczynie</a><span class="attraction-dist">1h 20 min</span></div>
-          <div class="attraction"><span>Rezerwat Kamienne Kręgi</span><span class="attraction-dist">1h 30 min</span></div>
+          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Zamek_w_Bytowie" target="_blank" rel="noopener">Zamek Krzyżacki w Bytowie</a><span class="attraction-dist">30 min</span><span class="attraction-bar near" style="--w:33%"></span></div>
+          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Park_Krajobrazowy_Dolina_S%C5%82upi" target="_blank" rel="noopener">Spływ kajakowy Doliną Słupi</a><span class="attraction-dist">30 min</span><span class="attraction-bar near" style="--w:33%"></span></div>
+          <div class="attraction"><span>Stary Młyn w Dywanie</span><span class="attraction-dist">50 min</span><span class="attraction-bar" style="--w:56%"></span></div>
+          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Kaszubski_Park_Etnograficzny_we_Wdzydzach" target="_blank" rel="noopener">Kaszubski Park Etnograficzny</a><span class="attraction-dist">1h 10 min</span><span class="attraction-bar" style="--w:78%"></span></div>
+          <div class="attraction"><a href="https://pl.wikipedia.org/wiki/S%C5%82owi%C5%84ski_Park_Narodowy" target="_blank" rel="noopener">Słowiński Park Narodowy</a><span class="attraction-dist">1h 10 min</span><span class="attraction-bar" style="--w:78%"></span></div>
+          <div class="attraction"><span>Morze Bałtyckie – Ustka</span><span class="attraction-dist">1h 10 min</span><span class="attraction-bar" style="--w:78%"></span></div>
+          <div class="attraction"><a href="http://www.strusie-garczyn.pl" target="_blank" rel="noopener">Farma Strusi w Garczynie</a><span class="attraction-dist">1h 20 min</span><span class="attraction-bar" style="--w:89%"></span></div>
+          <div class="attraction"><span>Rezerwat Kamienne Kręgi</span><span class="attraction-dist">1h 30 min</span><span class="attraction-bar" style="--w:100%"></span></div>
         </div>
       </div>
 
@@ -2770,6 +2794,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           referrerpolicy="no-referrer-when-downgrade"
           title="Lokalizacja Kaszubskiej Osady"
         ></iframe>
+        <a class="lok-nav-btn" href="https://maps.google.com/maps?q=Kaszubska+Osada,+Ko%C5%82czyg%C5%82owy" target="_blank" rel="noopener"><i class="ph-bold ph-navigation-arrow"></i> Prowadź do osady</a>
       </div>
     </div>
   </div>
@@ -2956,7 +2981,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="seo-block">
         <h2>Dom z działką Kaszuby – cena</h2>
-        <p>Ceny domów z działką na Kaszubach zaczynają się od 387 458 zł. W cenie: działka 176-289 m², taras, miejsce parkingowe, 2 kondygnacje.</p>
+        <p>Ceny domów z działką na Kaszubach zaczynają się od 387 000 zł. W cenie: działka 176-289 m², taras, miejsce parkingowe, 2 kondygnacje.</p>
       </div>
       <div class="seo-block">
         <h2>Nieruchomości wakacyjne Polska północna</h2>
@@ -3037,7 +3062,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="offer-popup-title">8 domów<br>nad jeziorami <em>Kaszub</em></div>
       <ul class="offer-popup-points">
         <li><i class="ph-bold ph-house-simple"></i><span>8 domów w zabudowie bliźniaczej – każdy z odrębną działką i tarasem</span></li>
-        <li><i class="ph-bold ph-tag"></i><span>Ceny brutto od <strong>387 458 zł</strong> (w tym 8% VAT) – własna działka, parking w cenie</span></li>
+        <li><i class="ph-bold ph-tag"></i><span>Ceny brutto od <strong>387 000 zł</strong> (w tym 8% VAT) – własna działka, parking w cenie</span></li>
         <li><i class="ph-bold ph-ruler"></i><span>51–56 m² użytkowej, działki 176-289 m²</span></li>
         <li><i class="ph-bold ph-chart-line-up"></i><span>Szacowana rentowność <strong>~7,5% rocznie</strong> z najmu</span></li>
         <li><i class="ph-bold ph-fork-knife"></i><span>Restauracja, plac zabaw, przystań rybacka na terenie osady</span></li>
@@ -3399,67 +3424,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <script>
-  /* ── Apartment carousel ── */
+  /* ── Apartment grid: filter + sort ── */
   (function () {
-    const track   = document.getElementById('aptTrack');
-    const prev    = document.getElementById('aptPrev');
-    const next    = document.getElementById('aptNext');
-    const dotsEl  = document.getElementById('aptDots');
-    if (!track) return;
+    const grid = document.getElementById('aptGrid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.ko-card'));
+    const state = { filter: 'all', sort: 'num' };
 
-    const cards   = Array.from(track.children);
-    let current   = 0;
+    const counts = { all: cards.length, avail: 0, sold: 0 };
+    cards.forEach(c => counts[c.dataset.status]++);
+    document.querySelectorAll('[data-count]').forEach(el => { el.textContent = counts[el.dataset.count]; });
 
-    function perView() {
-      if (window.innerWidth >= 1024) return 3;
-      if (window.innerWidth >= 640)  return 2;
-      return 1;
+    function apply() {
+      const key = {
+        num:   c => +c.dataset.num,
+        price: c => c.dataset.status === 'sold' ? Infinity : +c.dataset.price,
+        plot:  c => -c.dataset.plot
+      }[state.sort];
+      cards.slice().sort((a, b) => key(a) - key(b)).forEach(c => {
+        c.hidden = state.filter !== 'all' && c.dataset.status !== state.filter;
+        grid.appendChild(c);
+      });
     }
 
-    function maxIndex() { return cards.length - perView(); }
-
-    function buildDots() {
-      dotsEl.innerHTML = '';
-      const count = maxIndex() + 1;
-      for (let i = 0; i < count; i++) {
-        const b = document.createElement('button');
-        b.className = 'apt-dot' + (i === current ? ' active' : '');
-        b.setAttribute('aria-label', 'Domek ' + (i + 1));
-        b.addEventListener('click', () => goto(i));
-        dotsEl.appendChild(b);
-      }
-    }
-
-    function goto(idx) {
-      current = Math.max(0, Math.min(idx, maxIndex()));
-      const pv   = perView();
-      const gap  = 20; /* 1.25rem */
-      const cardW = (track.parentElement.offsetWidth - gap * (pv - 1)) / pv;
-      track.style.transform = `translateX(${-current * (cardW + gap)}px)`;
-      prev.disabled = current === 0;
-      next.disabled = current >= maxIndex();
-      dotsEl.querySelectorAll('.apt-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-    }
-    window.aptGoto = goto;
-
-    prev.addEventListener('click', () => goto(current - 1));
-    next.addEventListener('click', () => goto(current + 1));
-
-    /* touch swipe */
-    let tx = 0;
-    track.parentElement.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-    track.parentElement.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - tx;
-      if (Math.abs(dx) > 40) goto(current + (dx < 0 ? 1 : -1));
+    document.querySelectorAll('.ko-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const kind = btn.dataset.filter ? 'filter' : 'sort';
+        state[kind] = btn.dataset[kind];
+        document.querySelectorAll('.ko-pill[data-' + kind + ']').forEach(b => b.classList.toggle('active', b === btn));
+        apply();
+      });
     });
-
-    function init() {
-      buildDots();
-      goto(0);
-    }
-
-    window.addEventListener('resize', () => { buildDots(); goto(Math.min(current, maxIndex())); });
-    init();
   })();
 
   // ── Offer popup
