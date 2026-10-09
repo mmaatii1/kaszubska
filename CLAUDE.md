@@ -32,7 +32,7 @@ Everything lives in one file with three logical zones:
 
 ## Apartment cards
 
-Cards are a static grid (`#aptGrid`, 4/3/2/1 columns at >1100/≤1100/≤900/≤600px) of `article.ko-card` elements, one per unit. Key patterns:
+Cards are a static grid (`#aptGrid`, 4/3/2 columns at >1100/≤1100/≤900px; at ≤600px it becomes a swipe carousel with dots) of `article.ko-card` elements, one per unit. Key patterns:
 
 - Data attributes drive filtering/sorting JS: `data-num` (display order), `data-status` (`avail` | `sold`), `data-price` (promo price, 0 when sold), `data-plot` (m²). Status counts in the filter pills are computed from these.
 - **Promo pricing**: `.ko-price` is the current (promo) price, `<s class="ko-old">` is the catalogue price before the promotion, `.ko-pct` is the discount badge, `.ko-save` the saving, followed by price per m². Keep the promo panel (`.ko-promo`) and "od X zł" headline copy (title, OG/Twitter meta, JSON-LD, hero, lead, atuty, SEO text, popup) in sync.
@@ -41,6 +41,8 @@ Cards are a static grid (`#aptGrid`, 4/3/2/1 columns at >1100/≤1100/≤900/≤
 - PDF data sheets are in `karty/` (`karty/{n}-{n}A-New.pdf`, one per building).
 
 The standard section (`#standard`) describes the developer standard (stan deweloperski) and links `OPIS STANDARDU WYKOŃCZENIA.pdf`; `#pod-klucz` presents turnkey finishing as a paid option priced individually.
+
+Any element with `data-carousel` (`#aptGrid`, `.standard-grid`, `.attractions`) turns into a horizontal scroll-snap carousel with generated dots (`.m-dots`) at ≤600px; on wider screens it keeps its normal layout. Call `window.mCarousels.rebuild(el)` after changing which children are visible.
 
 ## Gallery tabs
 

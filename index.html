@@ -694,6 +694,7 @@
     #lokalizacja .divider { background: var(--gold-light); }
     #lokalizacja .eyebrow { color: var(--gold-light); }
     .lok-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .lok-grid > * { min-width: 0; }
     .lok-text p { color: rgba(247,243,236,.78); font-weight: 300; font-size: 1rem; margin-bottom: 1rem; }
     .attractions {
       display: flex; flex-direction: column; gap: .6rem;
@@ -1368,6 +1369,39 @@
       .ko-promo-pct { font-size: 2.8rem; }
       .ko-included-main, .ko-included-opt { padding: 1.8rem 1.4rem; }
       .ko-included-main h3 { font-size: 1.6rem; }
+    }
+
+    /* ─── MOBILE CAROUSELS (data-carousel) ──────────────────────── */
+    .m-dots { display: none; }
+    @media (max-width: 600px) {
+      [data-carousel] {
+        display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: .9rem; overflow-x: auto; scroll-snap-type: x mandatory;
+        margin-left: -1.5rem; margin-right: -1.5rem; padding: .25rem 1.5rem .5rem; scroll-padding: 0 1.5rem;
+        scrollbar-width: none; -webkit-overflow-scrolling: touch;
+      }
+      [data-carousel]::-webkit-scrollbar { display: none; }
+      [data-carousel] > * { flex: 0 0 86%; scroll-snap-align: start; min-width: 0; }
+      [data-carousel] > [hidden] { display: none; }
+      .ko-card:hover { transform: none; }
+      .attractions[data-carousel] > * { flex-basis: 62%; }
+      .attractions[data-carousel] .attraction {
+        flex-direction: column; align-items: flex-start; gap: .5rem; padding: 1rem;
+        border: 1px solid rgba(247,243,236,.14); border-radius: 14px; background: rgba(247,243,236,.05);
+      }
+      .attractions[data-carousel] .attraction:hover { padding-left: 1rem; }
+      .attractions[data-carousel] .attraction-bar { flex: 0 0 auto; width: 100%; height: 4px; margin-top: auto; }
+      .attractions[data-carousel] .attraction { transition: none; }
+      .m-dots { display: flex; justify-content: center; gap: .1rem; margin-top: .6rem; }
+      .m-dots button {
+        width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .m-dots button::before {
+        content: ''; width: 8px; height: 8px; border-radius: 999px; background: #cfc6b2; transition: width .25s, background .25s;
+      }
+      .m-dots button.active::before { width: 22px; background: var(--forest); }
+      #standard .m-dots button::before, #lokalizacja .m-dots button::before { background: rgba(247,243,236,.3); }
+      #standard .m-dots button.active::before, #lokalizacja .m-dots button.active::before { background: var(--gold-light); }
     }
 
     /* ─── FLOAT PHONE ───────────────────────────────────────────── */
@@ -2193,7 +2227,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <div class="ko-grid" id="aptGrid">
+    <div class="ko-grid" id="aptGrid" data-carousel>
       <!-- 1 -->
       <article class="ko-card" data-num="0" data-status="avail" data-price="393000" data-plot="213">
         <div class="ko-media">
@@ -2542,7 +2576,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
     <div class="std-right reveal">
-      <div class="standard-grid">
+      <div class="standard-grid" data-carousel>
         <div class="standard-card">
           <div class="standard-card-title"><i class="ph-bold ph-house-line"></i> Bryła i dach</div>
           <ul class="standard-list"><li>Ściany z gazobetonu + 20 cm ocieplenia</li><li>Elewacja: tynk mineralny z szachulcem, cokół klinkier/kamień</li><li>Dachówka ceramiczna, wełna 18 + 5 cm</li><li>Okna dachowe Velux 118×78 cm</li></ul>
@@ -2782,7 +2816,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="lok-sub">Czas dojazdu samochodem</div>
 
-        <div class="attractions">
+        <div class="attractions" data-carousel>
           <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Zamek_w_Bytowie" target="_blank" rel="noopener">Zamek Krzyżacki w Bytowie</a><span class="attraction-dist">30 min</span><span class="attraction-bar near" style="--w:33%"></span></div>
           <div class="attraction"><a href="https://pl.wikipedia.org/wiki/Park_Krajobrazowy_Dolina_S%C5%82upi" target="_blank" rel="noopener">Spływ kajakowy Doliną Słupi</a><span class="attraction-dist">30 min</span><span class="attraction-bar near" style="--w:33%"></span></div>
           <div class="attraction"><span>Stary Młyn w Dywanie</span><span class="attraction-dist">50 min</span><span class="attraction-bar" style="--w:56%"></span></div>
@@ -3432,6 +3466,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <script>
+  /* ── Mobile carousels with dots ── */
+  window.mCarousels = (function () {
+    const list = [];
+    document.querySelectorAll('[data-carousel]').forEach(track => {
+      const dots = document.createElement('div');
+      dots.className = 'm-dots';
+      track.after(dots);
+      const items = () => Array.from(track.children).filter(c => !c.hidden);
+      const pos = (item) => item.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft - parseFloat(getComputedStyle(track).paddingLeft);
+      function build() {
+        dots.innerHTML = '';
+        items().forEach((item, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', 'Pozycja ' + (i + 1));
+          b.addEventListener('click', () => track.scrollTo({ left: pos(item), behavior: 'smooth' }));
+          dots.appendChild(b);
+        });
+        update();
+      }
+      function update() {
+        const its = items();
+        const max = track.scrollWidth - track.clientWidth;
+        let idx = 0;
+        if (max > 0) {
+          idx = track.scrollLeft >= max - 4 ? its.length - 1
+            : its.reduce((best, it, i) => Math.abs(pos(it) - track.scrollLeft) < Math.abs(pos(its[best]) - track.scrollLeft) ? i : best, 0);
+        }
+        Array.from(dots.children).forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+      track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+      list.push({ track, build });
+      build();
+    });
+    window.addEventListener('resize', () => list.forEach(c => c.build()));
+    return { rebuild: (el) => list.forEach(c => { if (!el || c.track === el) { c.track.scrollLeft = 0; c.build(); } }) };
+  })();
+
   /* ── Apartment grid: filter + sort ── */
   (function () {
     const grid = document.getElementById('aptGrid');
@@ -3453,6 +3525,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         c.hidden = state.filter !== 'all' && c.dataset.status !== state.filter;
         grid.appendChild(c);
       });
+      if (window.mCarousels) window.mCarousels.rebuild(grid);
     }
 
     document.querySelectorAll('.ko-pill').forEach(btn => {
