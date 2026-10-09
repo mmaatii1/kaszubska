@@ -694,7 +694,7 @@
     #lokalizacja .divider { background: var(--gold-light); }
     #lokalizacja .eyebrow { color: var(--gold-light); }
     .lok-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-    .lok-grid > * { min-width: 0; }
+    .form-row > *, .amenities > *, .domy-specs > *, .lok-grid > *, .osada-grid > *, .domy-grid > *, .inv-grid > *, .contact-grid > *, .atuty-grid > * { min-width: 0; }
     .lok-text p { color: rgba(247,243,236,.78); font-weight: 300; font-size: 1rem; margin-bottom: 1rem; }
     .attractions {
       display: flex; flex-direction: column; gap: .6rem;
@@ -1362,7 +1362,7 @@
       .ko-fact strong { font-size: .88rem; }
       .ko-fact span { font-size: .72rem; }
       .ko-toolbar { flex-direction: column; align-items: stretch; gap: .5rem; margin-top: 2rem; }
-      .ko-pills { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -1.5rem; padding: 0 1.5rem; }
+      .ko-pills { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; box-sizing: border-box; width: 100vw; margin: 0 0 0 calc(50% - 50vw); padding: 0 calc(50vw - 50%); }
       .ko-pills::-webkit-scrollbar { display: none; }
       .ko-pill { flex-shrink: 0; min-height: 40px; padding: 0 .85rem; font-size: .82rem; }
       .ko-promo { display: flex; padding: 1.1rem 1.2rem; gap: 1rem; }
@@ -1376,14 +1376,14 @@
     @media (max-width: 600px) {
       [data-carousel] {
         display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; gap: .9rem; overflow-x: auto; scroll-snap-type: x mandatory;
-        margin-left: -1.5rem; margin-right: -1.5rem; padding: .25rem 1.5rem .5rem; scroll-padding: 0 1.5rem;
+        margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: .25rem 7vw .5rem;
         scrollbar-width: none; -webkit-overflow-scrolling: touch;
       }
       [data-carousel]::-webkit-scrollbar { display: none; }
-      [data-carousel] > * { flex: 0 0 86%; scroll-snap-align: start; min-width: 0; }
+      [data-carousel] > * { flex: 0 0 86%; scroll-snap-align: center; min-width: 0; }
       [data-carousel] > [hidden] { display: none; }
       .ko-card:hover { transform: none; }
-      .attractions[data-carousel] > * { flex-basis: 62%; }
+      .attractions[data-carousel] > * { flex-basis: 62%; scroll-snap-align: start; scroll-margin-left: 7vw; }
       .attractions[data-carousel] .attraction {
         flex-direction: column; align-items: flex-start; gap: .5rem; padding: 1rem;
         border: 1px solid rgba(247,243,236,.14); border-radius: 14px; background: rgba(247,243,236,.05);
@@ -3474,7 +3474,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       dots.className = 'm-dots';
       track.after(dots);
       const items = () => Array.from(track.children).filter(c => !c.hidden);
-      const pos = (item) => item.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft - parseFloat(getComputedStyle(track).paddingLeft);
+      const pos = (item) => {
+        const left = item.getBoundingClientRect().left - track.getBoundingClientRect().left + track.scrollLeft;
+        return getComputedStyle(item).scrollSnapAlign.includes('center')
+          ? left - (track.clientWidth - item.offsetWidth) / 2
+          : left - parseFloat(getComputedStyle(track).paddingLeft);
+      };
       function build() {
         dots.innerHTML = '';
         items().forEach((item, i) => {
