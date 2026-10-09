@@ -1355,7 +1355,15 @@
     @media (max-width: 900px) { .ko-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 600px) {
       .ko-grid { grid-template-columns: 1fr; }
-      .ko-facts { grid-template-columns: 1fr; }
+      .ko-facts { grid-template-columns: 1fr 1fr; }
+      .ko-fact { padding: .85rem .8rem; gap: .5rem; align-items: flex-start; }
+      .ko-fact i { font-size: 1.25rem; }
+      .ko-fact strong { font-size: .88rem; }
+      .ko-fact span { font-size: .72rem; }
+      .ko-toolbar { flex-direction: column; align-items: stretch; gap: .5rem; margin-top: 2rem; }
+      .ko-pills { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -1.5rem; padding: 0 1.5rem; }
+      .ko-pills::-webkit-scrollbar { display: none; }
+      .ko-pill { flex-shrink: 0; min-height: 40px; padding: 0 .85rem; font-size: .82rem; }
       .ko-promo { display: flex; padding: 1.1rem 1.2rem; gap: 1rem; }
       .ko-promo-pct { font-size: 2.8rem; }
       .ko-included-main, .ko-included-opt { padding: 1.8rem 1.4rem; }
@@ -2144,7 +2152,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ko-promo-txt">
           <span class="ko-promo-tag">Promocja</span>
           <div>Rabat do <strong>32 000 zł</strong></div>
-          <div class="ko-promo-sub">Ceny już od <strong>387 000 zł</strong> · oferta ważna do [DATA KOŃCA PROMOCJI]</div>
+          <div class="ko-promo-sub">Ceny już od <strong>387 000 zł</strong> · oferta ważna do 31 grudnia 2026</div>
         </div>
       </div>
 
