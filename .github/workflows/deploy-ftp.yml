@@ -19,9 +19,17 @@ jobs:
         continue-on-error: true
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
           echo | timeout 20 openssl s_client -starttls ftp -connect "$FTP_SERVER:21" 2>/dev/null \
             | openssl x509 -noout -subject -ext subjectAltName
+          ip=$(getent hosts "$FTP_SERVER" | awk '{print $1}')
+          ptr=$(dig +short -x "$ip" | sed 's/\.$//')
+          echo "Server hostname (PTR): $ptr"
+          echo "FTPS login test via $ptr:"
+          curl -sS --max-time 20 -o /dev/null -w "result %{response_code}\n" --ssl-reqd \
+            "ftp://$ptr/" --user "$FTP_USERNAME:$FTP_PASSWORD" --list-only || true
 
       - name: Upload to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
