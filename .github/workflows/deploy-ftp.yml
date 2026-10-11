@@ -15,6 +15,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Diagnose FTP connection
+        continue-on-error: true
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          echo "Runner IP / country:"; curl -s https://ipinfo.io/json | grep -E '"(ip|country|org)"' || true
+          case "$FTP_SERVER" in *://*|*/*|*:*) echo "::warning::FTP_SERVER should be a bare hostname (no ftp://, path or port)";; esac
+          echo "Resolved: $(getent hosts "$FTP_SERVER" | awk '{print $1}')"
+          echo "--- Banner on port 21:"
+          timeout 10 bash -c 'exec 3<>/dev/tcp/$FTP_SERVER/21 && timeout 5 head -c 300 <&3' || echo "(no banner / connection closed, exit $?)"
+          echo "--- Plain FTP login:"
+          curl -sS --max-time 20 -o /dev/null -w "result %{response_code}\n" "ftp://$FTP_SERVER/" --user "$FTP_USERNAME:$FTP_PASSWORD" --list-only || true
+          echo "--- FTPS (explicit TLS) login:"
+          curl -sS --max-time 20 -o /dev/null -w "result %{response_code}\n" --ssl-reqd "ftp://$FTP_SERVER/" --user "$FTP_USERNAME:$FTP_PASSWORD" --list-only || true
+          echo "--- SFTP port 22:"
+          timeout 8 bash -c 'exec 3<>/dev/tcp/$FTP_SERVER/22 && timeout 5 head -c 100 <&3' || echo "(port 22 closed)"
+
       - name: Upload to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
