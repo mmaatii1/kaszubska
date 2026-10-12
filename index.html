@@ -3908,9 +3908,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── Meta Pixel events ──────────────────────────────────────────────────────
 
-  // Kliknięcie "Zadzwoń teraz" nad popupem
-  document.querySelector('.offer-popup-call').addEventListener('click', function() {
-    if (typeof fbq === 'function') fbq('track', 'Contact', { content_name: 'call_popup' });
+  // Kliknięcie w dowolny numer telefonu (menu, kontakt, pływający przycisk, popup) = Lead
+  document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'phone_click_' + (link.className || 'link') });
+    });
   });
 
   // PDF card downloads
