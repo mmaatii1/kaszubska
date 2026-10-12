@@ -1849,6 +1849,22 @@
       transition: border-color .2s, color .2s;
     }
     .offer-popup-skip:hover { border-color: var(--forest); color: var(--forest); }
+    .offer-popup-msg {
+      background: none;
+      border: none;
+      padding: .2rem 0;
+      font: inherit;
+      font-size: .85rem;
+      color: var(--forest);
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .3rem;
+    }
+    .offer-popup-msg u { font-weight: 600; text-underline-offset: 3px; }
+    .offer-popup-msg:hover { color: var(--gold); }
     @media (max-width: 640px) {
       /* Telefon: niski panel od dołu, tylko najważniejsze pola, duży przycisk zamknięcia */
       .offer-popup-overlay { padding: 0; align-items: flex-end; background: rgba(10,20,12,.45); backdrop-filter: none; }
@@ -1865,6 +1881,7 @@
       .offer-popup-form .btn-callback { padding: .7rem 1rem; font-size: .85rem; }
       .offer-popup-consent { font-size: .66rem; line-height: 1.4; }
       .offer-popup-skip { font-size: .78rem; padding: .6rem .8rem; }
+      .offer-popup-msg { font-size: .8rem; }
       .offer-popup-close { width: 2.5rem; height: 2.5rem; font-size: 1.5rem; top: .2rem; right: .4rem; background: rgba(255,255,255,.95); }
     }
 
@@ -3245,6 +3262,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p class="offer-popup-privacy">
           Administratorem danych jest Kaszubska Osada Sp. z o.o. Dane przetwarzane są wyłącznie w celu odpowiedzi na zapytanie.
         </p>
+        <button type="button" class="offer-popup-msg" onclick="popupToContactForm()">Wolisz napisać? <u>Zostaw wiadomość</u> <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
         <button type="button" class="offer-popup-skip" onclick="closeOfferPopup()">Nie teraz, chcę najpierw przejrzeć ofertę</button>
       </form>
     </div>
@@ -3687,6 +3705,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       document.body.style.overflow = '';
     }, { once: true });
     sessionStorage.setItem('popupDismissed', '1');
+  }
+  // "Zostaw wiadomość" w popupie: zamyka popup i przewija do formularza kontaktowego
+  function popupToContactForm() {
+    closeOfferPopup();
+    document.body.style.overflow = '';
+    const form = document.getElementById('contactForm');
+    const navH = (document.querySelector('nav') || {}).offsetHeight || 0;
+    window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - navH - 24, behavior: 'smooth' });
   }
   document.getElementById('offerPopupClose').addEventListener('click', closeOfferPopup);
   document.getElementById('offerPopup').addEventListener('click', function(e) {
