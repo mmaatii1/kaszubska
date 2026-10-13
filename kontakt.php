@@ -188,17 +188,46 @@ if ($brevoKey !== '' && $email !== false) {
     $intro = $type === 'callback'
         ? 'dziękujemy za prośbę o kontakt. Oddzwonimy najszybciej, jak to możliwe.'
         : 'dziękujemy za wiadomość. Odpowiemy najszybciej, jak to możliwe.';
+
+    // Materiały do pobrania – linki tylko do plików, które faktycznie leżą na serwerze.
+    $docs = [
+        'prezentacja.pdf'                        => 'Prezentacja Kaszubskiej Osady',
+        'OPIS STANDARDU WYKOŃCZENIA.pdf'         => 'Opis standardu wykończenia',
+        'karty/Karta Lokalu – Kaszubska Osada.pdf' => 'Karta lokalu',
+        'karty/1-1A-New.pdf'                     => 'Karta budynku – domy 1 i 1a',
+        'karty/2-2A-New.pdf'                     => 'Karta budynku – domy 2 i 2a',
+        'karty/3-3A-New.pdf'                     => 'Karta budynku – domy 3 i 3a',
+        'karty/4-4A-New.pdf'                     => 'Karta budynku – domy 4 i 4a',
+    ];
+    $docLinks = [];
+    foreach ($docs as $file => $label) {
+        if (!is_file(__DIR__ . '/' . $file)) continue;
+        $url = 'https://kaszubskaosada.com.pl/' . implode('/', array_map('rawurlencode', explode('/', $file)));
+        $docLinks[$label] = $url;
+    }
+    $docsHtml = '';
+    $docsText = '';
+    if ($docLinks) {
+        $items = '';
+        foreach ($docLinks as $label => $url) {
+            $items .= '<li><a href="' . htmlspecialchars($url, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</a></li>';
+            $docsText .= "\n- {$label}: {$url}";
+        }
+        $docsHtml = '<p>Materiały o inwestycji do pobrania:</p><ul style="padding-left:20px;margin:0 0 1em">' . $items . '</ul>';
+        $docsText = "\n\nMateriały o inwestycji do pobrania:" . $docsText;
+    }
     $html = <<<HTML
         <div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#2b2b2b;max-width:560px">
           <p>Dzień dobry {$name},</p>
           <p>{$intro}</p>
+          {$docsHtml}
           <p>Jeśli wolą Państwo porozmawiać od razu, prosimy o telefon: <a href="tel:+48500299775">500&nbsp;299&nbsp;775</a>.
              Na tego maila można też po prostu odpowiedzieć.</p>
           <p>Pozdrawiamy,<br>Zespół Kaszubska Osada<br>
              <a href="https://kaszubskaosada.com.pl">kaszubskaosada.com.pl</a></p>
         </div>
         HTML;
-    $text = 'Dzień dobry ' . plain($name) . ",\n\n" . $intro
+    $text = 'Dzień dobry ' . plain($name) . ",\n\n" . $intro . $docsText
         . "\n\nJeśli wolą Państwo porozmawiać od razu, prosimy o telefon: 500 299 775. Na tego maila można też po prostu odpowiedzieć."
         . "\n\nPozdrawiamy,\nZespół Kaszubska Osada\nkaszubskaosada.com.pl";
 
