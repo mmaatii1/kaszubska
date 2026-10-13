@@ -123,6 +123,7 @@ $sheetOk = postJson('https://script.google.com/macros/s/AKfycbzthHk3Ef454ee72Ye6
     'email'             => $email !== false ? $email : '',
     'phone_number'      => plain($phone),
     'marketing_consent' => $marketing,
+    'message'           => plain($message),
 ]) !== null;
 
 // 2. Powiadomienie do nas.
