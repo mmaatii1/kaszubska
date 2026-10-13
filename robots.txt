@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /kontakt.php
 Disallow: /calibrate.html
+Disallow: /ip.php
 
 Sitemap: https://kaszubskaosada.com.pl/sitemap.xml
