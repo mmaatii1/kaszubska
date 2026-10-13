@@ -3140,7 +3140,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="form-consent">
             <label>
-              <input type="checkbox" />
+              <input type="checkbox" id="marketing" name="marketing" />
               Wyrażam zgodę na przetwarzanie danych osobowych w celu marketingu bezpośredniego produktów i usług Kaszubska Osada Sp. z o.o.
             </label>
           </div>
@@ -3769,6 +3769,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           phone:   document.getElementById('phone').value,
           email:   document.getElementById('email').value,
           message: document.getElementById('message').value,
+          marketing: document.getElementById('marketing').checked,
         }),
       });
       const json = await r.json();
