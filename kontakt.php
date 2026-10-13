@@ -191,7 +191,7 @@ if ($brevoKey !== '' && $email !== false) {
 
     // Materiały do pobrania – linki tylko do plików, które faktycznie leżą na serwerze.
     $docs = [
-        'prezentacja.pdf'                        => 'Prezentacja Kaszubskiej Osady',
+        'Informator_Kaszubska_Osada_2026.pdf'    => 'Informator Kaszubska Osada 2026',
         'OPIS STANDARDU WYKOŃCZENIA.pdf'         => 'Opis standardu wykończenia',
         'karty/Karta Lokalu – Kaszubska Osada.pdf' => 'Karta lokalu',
         'karty/1-1A-New.pdf'                     => 'Karta budynku – domy 1 i 1a',
