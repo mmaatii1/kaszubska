@@ -28,8 +28,12 @@ if (!is_array($data)) {
 
 // Klucze API trzymamy poza repo: kontakt.config.php (wzór: kontakt.config.example.php).
 // Bez pliku albo z pustymi kluczami autoodpowiedź i SMS-y są po prostu pomijane.
-$configFile = __DIR__ . '/kontakt.config.php';
-$config = is_file($configFile) ? (array)require $configFile : [];
+// Najpierw szukamy pliku poziom wyżej (poza katalogiem publicznym), potem obok kontakt.php.
+$configFile = null;
+foreach ([dirname(__DIR__) . '/kontakt.config.php', __DIR__ . '/kontakt.config.php'] as $candidate) {
+    if (@is_file($candidate)) { $configFile = $candidate; break; }  // @: open_basedir na hostingu
+}
+$config = $configFile ? (array)require $configFile : [];
 $cfg = fn(string $key, mixed $default = '') => $config[$key] ?? $default;
 
 function clean(mixed $v): string {
