@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <!-- Google Consent Mode v2 (advanced): tagi Google ładują się zawsze, ale do czasu zgody
-       z banera (#cookieBanner) działają bez cookies. Meta Pixel ładuje się dopiero po zgodzie. -->
+       z banera (#koPrefs) działają bez cookies. Meta Pixel ładuje się dopiero po zgodzie. -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -1536,7 +1536,7 @@
 
     /* ─── FLOAT PHONE ───────────────────────────────────────────── */
     /* ─── COOKIE BANNER ─────────────────────────────────────────── */
-    .cookie-backdrop {
+    .ko-prefs-shade {
       position: fixed; inset: 0;
       z-index: 299;
       background: rgba(10, 25, 18, .55);
@@ -1545,8 +1545,8 @@
       opacity: 0; pointer-events: none;
       transition: opacity .4s ease;
     }
-    .cookie-open .cookie-backdrop { opacity: 1; pointer-events: auto; }
-    .cookie-banner {
+    .ko-prefs-open .ko-prefs-shade { opacity: 1; pointer-events: auto; }
+    .ko-prefs {
       position: fixed;
       left: 50%; bottom: 1.5rem;
       z-index: 300;
@@ -1561,37 +1561,37 @@
       opacity: 0;
       transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
     }
-    .cookie-banner.visible { transform: translate(-50%, 0); opacity: 1; }
-    .cookie-banner-head {
+    .ko-prefs.visible { transform: translate(-50%, 0); opacity: 1; }
+    .ko-prefs-head {
       display: flex; align-items: center; gap: .65rem;
       margin-bottom: .6rem;
     }
-    .cookie-banner-head i { font-size: 1.9rem; color: var(--gold); flex-shrink: 0; }
-    .cookie-banner-head h2 {
+    .ko-prefs-head i { font-size: 1.9rem; color: var(--gold); flex-shrink: 0; }
+    .ko-prefs-head h2 {
       font-family: 'Playfair Display', serif;
       font-size: 1.25rem; line-height: 1.25;
       color: var(--forest); margin: 0;
     }
-    .cookie-banner-text {
+    .ko-prefs-text {
       font-size: .9rem;
       line-height: 1.55;
       color: var(--text-mid);
       margin: 0 0 1.2rem;
     }
-    .cookie-banner-text a { color: var(--forest); font-weight: 600; text-decoration: underline; }
-    .cookie-banner-actions {
+    .ko-prefs-text a { color: var(--forest); font-weight: 600; text-decoration: underline; }
+    .ko-prefs-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: .6rem 1rem;
     }
-    .cookie-banner-actions button {
+    .ko-prefs-actions button {
       font-family: inherit;
       cursor: pointer;
       transition: background .2s, color .2s, border-color .2s, transform .2s, box-shadow .2s;
       white-space: nowrap;
     }
-    .cookie-btn-accept {
+    .ko-prefs-yes {
       flex: 1 1 auto;
       display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
       font-size: 1rem; font-weight: 700;
@@ -1603,8 +1603,8 @@
       box-shadow: 0 6px 18px rgba(201, 149, 58, .45);
       animation: cookiePulse 2.4s ease-in-out 1.2s infinite;
     }
-    .cookie-btn-accept:hover { background: #b07e25; transform: translateY(-1px); animation: none; }
-    .cookie-btn-reject {
+    .ko-prefs-yes:hover { background: #b07e25; transform: translateY(-1px); animation: none; }
+    .ko-prefs-no {
       font-size: .85rem; font-weight: 500;
       padding: .6rem .9rem;
       border-radius: 100px;
@@ -1612,19 +1612,19 @@
       color: var(--text-mid);
       border: 1px solid rgba(0,0,0,.18);
     }
-    .cookie-btn-reject:hover { border-color: var(--forest); color: var(--forest); }
+    .ko-prefs-no:hover { border-color: var(--forest); color: var(--forest); }
     @keyframes cookiePulse {
       0%, 100% { box-shadow: 0 6px 18px rgba(201, 149, 58, .45), 0 0 0 0 rgba(201, 149, 58, .5); }
       50%      { box-shadow: 0 6px 18px rgba(201, 149, 58, .45), 0 0 0 10px rgba(201, 149, 58, 0); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .cookie-btn-accept { animation: none; }
+      .ko-prefs-yes { animation: none; }
     }
     @media (max-width: 640px) {
-      .cookie-banner { bottom: 1rem; padding: 1.3rem 1.2rem 1.2rem; }
-      .cookie-banner-head h2 { font-size: 1.1rem; }
-      .cookie-banner-text { font-size: .85rem; }
-      .cookie-banner-actions { flex-direction: column; align-items: stretch; }
+      .ko-prefs { bottom: 1rem; padding: 1.3rem 1.2rem 1.2rem; }
+      .ko-prefs-head h2 { font-size: 1.1rem; }
+      .ko-prefs-text { font-size: .85rem; }
+      .ko-prefs-actions { flex-direction: column; align-items: stretch; }
     }
 
     .float-phone {
@@ -3274,19 +3274,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <!-- ─── COOKIE BANNER ──────────────────────────────────────────── -->
-<div class="cookie-backdrop" aria-hidden="true"></div>
-<div class="cookie-banner" id="cookieBanner" role="dialog" aria-labelledby="cookieTitle" aria-describedby="cookieText">
-  <div class="cookie-banner-head">
+<div class="ko-prefs-shade" aria-hidden="true"></div>
+<div class="ko-prefs" id="koPrefs" role="dialog" aria-labelledby="koPrefsTitle" aria-describedby="koPrefsText">
+  <div class="ko-prefs-head">
     <i class="ph ph-cookie" aria-hidden="true"></i>
-    <h2 id="cookieTitle">Zanim zaczniesz – zgoda na cookies</h2>
+    <h2 id="koPrefsTitle">Zanim zaczniesz – zgoda na cookies</h2>
   </div>
-  <p class="cookie-banner-text" id="cookieText">
+  <p class="ko-prefs-text" id="koPrefsText">
     Używamy plików cookies, aby strona działała prawidłowo, a także do statystyk i dopasowania reklam. Dzięki temu możemy lepiej pokazywać ofertę domów w Kaszubskiej Osadzie. Szczegóły w
     <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>.
   </p>
-  <div class="cookie-banner-actions">
-    <button type="button" class="cookie-btn-accept" onclick="setCookieConsent(true)"><i class="ph-bold ph-check" aria-hidden="true"></i> Akceptuję wszystkie</button>
-    <button type="button" class="cookie-btn-reject" onclick="setCookieConsent(false)">Tylko niezbędne</button>
+  <div class="ko-prefs-actions">
+    <button type="button" class="ko-prefs-yes" onclick="setCookieConsent(true)"><i class="ph-bold ph-check" aria-hidden="true"></i> Akceptuję wszystkie</button>
+    <button type="button" class="ko-prefs-no" onclick="setCookieConsent(false)">Tylko niezbędne</button>
   </div>
 </div>
 
@@ -3376,32 +3376,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   window.scrollTo(0, 0);
 
   // ── Cookie consent banner
-  const cookieBanner = document.getElementById('cookieBanner');
-  if (cookieBanner && !getCookieConsent()) {
+  const koPrefs = document.getElementById('koPrefs');
+  if (koPrefs && !getCookieConsent()) {
     setTimeout(() => {
-      cookieBanner.classList.add('visible');
+      koPrefs.classList.add('visible');
       // Blokery (uBlock, AdGuard, Brave…) potrafią ukryć baner – wtedy nie przyciemniamy strony,
       // bo zostałby sam blur bez możliwości kliknięcia. Zgody pozostają domyślnie odrzucone.
-      if (!cookieBannerShown()) return;
-      document.documentElement.classList.add('cookie-open');
+      if (!koPrefsShown()) return;
+      document.documentElement.classList.add('ko-prefs-open');
       syncCookieOffset();
     }, 600);
     window.addEventListener('resize', syncCookieOffset);
   }
-  function cookieBannerShown() {
-    if (!cookieBanner || !cookieBanner.classList.contains('visible')) return false;
-    const cs = getComputedStyle(cookieBanner);
-    return cookieBanner.getClientRects().length > 0 && cs.visibility !== 'hidden' && cs.display !== 'none';
+  function koPrefsShown() {
+    if (!koPrefs || !koPrefs.classList.contains('visible')) return false;
+    const cs = getComputedStyle(koPrefs);
+    return koPrefs.getClientRects().length > 0 && cs.visibility !== 'hidden' && cs.display !== 'none';
   }
   // keep the floating "Zadzwoń teraz" button above the cookie banner
   function syncCookieOffset() {
-    const h = cookieBannerShown() ? cookieBanner.offsetHeight + parseFloat(getComputedStyle(cookieBanner).bottom) : 0;
+    const h = koPrefsShown() ? koPrefs.offsetHeight + parseFloat(getComputedStyle(koPrefs).bottom) : 0;
     document.documentElement.style.setProperty('--cookie-h', h + 'px');
   }
   function setCookieConsent(accepted) {
     try { localStorage.setItem('cookieConsent', accepted ? 'accepted' : 'rejected'); } catch (e) {}
-    cookieBanner.classList.remove('visible');
-    document.documentElement.classList.remove('cookie-open');
+    koPrefs.classList.remove('visible');
+    document.documentElement.classList.remove('ko-prefs-open');
     syncCookieOffset();
     if (accepted) {
       grantConsent();
@@ -3920,7 +3920,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const POPUP_DELAY = 25000;
     let popupTimeUp = false;
     const popupBusy = () => document.body.style.overflow === 'hidden' ||
-      cookieBannerShown() ||
+      koPrefsShown() ||
       /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || '');
     const tryPopup = () => {
       if (!popupTimeUp || window.scrollY < window.innerHeight * 0.6 || popupBusy()) return;
