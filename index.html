@@ -3380,14 +3380,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   if (cookieBanner && !getCookieConsent()) {
     setTimeout(() => {
       cookieBanner.classList.add('visible');
+      // Blokery (uBlock, AdGuard, Brave…) potrafią ukryć baner – wtedy nie przyciemniamy strony,
+      // bo zostałby sam blur bez możliwości kliknięcia. Zgody pozostają domyślnie odrzucone.
+      if (!cookieBannerShown()) return;
       document.documentElement.classList.add('cookie-open');
       syncCookieOffset();
     }, 600);
     window.addEventListener('resize', syncCookieOffset);
   }
+  function cookieBannerShown() {
+    if (!cookieBanner || !cookieBanner.classList.contains('visible')) return false;
+    const cs = getComputedStyle(cookieBanner);
+    return cookieBanner.getClientRects().length > 0 && cs.visibility !== 'hidden' && cs.display !== 'none';
+  }
   // keep the floating "Zadzwoń teraz" button above the cookie banner
   function syncCookieOffset() {
-    const h = cookieBanner && cookieBanner.classList.contains('visible') ? cookieBanner.offsetHeight + parseFloat(getComputedStyle(cookieBanner).bottom) : 0;
+    const h = cookieBannerShown() ? cookieBanner.offsetHeight + parseFloat(getComputedStyle(cookieBanner).bottom) : 0;
     document.documentElement.style.setProperty('--cookie-h', h + 'px');
   }
   function setCookieConsent(accepted) {
@@ -3912,7 +3920,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const POPUP_DELAY = 25000;
     let popupTimeUp = false;
     const popupBusy = () => document.body.style.overflow === 'hidden' ||
-      document.getElementById('cookieBanner').classList.contains('visible') ||
+      cookieBannerShown() ||
       /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || '');
     const tryPopup = () => {
       if (!popupTimeUp || window.scrollY < window.innerHeight * 0.6 || popupBusy()) return;
