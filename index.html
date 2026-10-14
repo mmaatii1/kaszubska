@@ -3923,6 +3923,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     link.addEventListener('click', function() {
       if (typeof fbq === 'function') fbq('track', 'Contact', { content_name: 'phone_click_' + (link.className || 'link') });
       gaEvent('phone_click', { link_location: link.className || 'link' });
+      gaEvent('ads_conversion_phone_call_lead', { link_location: link.className || 'link' });
     });
   });
 
