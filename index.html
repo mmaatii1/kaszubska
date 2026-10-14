@@ -885,6 +885,7 @@
       border-radius: 10px; background: var(--forest); color: var(--white); font-weight: 600; font-size: .94rem; text-decoration: none;
     }
     .inv-deck-btn:hover { background: var(--forest-mid); color: var(--white); }
+    .inv-deck-note { margin-top: .6rem; font-size: .85rem; color: var(--text-mid); }
     .inv-deck-btn small { font-weight: 400; opacity: .7; }
     .inv-feature {
       display: flex; align-items: center; gap: 1rem;
@@ -1367,6 +1368,14 @@
     .ko-fact strong { display: block; font-size: 1.02rem; color: var(--text); }
     .ko-fact span { font-size: .8rem; color: var(--text-mid); }
     .ko-fact a { color: var(--forest); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+    .ko-deck {
+      display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; justify-content: space-between;
+      background: var(--forest); color: var(--cream); border-radius: 14px; padding: 1.2rem 1.5rem; margin: -1rem 0 2.5rem;
+    }
+    .ko-deck-txt { display: flex; gap: .9rem; align-items: center; }
+    .ko-deck-txt i { font-size: 2rem; color: var(--gold-light); flex-shrink: 0; }
+    .ko-deck-txt strong { display: block; font-size: 1.05rem; }
+    .ko-deck-txt span { font-size: .85rem; color: #d9e2da; }
 
     /* ─── FILTERS ───────────────────────────────────────────────── */
     .ko-toolbar { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; align-items: center; margin: 2.5rem 0 1.5rem; }
@@ -1418,6 +1427,8 @@
     .ko-old { font-size: .95rem; color: #6b6b63; }
     .ko-price-meta { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; margin-top: .5rem; font-size: .75rem; color: var(--text-mid); }
     .ko-save { font-weight: 700; color: #7a2e14; background: #f6dfd3; padding: .25rem .5rem; border-radius: 6px; }
+    .ko-lowest { margin-top: .45rem; font-size: .72rem; color: var(--text-mid); }
+    .ko-nw { white-space: nowrap; }
     .ko-sold-note { background: #f1efe9; border-radius: 12px; padding: .9rem; font-size: .88rem; color: var(--text-mid); }
     .ko-specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem .75rem; }
     .ko-spec { display: flex; gap: .55rem; align-items: center; }
@@ -1977,6 +1988,17 @@
     }
 
     /* ─── FOOTER SOCIAL ─────────────────────────────────────────── */
+    .footer-credit {
+      max-width: 1200px; margin: 1.2rem auto 0;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(247,243,236,.07);
+      display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.2rem;
+      font-size: .75rem;
+    }
+    .footer-credit strong { font-weight: 600; color: rgba(247,243,236,.7); }
+    .footer-credit a { display: inline-flex; align-items: center; gap: .35rem; transition: color .2s; }
+    .footer-credit a:hover { color: var(--gold-light); }
+    .footer-credit i { font-size: 15px; }
     .footer-social-block {
       display: flex;
       align-items: center;
@@ -2407,6 +2429,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ko-fact"><i class="ph-bold ph-map-pin"></i><div><strong>Jezioro Graniczne</strong><span>2 plaże · 1h 10 min do Ustki</span></div></div>
         <div class="ko-fact"><i class="ph-bold ph-file-text"></i><div><strong>Stan deweloperski</strong><span><a href="#standard">co dokładnie jest w cenie</a></span></div></div>
       </div>
+
+      <div class="ko-deck">
+        <div class="ko-deck-txt">
+          <i class="ph-bold ph-file-pdf" aria-hidden="true"></i>
+          <div><strong>Prezentacja inwestycji 2026</strong><span>Jeszcze więcej szczegółów o domach, osadzie i inwestycji – wszystko w jednym pliku PDF.</span></div>
+        </div>
+        <a class="ko-btn-gold" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-download-simple" aria-hidden="true"></i> Pobierz prezentację</a>
+      </div>
     </div>
 
     <div class="lot-selector reveal">
@@ -2459,6 +2489,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">393 000 zł</span><s class="ko-old">405 000 zł</s></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 706 zł/m²</span></div>
+            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">393 000 zł</span></div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2496,6 +2527,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">408 000 zł</span><s class="ko-old">429 000 zł</s></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 21 000 zł</span><span>7 429 zł/m²</span></div>
+            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">408 000 zł</span></div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2533,6 +2565,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">425 000 zł</span><s class="ko-old">457 000 zł</s></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 32 000 zł</span><span>8 333 zł/m²</span></div>
+            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">425 000 zł</span></div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2596,6 +2629,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">388 000 zł</span><s class="ko-old">400 000 zł</s></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 608 zł/m²</span></div>
+            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">388 000 zł</span></div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2633,6 +2667,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">413 000 zł</span><s class="ko-old">435 000 zł</s></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 520 zł/m²</span></div>
+            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">413 000 zł</span></div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2670,6 +2705,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">387 000 zł</span><s class="ko-old">399 000 zł</s></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 588 zł/m²</span></div>
+            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">387 000 zł</span></div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2707,6 +2743,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">409 000 zł</span><s class="ko-old">431 000 zł</s></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 447 zł/m²</span></div>
+            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">409 000 zł</span></div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
@@ -3089,6 +3126,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
         <a class="inv-deck-btn" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-file-pdf" aria-hidden="true"></i> Pobierz prezentację inwestycji <small>(PDF)</small></a>
+        <p class="inv-deck-note">W prezentacji znajdziesz jeszcze więcej szczegółów o inwestycji.</p>
       </div>
 
       <div class="inv-gallery reveal" data-carousel>
@@ -3173,6 +3211,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="contact-block">
             <h4>Prezentacja inwestycji</h4>
             <a href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener">Informator Kaszubska Osada 2026 (PDF)</a>
+            <p>Jeszcze więcej szczegółów o domach i inwestycji.</p>
           </div>
           <div class="contact-block">
             <h4>Adres spółki</h4>
@@ -3282,6 +3321,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>Kaszubska Osada spółka z o.o. z siedzibą w Słupsku. KRS 0000892338, Sąd Rejonowy Gdańsk-Północ w Gdańsku, VIII Wydział Gospodarczy. Kapitał zakładowy: 12 000 zł. NIP: 586-236-74-68, REGON: 388568375</p>
     <p style="margin-top:.5rem">Treść całego serwisu ma charakter informacyjny i nie stanowi oferty handlowej w rozumieniu Art. 66 §1 Kodeksu Cywilnego.</p>
     <p style="margin-top:.5rem">Wszystkie ceny podane na stronie są cenami brutto i zawierają podatek VAT w stawce 8%.</p>
+  </div>
+  <div class="footer-credit">
+    <span>Wykonanie, obsługa i marketing: <strong>Mateusz Szreder</strong></span>
+    <a href="https://www.linkedin.com/in/mateusz-szreder00" target="_blank" rel="noopener" aria-label="LinkedIn – Mateusz Szreder"><i class="ph ph-linkedin-logo" aria-hidden="true"></i> LinkedIn</a>
+    <a href="https://mszreder.pl" target="_blank" rel="noopener"><i class="ph ph-globe" aria-hidden="true"></i> mszreder.pl</a>
   </div>
 </footer>
 
