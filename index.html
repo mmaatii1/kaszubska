@@ -48,6 +48,7 @@
     })();
     gtag('js', new Date());
     gtag('config', 'G-9YM5FV534P');
+    gtag('config', 'AW-18508894435');
 
     // Meta Pixel – tylko po zgodzie
     function loadMetaPixel() {
@@ -3793,6 +3794,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   function gaEvent(name, params) {
     if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
   }
+  // Konwersja Google Ads „Przesłanie formularza kontaktowego” (oba formularze; wysyłka przez fetch, bez przeładowania)
+  function adsFormConversion() {
+    gaEvent('conversion', { send_to: 'AW-18508894435/Khi4COKZwZwdEOOh3flE', value: 1.0, currency: 'PLN' });
+  }
 
   function openOfferPopup() {
     gaEvent('popup_view', { popup_name: 'offer_popup' });
@@ -3849,6 +3854,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const json = await r.json();
       if (json.ok) {
         gaEvent('generate_lead', { form_name: 'contact_form' });
+        adsFormConversion();
         btn.classList.remove('btn-submit-loading');
         btn.classList.add('btn-submit-success');
         btn.innerHTML = '<i class="ph-bold ph-check"></i> Wiadomość wysłana!';
@@ -3890,6 +3896,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const json = await r.json();
       if (!json.ok) throw new Error(json.error || 'Błąd');
       gaEvent('generate_lead', { form_name: 'callback_popup' });
+      adsFormConversion();
     } catch {
       // cisza – nawet jeśli fetch padnie, pokazujemy sukces żeby nie frustrować użytkownika
     }
@@ -4001,6 +4008,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (typeof fbq === 'function') {
         fbq('track', 'ViewContent', { content_name: link.getAttribute('href') });
       }
+      // tylko do Google Ads – GA4 sam liczy file_download (pomiar zaawansowany), bez duplikatów
+      gaEvent('file_download', { send_to: 'AW-18508894435', file_name: link.getAttribute('href') });
     });
   });
 
