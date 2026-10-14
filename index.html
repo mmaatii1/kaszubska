@@ -3721,7 +3721,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   })();
 
   // ── Offer popup
+  // Zdarzenie GA4 (gtag ładuje się po zgodzie na cookies – bez zgody nic nie wysyłamy)
+  function gaEvent(name, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  }
+
   function openOfferPopup() {
+    gaEvent('popup_view', { popup_name: 'offer_popup' });
     const overlay = document.getElementById('offerPopup');
     overlay.style.display = 'flex';
     requestAnimationFrame(() => overlay.classList.add('visible'));
@@ -3774,6 +3780,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
       const json = await r.json();
       if (json.ok) {
+        gaEvent('generate_lead', { form_name: 'contact_form' });
         btn.classList.remove('btn-submit-loading');
         btn.classList.add('btn-submit-success');
         btn.innerHTML = '<i class="ph-bold ph-check"></i> Wiadomość wysłana!';
@@ -3814,6 +3821,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
       const json = await r.json();
       if (!json.ok) throw new Error(json.error || 'Błąd');
+      gaEvent('generate_lead', { form_name: 'callback_popup' });
     } catch {
       // cisza – nawet jeśli fetch padnie, pokazujemy sukces żeby nie frustrować użytkownika
     }
@@ -3907,13 +3915,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   })();
 
-  // ── Meta Pixel events ──────────────────────────────────────────────────────
+  // ── Meta Pixel + GA4 events ──────────────────────────────────────────────────────
 
   // Kliknięcie w dowolny numer telefonu = Contact (nie Lead – strona nie wie, czy rozmowa się odbyła;
   // Lead za rozmowę >60 s musi przyjść z systemu call trackingu / konwersji offline)
   document.querySelectorAll('a[href^="tel:"]').forEach(function(link) {
     link.addEventListener('click', function() {
       if (typeof fbq === 'function') fbq('track', 'Contact', { content_name: 'phone_click_' + (link.className || 'link') });
+      gaEvent('phone_click', { link_location: link.className || 'link' });
     });
   });
 
