@@ -4002,14 +4002,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
-  // PDF card downloads
+  // PDF card downloads (file_download do GA4/Ads wysyła pomiar zaawansowany GA4 – nie dublować)
   document.querySelectorAll('a[href$=".pdf"]').forEach(function(link) {
     link.addEventListener('click', function() {
       if (typeof fbq === 'function') {
         fbq('track', 'ViewContent', { content_name: link.getAttribute('href') });
       }
-      // tylko do Google Ads – GA4 sam liczy file_download (pomiar zaawansowany), bez duplikatów
-      gaEvent('file_download', { send_to: 'AW-18508894435', file_name: link.getAttribute('href') });
     });
   });
 
