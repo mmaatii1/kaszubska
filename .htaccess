@@ -9,3 +9,11 @@
     Deny from all
   </IfModule>
 </FilesMatch>
+
+# Jedna wersja domeny: www.kaszubskaosada.com.pl → https://kaszubskaosada.com.pl (301).
+# Ścieżka i parametry (np. gclid, utm_*) przechodzą bez zmian.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.(kaszubskaosada\.com\.pl)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+</IfModule>
