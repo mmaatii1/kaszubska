@@ -1309,25 +1309,40 @@
     /* hides together with nav: -(nav 72px + bar 42px) */
     #offer-bar.bar-hidden { transform: translateY(-114px); }
     #offer-bar.bar-float  { top: 0; }
+    /* mobile-first: jedna linia, bez wersalików; od 601px pełny tekst */
     #offer-bar a {
       color: var(--white);
-      font-weight: 700;
-      font-size: .8rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
+      font-weight: 600;
+      font-size: .82rem;
       display: flex;
       align-items: center;
-      gap: .55rem;
+      gap: .5rem;
+      max-width: 100%;
+      padding: 0 1rem;
+      white-space: nowrap;
       transition: opacity .2s;
     }
-    #offer-bar a:hover { opacity: .85; }
-    .offer-bar-tag { background: var(--forest); color: var(--gold-light); padding: .15rem .5rem; border-radius: 999px; margin-right: .35rem; font-size: .7rem; }
-    @media (max-width: 600px) { .offer-bar-long { display: none; } #offer-bar a { font-size: .7rem; letter-spacing: .06em; } }
-    .hero-promo {
-      display: inline-block; vertical-align: middle; margin-left: .6rem; font-family: 'Inter', sans-serif;
-      font-size: .8rem; font-weight: 700; letter-spacing: .04em; color: var(--forest); background: var(--gold-light);
-      padding: .3rem .7rem; border-radius: 999px;
+    .offer-bar-txt { overflow: hidden; text-overflow: ellipsis; }
+    .offer-bar-txt strong { font-weight: 800; }
+    .offer-bar-long { display: none; }
+    @media (max-width: 359px) { #offer-bar a { font-size: .74rem; gap: .35rem; padding: 0 .5rem; } .offer-bar-tag { padding: .2rem .4rem; } }
+    @media (min-width: 601px) {
+      #offer-bar a { font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+      .offer-bar-long { display: inline; }
     }
+    #offer-bar a:hover { opacity: .85; }
+    .offer-bar-tag {
+      flex-shrink: 0; background: var(--forest); color: var(--gold-light); padding: .2rem .55rem; border-radius: 999px;
+      font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .hero-promos { display: flex; flex-wrap: wrap; gap: .5rem; margin: -.8rem 0 1.6rem; animation: heroUp .9s cubic-bezier(.22,1,.36,1) .55s both; }
+    .hero-promo {
+      display: inline-flex; align-items: center; gap: .35rem; font-family: 'Inter', sans-serif;
+      font-size: .8rem; font-weight: 700; letter-spacing: .02em; color: var(--forest); background: var(--gold-light);
+      padding: .4rem .8rem; border-radius: 999px;
+    }
+    .hero-promo--pump { background: var(--cream); }
+    .hero-promo i { font-size: 1rem; color: var(--gold); }
     .offer-bar-arrow { transition: transform .22s ease; }
     #offer-bar a:hover .offer-bar-arrow { transform: translateX(5px); }
     @keyframes offerBarPulse {
@@ -1346,20 +1361,38 @@
     }
     /* ─── PROMO + FACTS ─────────────────────────────────────────── */
     .ko-promo {
-      display: inline-flex; align-items: center; gap: 1.4rem;
+      display: flex; flex-direction: column; gap: .8rem;
       background: var(--white); border: 1px solid #e3dccd; border-radius: 16px;
-      padding: 1.3rem 1.6rem; margin: .5rem 0 1.5rem;
+      padding: 1rem; margin: .5rem 0 1.5rem;
     }
-    .ko-promo-pct { font-family: 'Playfair Display', serif; font-size: 3.6rem; font-weight: 700; line-height: 1; color: var(--forest); }
-    .ko-promo-txt { display: flex; flex-direction: column; gap: .2rem; font-size: 1.05rem; color: var(--forest); }
     .ko-promo-tag {
-      align-self: flex-start; background: var(--gold-light); color: var(--forest);
+      align-self: flex-start; background: var(--forest); color: var(--gold-light);
       font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-      padding: .2rem .6rem; border-radius: 999px; margin-bottom: .2rem;
+      padding: .3rem .7rem; border-radius: 999px;
     }
-    .ko-bonus { display: flex; align-items: center; gap: .35rem; margin-top: .45rem; font-size: .8rem; font-weight: 600; color: var(--forest); }
-    .ko-bonus i { color: var(--gold); font-size: .95rem; }
-    .ko-promo-sub { font-size: .84rem; color: var(--text-mid); }
+    .ko-promo-items { display: flex; flex-direction: column; gap: .5rem; }
+    .ko-promo-item { display: flex; align-items: center; gap: .9rem; background: var(--cream); border-radius: 12px; padding: .85rem 1rem; }
+    .ko-promo-item strong { display: block; font-size: 1rem; color: var(--forest); line-height: 1.3; }
+    .ko-promo-item span { display: block; font-size: .8rem; color: var(--text-mid); margin-top: .15rem; }
+    .ko-promo-item--pump { background: #fbefd9; }
+    .ko-promo-big { flex-shrink: 0; min-width: 3.4rem; font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; line-height: 1; color: var(--forest); text-align: center; }
+    .ko-promo-icon {
+      flex-shrink: 0; width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--gold-light); color: var(--forest);
+      display: flex; align-items: center; justify-content: center; font-size: 1.7rem;
+    }
+    .ko-promo-plus { align-self: center; font-size: 1.3rem; font-weight: 800; color: var(--gold); line-height: 1; margin: -.15rem 0; }
+    @media (min-width: 601px) {
+      .ko-promo { display: inline-flex; padding: 1.2rem; }
+      .ko-promo-items { flex-direction: row; align-items: stretch; gap: .75rem; }
+      .ko-promo-item { flex: 1 1 0; max-width: 340px; }
+      .ko-promo-plus { margin: 0; }
+    }
+    .ko-bonus {
+      display: flex; align-items: center; gap: .45rem; margin: .55rem 0 .1rem; padding: .45rem .6rem;
+      background: #fbefd9; border: 1px solid #f0d9a8; border-radius: 8px; font-size: .78rem; color: var(--forest); line-height: 1.3;
+    }
+    .ko-bonus strong { font-weight: 800; }
+    .ko-bonus i { flex-shrink: 0; color: var(--gold); font-size: 1.05rem; }
     .ko-facts {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
       background: #e3dccd; border: 1px solid #e3dccd; border-radius: 14px; overflow: hidden;
@@ -1497,8 +1530,6 @@
       .ko-pills { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; box-sizing: border-box; width: 100vw; margin: 0 0 0 calc(50% - 50vw); padding: 0 calc(50vw - 50%); }
       .ko-pills::-webkit-scrollbar { display: none; }
       .ko-pill { flex-shrink: 0; min-height: 40px; padding: 0 .85rem; font-size: .82rem; }
-      .ko-promo { display: flex; padding: 1.1rem 1.2rem; gap: 1rem; }
-      .ko-promo-pct { font-size: 2.8rem; }
       .ko-included-main, .ko-included-opt { padding: 1.8rem 1.4rem; }
       .ko-included-main h3 { font-size: 1.6rem; }
     }
@@ -1835,6 +1866,7 @@
     }
     .offer-popup-form .form-group { display: flex; flex-direction: column; gap: .4rem; }
     .offer-popup-form label { font-size: .8rem; font-weight: 600; color: var(--text-light); }
+    .offer-popup-form .cb-hint { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--forest); }
     .offer-popup-form input,
     .offer-popup-form textarea {
       border: 1.5px solid rgba(30,61,43,.2);
@@ -2310,7 +2342,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ─── CTA OFFER BAR ─────────────────────────────────────────── -->
 <div id="offer-bar">
   <a href="#oferta">
-    <span><span class="offer-bar-tag">Promocja</span> Rabaty 3–7% + pompa ciepła<span class="offer-bar-long"> 3 kW z klimatyzacją w cenie</span> · Sprawdź ofertę</span>
+    <span class="offer-bar-tag">Promocja</span>
+    <span class="offer-bar-txt"><strong>do −7%</strong> + pompa ciepła<span class="offer-bar-long"> 3 kW z klimatyzacją</span> w cenie<span class="offer-bar-long"> · Sprawdź ofertę</span></span>
     <i class="ph ph-arrow-right offer-bar-arrow" aria-hidden="true" style="font-size:15px"></i>
   </a>
 </div>
@@ -2332,8 +2365,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
     </div>
     <h1>Domy całoroczne<br><em>na Kaszubach</em></h1>
-    <div class="hero-price">od 387 000 zł <span class="hero-promo">Promocja do −7%</span></div>
-    <div class="hero-price-note">cena brutto, zawiera 8% VAT · pompa ciepła 3 kW z klimatyzacją w cenie</div>
+    <div class="hero-price">od 387 000 zł</div>
+    <div class="hero-price-note">cena brutto, zawiera 8% VAT</div>
+    <div class="hero-promos">
+      <span class="hero-promo">Promocja do −7%</span>
+      <span class="hero-promo hero-promo--pump"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> Pompa ciepła z klimatyzacją w cenie</span>
+    </div>
     <p class="hero-desc">Niepowtarzalne połączenie komfortu i bliskości natury. Zamieszkaj lub zainwestuj – i zarabiaj.</p>
     <div class="hero-btns">
       <a href="#kontakt" class="btn btn-primary">Wyślij zapytanie</a>
@@ -2417,11 +2454,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="oferta-lead">Ta oferta to <strong class="hl-gold">4 budynki (8 domków)</strong> – najnowsza część Kaszubskiej Osady. Reszta osiedla jest już w całości sprzedana. Każdy dom to osobna nieruchomość na <strong class="hl-gold">2 piętrach</strong> z własną działką i księgą wieczystą, tarasem i miejscem parkingowym. Ceny brutto (z 8% VAT) w stanie deweloperskim zaczynają się od <strong class="hl-gold">387 000 zł</strong>, a w promocji oszczędzasz <strong class="hl-gold">od 3% do 7%</strong> i dostajesz <strong class="hl-gold">pompę ciepła 3 kW z klimatyzacją</strong> w cenie domu.</p>
 
       <div class="ko-promo">
-        <div class="ko-promo-pct">−7%</div>
-        <div class="ko-promo-txt">
-          <span class="ko-promo-tag">Promocja</span>
-          <div>Rabat do <strong>32 000 zł</strong> + <strong>pompa ciepła 3 kW z klimatyzacją</strong> w cenie</div>
-          <div class="ko-promo-sub">Ceny już od <strong>387 000 zł</strong> · oferta ważna do 31 grudnia 2026</div>
+        <span class="ko-promo-tag">Promocja do 31 grudnia 2026</span>
+        <div class="ko-promo-items">
+          <div class="ko-promo-item">
+            <div class="ko-promo-big">−7%</div>
+            <div><strong>Rabat do 32 000 zł</strong><span>ceny już od 387 000 zł</span></div>
+          </div>
+          <div class="ko-promo-plus" aria-hidden="true">+</div>
+          <div class="ko-promo-item ko-promo-item--pump">
+            <div class="ko-promo-icon"><i class="ph-bold ph-thermometer" aria-hidden="true"></i></div>
+            <div><strong>Pompa ciepła 3 kW z klimatyzacją</strong><span>w cenie każdego domu – grzeje zimą, chłodzi latem</span></div>
+          </div>
         </div>
       </div>
 
@@ -2490,9 +2533,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">393 000 zł</span><s class="ko-old">405 000 zł</s></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 706 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">393 000 zł</span></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer"></i> + pompa ciepła 3 kW z klimatyzacją</div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2529,9 +2572,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">408 000 zł</span><s class="ko-old">429 000 zł</s></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 21 000 zł</span><span>7 429 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">408 000 zł</span></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer"></i> + pompa ciepła 3 kW z klimatyzacją</div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2568,9 +2611,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">425 000 zł</span><s class="ko-old">457 000 zł</s></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 32 000 zł</span><span>8 333 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">425 000 zł</span></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer"></i> + pompa ciepła 3 kW z klimatyzacją</div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2633,9 +2676,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">388 000 zł</span><s class="ko-old">400 000 zł</s></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 608 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">388 000 zł</span></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer"></i> + pompa ciepła 3 kW z klimatyzacją</div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2672,9 +2715,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">413 000 zł</span><s class="ko-old">435 000 zł</s></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 520 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">413 000 zł</span></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer"></i> + pompa ciepła 3 kW z klimatyzacją</div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2711,9 +2754,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">387 000 zł</span><s class="ko-old">399 000 zł</s></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 588 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">387 000 zł</span></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer"></i> + pompa ciepła 3 kW z klimatyzacją</div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
@@ -2750,9 +2793,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">409 000 zł</span><s class="ko-old">431 000 zł</s></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 447 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">409 000 zł</span></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer"></i> + pompa ciepła 3 kW z klimatyzacją</div>
           </div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
@@ -3373,8 +3416,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="offer-popup-close" id="offerPopupClose" aria-label="Zamknij">&times;</button>
 
     <div class="offer-popup-banner">
-      <i class="ph-bold ph-house-simple"></i>
-      Sprawdź dostępność – ostatnie wolne domki!
+      <i class="ph-bold ph-thermometer"></i>
+      Promocja: do −7% + pompa ciepła z klimatyzacją w cenie
     </div>
 
     <div class="offer-popup-left">
@@ -3393,19 +3436,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="offer-popup-right">
       <div class="offer-popup-form-title">Oddzwonimy do Ciebie</div>
-      <p class="offer-popup-form-sub">Zostaw numer – doradca oddzwoni w ciągu 24h.</p>
+      <p class="offer-popup-form-sub">Doradca oddzwoni w ciągu 24h, a na e-mail od razu wyślemy informator 2026 i karty domków.</p>
       <form class="offer-popup-form" id="offerCallbackForm" onsubmit="return submitCallback(event)">
         <div class="form-group">
           <label for="cb-name">Imię</label>
-          <input type="text" id="cb-name" name="cb-name" placeholder="Jan Kowalski" required />
+          <input type="text" id="cb-name" name="cb-name" placeholder="Jan Kowalski" autocomplete="name" required />
         </div>
         <div class="form-group">
           <label for="cb-phone">Telefon</label>
-          <input type="tel" id="cb-phone" name="cb-phone" placeholder="+48 000 000 000" required />
+          <input type="tel" id="cb-phone" name="cb-phone" placeholder="+48 000 000 000" autocomplete="tel" required />
         </div>
-        <div class="form-group cb-optional">
-          <label for="cb-email">E-mail <span style="font-weight:400;opacity:.7">(opcjonalnie)</span></label>
-          <input type="email" id="cb-email" name="cb-email" placeholder="jan@kowalski.pl" />
+        <div class="form-group">
+          <label for="cb-email">E-mail <span class="cb-hint">– wyślemy informator i karty domków</span></label>
+          <input type="email" id="cb-email" name="cb-email" placeholder="jan@kowalski.pl" autocomplete="email" inputmode="email" />
         </div>
         <div class="form-group cb-optional">
           <label for="cb-message">Wiadomość <span style="font-weight:400;opacity:.7">(opcjonalnie)</span></label>

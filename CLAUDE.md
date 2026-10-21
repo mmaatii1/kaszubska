@@ -56,6 +56,9 @@ The `<script type="application/ld+json">` block at the top of `<head>` contains 
 
 ## Responsive breakpoints
 
+**Mobile-first, always.** Most visitors are on phones. Design and write CSS for ~390px first (base styles), then widen with `min-width` media queries; check every change at 360/390px before desktop.
+
+
 - `≥ 1200px` — full desktop layout
 - `≤ 900px` — two-column grids collapse, apartment carousel shows 2 cards
 - `≤ 600px` — single-column, mobile nav, carousel shows 1 card, popup layout adjusts
