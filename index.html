@@ -3904,7 +3904,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && document.getElementById('offerPopup').classList.contains('visible')) closeOfferPopup();
   });
-  const KONTAKT_URL = 'https://kaszubskaosada.com.pl/kontakt.php';
+  // Ta sama domena co strona – działa z www i bez www (pełny adres blokował CORS na www.)
+  const KONTAKT_URL = '/kontakt.php';
 
   async function submitContact(e) {
     e.preventDefault();

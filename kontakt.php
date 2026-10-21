@@ -2,7 +2,12 @@
 declare(strict_types=1);
 
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: https://kaszubskaosada.com.pl');
+$allowedOrigins = ['https://kaszubskaosada.com.pl', 'https://www.kaszubskaosada.com.pl'];
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (in_array($origin, $allowedOrigins, true)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+    header('Vary: Origin');
+}
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
