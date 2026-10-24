@@ -153,7 +153,7 @@
         "telephone": "+48-500-299-775",
         "email": "kontakt@kaszubskaosada.com.pl",
         "description": "Domy całoroczne na Kaszubach nad jeziorem Granicznym od 387 000 zł, pompa ciepła 3 kW z klimatyzacją w cenie. Inwestycja z ~7,5% roczną stopą zwrotu.",
-        "priceRange": "387 000 – 425 000 zł",
+        "priceRange": "387 000 – 413 000 zł",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Barkocin 158",
@@ -183,8 +183,8 @@
           "@type": "AggregateOffer",
           "priceCurrency": "PLN",
           "lowPrice": 387000,
-          "highPrice": 425000,
-          "offerCount": 7,
+          "highPrice": 413000,
+          "offerCount": 6,
           "availability": "https://schema.org/InStock",
           "seller": {
             "@id": "https://kaszubskaosada.com.pl/#organization"
@@ -2593,13 +2593,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </article>
 
       <!-- 2 -->
-      <article class="ko-card" data-num="2" data-status="avail" data-price="425000" data-plot="258">
+      <article class="ko-card ko-sold" data-num="2" data-status="sold" data-price="0" data-plot="258">
         <div class="ko-media">
           <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
           <img class="ko-img-color ko-left" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 2" loading="lazy" width="768" height="509" />
           <div class="ko-media-top">
-            <span class="ko-status">Dostępny</span>
-            <span class="ko-pct">−7%</span>
+            <span class="ko-status">Sprzedany</span>
           </div>
           <span class="ko-side ko-side-left">Lewa część bliźniaka</span>
           <div class="ko-num">2</div>
@@ -2609,24 +2608,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <h3 class="ko-title">Domek 2</h3>
             <div class="ko-sub">Bliźniak · 2 kondygnacje · układ standard</div>
           </div>
-          <div class="ko-price-box">
-            <div class="ko-price-row"><span class="ko-price">425 000 zł</span><s class="ko-old">457 000 zł</s></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
-            <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 32 000 zł</span><span>8 333 zł/m²</span></div>
-            <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">425 000 zł</span></div>
-          </div>
+          <div class="ko-sold-note">Ten dom znalazł już właściciela. Zapytaj o podobny układ – domki 1, 3, 4.</div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
             <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>258 m²</strong><span>własna działka</span></div></div>
             <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
             <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
-          </div>
-          <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 2</a>
-            <div class="ko-btn-row">
-              <a class="ko-btn-ghost" href="karty/2-2A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
-              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
-            </div>
           </div>
         </div>
       </article>
@@ -4050,7 +4037,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       4: ['Domek 4', 'Domek 4a']
     };
     // [left sold, right sold] per building
-    const SOLD = { 2: [false, true] };
+    const SOLD = { 2: [true, true] };
 
     let activeBld = null;
     const modal    = document.getElementById('halfModal');
