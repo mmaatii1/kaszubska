@@ -885,6 +885,9 @@
       border-radius: 10px; background: var(--forest); color: var(--white); font-weight: 600; font-size: .94rem; text-decoration: none;
     }
     .inv-deck-btn:hover { background: var(--forest-mid); color: var(--white); }
+    .inv-deck-btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .inv-deck-ghost { background: transparent; border: 1.5px solid var(--forest); color: var(--forest); }
+    .inv-deck-ghost:hover { background: var(--cream); color: var(--forest); }
     .inv-deck-note { margin-top: .6rem; font-size: .85rem; color: var(--text-mid); }
     .inv-deck-btn small { font-weight: 400; opacity: .7; }
     .inv-feature {
@@ -1407,6 +1410,7 @@
       display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; justify-content: space-between;
       background: var(--forest); color: var(--cream); border-radius: 14px; padding: 1.2rem 1.5rem; margin: -1rem 0 2.5rem;
     }
+    .ko-deck-btns { display: flex; gap: .6rem; flex-wrap: wrap; }
     .ko-deck-txt { display: flex; gap: .9rem; align-items: center; }
     .ko-deck-txt i { font-size: 2rem; color: var(--gold-light); flex-shrink: 0; }
     .ko-deck-txt strong { display: block; font-size: 1.05rem; }
@@ -2480,7 +2484,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <i class="ph-bold ph-file-pdf" aria-hidden="true"></i>
           <div><strong>Prezentacja inwestycji 2026</strong><span>Jeszcze więcej szczegółów o domach, osadzie i inwestycji – wszystko w jednym pliku PDF.</span></div>
         </div>
-        <a class="ko-btn-gold" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-download-simple" aria-hidden="true"></i> Pobierz prezentację</a>
+        <div class="ko-deck-btns">
+          <a class="ko-btn-gold" href="Informator_Kaszubska_Osada_2026.pdf" download><i class="ph-bold ph-download-simple" aria-hidden="true"></i> Pobierz</a>
+          <a class="ko-btn-outline-light" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-eye" aria-hidden="true"></i> Podgląd</a>
+        </div>
       </div>
     </div>
 
@@ -3164,7 +3171,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div>Wieloletni partner operacyjny – <a href="https://rental24pro.pl" target="_blank" rel="noopener">Rental24 sp. z o.o.</a></div>
           </div>
         </div>
-        <a class="inv-deck-btn" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-file-pdf" aria-hidden="true"></i> Pobierz prezentację inwestycji <small>(PDF)</small></a>
+        <div class="inv-deck-btns">
+          <a class="inv-deck-btn" href="Informator_Kaszubska_Osada_2026.pdf" download><i class="ph-bold ph-download-simple" aria-hidden="true"></i> Pobierz prezentację <small>(PDF)</small></a>
+          <a class="inv-deck-btn inv-deck-ghost" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-eye" aria-hidden="true"></i> Podgląd</a>
+        </div>
         <p class="inv-deck-note">W prezentacji znajdziesz jeszcze więcej szczegółów o inwestycji.</p>
       </div>
 
