@@ -139,3 +139,8 @@ Conclusions:
 ## `generate_lead` by channel (owner data, 2026-11-02)
 
 Key-event column filtered to `generate_lead`: 9 total (4.8% of all key events; 25 raw events exist, so the key-event flag covers only part of the period). Paid Social 5 (of 519 sessions), Direct 3, Organic Search 1, **all paid Google channels 0** (Cross-network 1,377 + Paid Search 189 + Display 153 + Paid Other 84 = 1,803 sessions). Reading: no form leads from paid Google in this window; Meta is the only paid source with forms. Caveats: tiny numbers (9), the flag's start date is unknown, phone taps are not included (Ads shows 12 phone taps from campaigns). Still to get: `phone_click` by channel and campaign cost, then cost per contact for Google vs Meta.
+
+## `phone_click` by channel (owner data, 2026-11-02) - corrects the previous reading
+
+Total 49: paid Google 39 (Cross-network 21, Paid Other 11, Display 5, Paid Search 2) = 80%, Paid Social 7, Organic 1, Direct 1, Unassigned 1.
+Contacts per session (form + phone tap): paid Google 39 / 1,803 = 2.2% (all taps, 0 forms); Meta 12 / 519 = 2.3% (5 forms + 7 taps). **Per session the two are on par; they differ in type**: Google brings phone taps, Meta brings forms. So "Google gives nothing" is wrong; "Google gives taps, not forms" is right. Decision needs cost per contact (spend still missing) and tap quality (a tap is not a connected call; owner says many calls do not connect). Ads reports only 12 of these 39 taps as conversions (attribution/lookback differences between GA4 and Ads, to be checked). Do not move the budget wholesale to Meta on this data; revisit with spend and answered-call counts.
