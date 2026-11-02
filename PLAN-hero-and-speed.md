@@ -192,6 +192,7 @@ Lighthouse mobile (lab, `femtopixel/google-lighthouse` 13.5, local copy served o
 | Local baseline (before C) | 46 | 92 | 96 | 100 | 2.5 s | 21.9 s | 1,210 ms | 0.073 | 4,309 KiB |
 | C: gallery/lightbox hardening, `js_error` | 50 | 92 | 96 | 100 | 2.5 s | 22.4 s | 890 ms | 0.038 | 3,925 KiB |
 | D1: hero `<img>` + mobile crops, lazy slides, charset first, cache/gzip (Apache 2.4 container from here on) | 53 | 92 | 100 | 100 | 1.7 s | 8.7 s | 1,010 ms | 0.037 | 2,090 KiB |
+| B0: compact mobile cookie banner | 54 | 92 | 100 | 100 | 1.8 s | 8.7 s | 880 ms | 0.037 | 2,090 KiB |
 
 Lab note: observed (unthrottled) LCP is 0.8 s; the 20+ s simulated LCP comes from everything requested before the LCP paint (3 hero images 2.3 MB, 3x gtag 600 KB, GTM, Phosphor fonts 300 KB) being replayed on simulated slow 4G. The page's own "4.8 s" is almost all style/layout/paint (infinite `box-shadow` pulse animations, Ken Burns, blurs), only ~90 ms is script.
 
@@ -210,3 +211,7 @@ Lab note: observed (unthrottled) LCP is 0.8 s; the 20+ s simulated LCP comes fro
 - Logo: 3991x891 PNG (134 KB) -> 358x80 WebP (8 KB) in nav and footer; all images below the fold are `loading=lazy` with `width`/`height` (incl. the lot modal image that used to load eagerly while hidden).
 - `.htaccess`: `Cache-Control` 30 days for images/fonts, 7 days CSS/JS, 1 day PDF, `no-cache` for HTML (no file versioning, so no `immutable`); gzip for text. Verified on `httpd:2.4` with `AllowOverride All`: headers present, gzip on `/`, `.md`/config still 403, www -> apex 301 keeps `gclid`.
 - CLS fix found on the way: `.float-phone` animated `bottom` when the cookie banner appeared (a layout shift every frame); it now moves with `transform`. Remaining CLS is the Google-Fonts swap in the bottom-anchored hero text (handled in D2).
+
+### B0. Cookie banner - done
+- Phones (<= 640 px): no shade at all (desktop keeps the light, click-through shade from 16d5d7b), a bottom bar with 2 lines of text ("Cookies do statystyk i dopasowania reklam. Szczegóły w Polityce prywatności."), two filled, equal-size buttons side by side ("Akceptuję" gold, "Tylko niezbędne" forest), min 44 px, no pulse animation. ~110 px tall at 360 px; the new hero (A) is sized so the banner covers only the peeking next section, not the CTA (checked by the smoke test).
+- Consent logic unchanged (Consent Mode default denied, choice in `localStorage`).

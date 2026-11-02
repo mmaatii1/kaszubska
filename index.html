@@ -1704,11 +1704,29 @@
     @media (prefers-reduced-motion: reduce) {
       .ko-prefs-yes { animation: none; }
     }
+    .ko-prefs-short { display: none; }
+    /* Phone: compact bar at the very bottom – 2 lines of text, two equal buttons side by side,
+       no dimming; it covers only the strip below the hero CTA (see .hero height). */
     @media (max-width: 640px) {
-      .ko-prefs { bottom: 1rem; padding: 1.3rem 1.2rem 1.2rem; }
-      .ko-prefs-head h2 { font-size: 1.1rem; }
-      .ko-prefs-text { font-size: .85rem; }
-      .ko-prefs-actions { flex-direction: column; align-items: stretch; }
+      .ko-prefs-shade { display: none; }
+      .ko-prefs {
+        left: .5rem; right: .5rem; bottom: .5rem; width: auto;
+        transform: translateY(calc(100% + 1rem));
+        padding: .6rem .75rem .7rem; border-top-width: 3px;
+        box-shadow: 0 -4px 24px rgba(0,0,0,.25);
+      }
+      .ko-prefs.visible { transform: none; }
+      .ko-prefs-head, .ko-prefs-long { display: none; }
+      .ko-prefs-short { display: inline; }
+      .ko-prefs-text { font-size: .8rem; line-height: 1.35; margin: 0 0 .55rem; }
+      .ko-prefs-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+      .ko-prefs-actions button {
+        min-height: 44px; padding: .5rem .6rem; border-radius: 10px;
+        font-size: .9rem; font-weight: 700; animation: none; box-shadow: none;
+      }
+      .ko-prefs-yes { flex: none; }
+      .ko-prefs-no { background: var(--forest); color: #fff; border-color: var(--forest); }
+      .ko-prefs-no:hover { color: #fff; }
     }
 
     .float-phone {
@@ -3425,11 +3443,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h2 id="koPrefsTitle">Zanim zaczniesz – zgoda na cookies</h2>
   </div>
   <p class="ko-prefs-text" id="koPrefsText">
-    Używamy plików cookies, aby strona działała prawidłowo, a także do statystyk i dopasowania reklam. Dzięki temu możemy lepiej pokazywać ofertę domów w Kaszubskiej Osadzie. Szczegóły w
+    <span class="ko-prefs-long">Używamy plików cookies, aby strona działała prawidłowo, a także do statystyk i dopasowania reklam. Dzięki temu możemy lepiej pokazywać ofertę domów w Kaszubskiej Osadzie. Szczegóły w</span>
+    <span class="ko-prefs-short">Cookies do statystyk i dopasowania reklam. Szczegóły w</span>
     <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>.
   </p>
   <div class="ko-prefs-actions">
-    <button type="button" class="ko-prefs-yes" onclick="setCookieConsent(true)"><i class="ph-bold ph-check" aria-hidden="true"></i> Akceptuję wszystkie</button>
+    <button type="button" class="ko-prefs-yes" onclick="setCookieConsent(true)"><i class="ph-bold ph-check" aria-hidden="true"></i> Akceptuję<span class="ko-prefs-long"> wszystkie</span></button>
     <button type="button" class="ko-prefs-no" onclick="setCookieConsent(false)">Tylko niezbędne</button>
   </div>
 </div>
