@@ -1,6 +1,8 @@
 # Plan: first-screen conversion + page speed
 
-Date: 2026-11-02. Status: DRAFT, reviewed by a second agent (amendments below); awaiting owner go-ahead.
+Date: 2026-11-02. Status: **code items C, D1, B0, A+F, B+B1, D2 and the consistency check IMPLEMENTED** on branch `perf-conversion-fixes` (not merged, not deployed); E and the GTM/gtag dedupe wait for owner steps. Results and details: "Implementation log" at the end.
+
+Result (Lighthouse mobile, lab, median of 3): Performance 46 -> 81, LCP 21.9 s -> 2.5 s, TBT 1,210 -> 640 ms, CLS 0.073 -> 0, weight 4.3 -> 1.6 MB, Accessibility 92 -> 100, Best practices 96 -> 100. Targets: Performance >= 80 met; LCP < 2.5 s borderline (2.4-2.5 s); TBT < 300 ms **not met**: ~90% of what is left is GTM + the duplicated gtag + Clarity (dedupe needs the GTM export).
 
 ## Evidence (Clarity, last 3 days; Lighthouse mobile, live site)
 
