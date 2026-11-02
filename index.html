@@ -1593,13 +1593,11 @@
     .ko-prefs-shade {
       position: fixed; inset: 0;
       z-index: 299;
-      background: rgba(10, 25, 18, .55);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
+      background: rgba(10, 25, 18, .35);
       opacity: 0; pointer-events: none;
       transition: opacity .4s ease;
     }
-    .ko-prefs-open .ko-prefs-shade { opacity: 1; pointer-events: auto; }
+    .ko-prefs-open .ko-prefs-shade { opacity: 1; }
     .ko-prefs {
       position: fixed;
       left: 50%; bottom: 1.5rem;
@@ -3927,7 +3925,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       overlay.style.display = 'none';
       document.body.style.overflow = '';
     }, { once: true });
-    sessionStorage.setItem('popupDismissed', '1');
+    try { sessionStorage.setItem('popupDismissed', '1'); } catch (e) {}
   }
   // "Zostaw wiadomość" w popupie: zamyka popup i przewija do formularza kontaktowego
   function popupToContactForm() {
@@ -4023,7 +4021,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   // Popup dopiero gdy minie 25 s ORAZ użytkownik przewinie stronę – i nie w trakcie
   // wypełniania formularza, przy widocznym banerze cookies ani gdy otwarty jest inny modal.
-  if (!sessionStorage.getItem('popupDismissed')) {
+  let popupSeen = false;
+  try { popupSeen = !!sessionStorage.getItem('popupDismissed'); } catch (e) {}
+  if (!popupSeen) {
     const POPUP_DELAY = 25000;
     let popupTimeUp = false;
     const popupBusy = () => document.body.style.overflow === 'hidden' ||
