@@ -144,3 +144,7 @@ Key-event column filtered to `generate_lead`: 9 total (4.8% of all key events; 2
 
 Total 49: paid Google 39 (Cross-network 21, Paid Other 11, Display 5, Paid Search 2) = 80%, Paid Social 7, Organic 1, Direct 1, Unassigned 1.
 Contacts per session (form + phone tap): paid Google 39 / 1,803 = 2.2% (all taps, 0 forms); Meta 12 / 519 = 2.3% (5 forms + 7 taps). **Per session the two are on par; they differ in type**: Google brings phone taps, Meta brings forms. So "Google gives nothing" is wrong; "Google gives taps, not forms" is right. Decision needs cost per contact (spend still missing) and tap quality (a tap is not a connected call; owner says many calls do not connect). Ads reports only 12 of these 39 taps as conversions (attribution/lookback differences between GA4 and Ads, to be checked). Do not move the budget wholesale to Meta on this data; revisit with spend and answered-call counts.
+
+## Current budgets (owner, 2026-11-02; assumed daily, to confirm)
+
+Meta 55 zł, PMax 28 zł, Search 68 zł. Observation: Search has the largest budget but the fewest sessions (Paid Search 189 vs Cross-network 1,377), so it likely has a high CPC or is limited by narrow targeting/low impression share; PMax is cheap per session but low quality. Need: daily vs. period, report period dates, actual spend per campaign, Search CPC / impression share / top search terms.
