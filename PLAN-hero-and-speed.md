@@ -194,6 +194,7 @@ Lighthouse mobile (lab, `femtopixel/google-lighthouse` 13.5, local copy served o
 | D1: hero `<img>` + mobile crops, lazy slides, charset first, cache/gzip (Apache 2.4 container from here on) | 53 | 92 | 100 | 100 | 1.7 s | 8.7 s | 1,010 ms | 0.037 | 2,090 KiB |
 | B0: compact mobile cookie banner | 54 | 92 | 100 | 100 | 1.8 s | 8.7 s | 880 ms | 0.037 | 2,090 KiB |
 | A + F: new hero, mobile menu, mobile animations | 75 | 92 | 100 | 100 | 1.7 s | 2.2 s | 1,040 ms | 0.025 | 2,091 KiB |
+| B + B1: popup bottom sheet + trigger, dead taps | 77 | 95 | 100 | 100 | 1.8 s | 2.1 s | 960 ms | 0.025 | 2,092 KiB |
 
 Lab note: observed (unthrottled) LCP is 0.8 s; the 20+ s simulated LCP comes from everything requested before the LCP paint (3 hero images 2.3 MB, 3x gtag 600 KB, GTM, Phosphor fonts 300 KB) being replayed on simulated slow 4G. The page's own "4.8 s" is almost all style/layout/paint (infinite `box-shadow` pulse animations, Ken Burns, blurs), only ~90 ms is script.
 
@@ -224,3 +225,19 @@ Lab note: observed (unthrottled) LCP is 0.8 s; the 20+ s simulated LCP comes fro
 - Menu: real `<button>` 48x48 with `aria-expanded`/`aria-controls`/label, bars morph to an X (transform only); panel opens with opacity + translateY, backdrop below it; closes on link tap, Esc (focus back to the button), backdrop/outside tap, and when the viewport grows past 900 px; page scroll locked while open (`overscroll-behavior: contain` on the panel); nav never auto-hides while open. Order: Oferta i ceny (highlighted, badge "od 387 tys. zł"), Lokalizacja, Inwestycja, Standard, Galeria, Kontakt; pinned at the bottom "Zadzwoń" + "Zapytaj" and the line "6 z 8 domów dostępnych · pompa ciepła w cenie". Desktop uses the same list inline (Kontakt and the note hidden). Logo links to the top.
 - GA4: `menu_open`, `menu_click` (`link_target`, `menu_type` mobile/desktop).
 - Animations: infinite `box-shadow` pulses (offer bar, cookie button, float phone, popup call) replaced by a transform/opacity ring or removed; aerial parallax only >= 601 px (and rAF-throttled, skipped when off screen); full `prefers-reduced-motion` support (CSS: animations/transitions off, reveals visible, no smooth scroll; JS: no slider rotation, no count-up, instant carousel scroll).
+
+### B1. Popup - done
+- Trigger: >= 25 s on the page **and** scrolled to >= 50% of the page **and** 1.5 s without scroll/touch (re-armed by every scroll/touch, so it never opens mid-gesture); once per session (`sessionStorage` + in-memory flag, so blocked storage cannot show it twice on one page); never while the cookie banner, the menu, the lightbox/lot modal (shared `scrollLock`) or a form field is active (re-checked every 2 s).
+- Tap guard: the whole popup ignores pointer events for 400 ms after it appears; the overlay close additionally ignores taps in that window.
+- Phones (<= 600 px): non-blocking bottom sheet (~270 px): promo strip, "Zostało 6 z 8 domów nad jeziorem na Kaszubach", "Oddzwonimy do Ciebie", two buttons "Zadzwoń teraz" (tel:) and "Zostaw numer" (opens the callback form inside the sheet); no dimming, no scroll lock, close button 44 px. Desktop keeps the centred modal with scroll lock.
+- Close: timeout fallback (`afterTransition`), scroll unlocked immediately.
+- GA4: `popup_shown` (`scroll_percent`, `max_scroll_percent`, `popup_layout` sheet/modal), `popup_call`, `popup_lead` (with `generate_lead`), `popup_dismiss` (`method`: close_button / overlay / escape / skip / to_contact_form, `seconds_open`). `popup_view` is still sent for the before/after comparison in "GA4 events" above; drop it after ~4 weeks.
+- Copy aligned with the hero: promo strip "Pompa ciepła 3 kW z klimatyzacją w cenie + rabat do −7%", title and first bullet state 6 of 8.
+
+### B. Dead taps (code audit) - done
+- Hero/mobile stats strip (`.stat-item`, `.mobile-stat`, the strip that peeks under the hero) are links now: sizes -> `#oferta`, travel times -> `#lokalizacja`, return -> `#inwestycja`.
+- `.ko-card` (available houses): tapping the image or the price box opens the house's "Karta + rzut" PDF (a real click on the existing link, so GA4 `file_download` and Meta `ViewContent` still fire); sold cards stay inert.
+- Hover lifts on non-interactive cards (`.spec-card`, `.amenity`, `.atut-card`, `.ko-card`) only on devices that really hover (`@media (hover: hover)`), so a tap no longer leaves a "pressed" look.
+- Attraction rows with a link: the whole row is the link.
+- Carousel dots (`.m-dots`) and gallery dots: 24x44 px hit areas (were 22x28 and 7x7 px); gallery arrows 44 px on phones; hero promo badge and osada line are links.
+- Contact form consent label no longer splits into columns (flex label wrapped the link as a separate item).

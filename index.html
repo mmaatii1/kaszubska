@@ -858,7 +858,9 @@
       transition: color .2s;
     }
     .attraction:hover { color: var(--gold-light); }
+    .attraction { position: relative; }
     .attraction a { color: inherit; }
+    .attraction a::after { content: ''; position: absolute; inset: 0; }
     .attraction-dist {
       font-size: .78rem;
       font-weight: 600;
@@ -1046,16 +1048,18 @@
     /* Dots on mobile */
     .gallery-dots {
       display: none;
-      justify-content: center; gap: 6px;
-      margin-top: 1rem;
+      justify-content: center; gap: 0;
+      margin-top: .25rem;
     }
     .gallery-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: rgba(30,61,43,.25);
-      cursor: pointer; border: none; padding: 0;
-      transition: background .2s, transform .2s;
+      width: 24px; height: 44px; display: flex; align-items: center; justify-content: center;
+      background: none; cursor: pointer; border: none; padding: 0;
     }
-    .gallery-dot.active { background: var(--gold); transform: scale(1.3); }
+    .gallery-dot::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(30,61,43,.25); transition: background .2s, transform .2s;
+    }
+    .gallery-dot.active::before { background: var(--gold); transform: scale(1.3); }
 
     /* ─── KONTAKT ─────────────────────────────────────────────── */
     #kontakt { background: var(--forest); color: var(--cream); }
@@ -1264,16 +1268,16 @@
       transition: transform .22s ease, box-shadow .22s ease;
       cursor: default;
     }
-    .spec-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(30,61,43,.13); }
+    @media (hover: hover) { .spec-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(30,61,43,.13); } }
 
     .amenity { transition: transform .2s ease, box-shadow .2s ease; }
-    .amenity:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(30,61,43,.1); }
+    @media (hover: hover) { .amenity:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(30,61,43,.1); } }
 
     .attraction { transition: color .2s, padding-left .2s; }
     .attraction:hover { padding-left: .5rem; }
 
-    .stat-item { transition: background .2s; cursor: default; }
-    .stat-item:hover { background: rgba(247,243,236,.07); }
+    .stat-item, .mobile-stat { display: block; color: inherit; transition: background .2s; }
+    .stat-item:hover, .mobile-stat:active { background: rgba(247,243,236,.07); }
 
     /* Count-up target */
     .countup { display: inline-block; }
@@ -1467,7 +1471,9 @@
       display: flex; flex-direction: column; box-shadow: 0 6px 24px rgba(30,61,43,.08);
       transition: transform .25s ease, box-shadow .25s ease;
     }
-    .ko-card:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(30,61,43,.16); }
+    @media (hover: hover) { .ko-card:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(30,61,43,.16); } }
+    /* image and price of an available house open its "Karta + rzut" (people tap them) */
+    .ko-card:not(.ko-sold) .ko-media, .ko-card:not(.ko-sold) .ko-price-box { cursor: pointer; }
     .ko-card[hidden] { display: none; }
     .ko-media { position: relative; aspect-ratio: 16 / 11; background: var(--white); border-bottom: 1px solid #f0ebe0; }
     .ko-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
@@ -1599,7 +1605,7 @@
       .m-nav { display: flex; align-items: center; justify-content: center; gap: .4rem; margin-top: .6rem; }
       .m-dots { display: flex; justify-content: center; flex-wrap: wrap; max-width: 60vw; }
       .m-dots button {
-        width: 22px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer;
+        width: 24px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer;
         display: flex; align-items: center; justify-content: center;
       }
       .m-dots button::before {
@@ -2068,7 +2074,36 @@
       .offer-popup-consent { font-size: .66rem; line-height: 1.4; }
       .offer-popup-skip { font-size: .78rem; padding: .6rem .8rem; }
       .offer-popup-msg { font-size: .8rem; }
-      .offer-popup-close { width: 2.5rem; height: 2.5rem; font-size: 1.5rem; top: .2rem; right: .4rem; background: rgba(255,255,255,.95); }
+      .offer-popup-close { width: 2.75rem; height: 2.75rem; font-size: 1.5rem; top: .15rem; right: .3rem; background: rgba(255,255,255,.95); }
+    }
+    .offer-popup-sheet-actions { display: none; }
+    /* first 400 ms after opening: ignore taps (the tail of a scroll/tap must not hit the popup) */
+    .offer-popup-overlay.arming, .offer-popup-overlay.arming * { pointer-events: none !important; }
+    /* Phones: non-blocking bottom sheet – no dimming, no scroll lock, the page stays usable above it */
+    @media (max-width: 600px) {
+      .offer-popup-overlay {
+        pointer-events: none; background: transparent; padding: 0;
+        justify-content: flex-end; align-items: stretch;
+      }
+      .offer-popup-overlay > .offer-popup-call { display: none; }
+      .offer-popup {
+        pointer-events: auto; max-width: none; width: 100%;
+        max-height: 85vh; max-height: 85svh;
+        border-radius: 16px 16px 0 0;
+        transform: translateY(100%);
+        box-shadow: 0 -10px 40px rgba(0,0,0,.35);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .offer-popup-overlay.visible .offer-popup { transform: none; }
+      .offer-popup-sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+      .offer-popup-sheet-actions > * {
+        display: flex; align-items: center; justify-content: center; gap: .4rem; min-height: 48px;
+        border-radius: 10px; font: 700 .92rem 'Inter', sans-serif; cursor: pointer; text-decoration: none;
+      }
+      .offer-popup-sheet-call { background: var(--gold); color: #fff; }
+      .offer-popup-sheet-form { background: var(--forest); color: #fff; border: 0; }
+      .offer-popup-overlay:not(.sheet-form) .offer-popup-form { display: none; }
+      .offer-popup-overlay.sheet-form .offer-popup-sheet-actions { display: none; }
     }
 
     /* ─── FOOTER SOCIAL ─────────────────────────────────────────── */
@@ -2132,7 +2167,7 @@
       box-shadow: 0 2px 14px rgba(30,61,43,.06);
       transition: transform .22s ease, box-shadow .22s ease;
     }
-    .atut-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(30,61,43,.12); }
+    @media (hover: hover) { .atut-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(30,61,43,.12); } }
     .atut-icon {
       width: 40px; height: 40px;
       background: var(--forest);
@@ -2354,30 +2389,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="hero-stats">
     <div class="hero-stats-inner">
-      <div class="stat-item">
+      <a class="stat-item" href="#oferta">
         <div class="stat-label">Powierzchnia domu</div>
         <div class="stat-value">51 – 56 m²</div>
-      </div>
-      <div class="stat-item">
+      </a>
+      <a class="stat-item" href="#oferta">
         <div class="stat-label">Działka</div>
         <div class="stat-value">176 – 289 m²</div>
-      </div>
-      <div class="stat-item">
+      </a>
+      <a class="stat-item" href="#lokalizacja">
         <div class="stat-label">Bytów</div>
         <div class="stat-value">30 min</div>
-      </div>
-      <div class="stat-item">
+      </a>
+      <a class="stat-item" href="#lokalizacja">
         <div class="stat-label">Słupsk</div>
         <div class="stat-value">45 min</div>
-      </div>
-      <div class="stat-item">
+      </a>
+      <a class="stat-item" href="#lokalizacja">
         <div class="stat-label">Morze Bałtyckie</div>
         <div class="stat-value">1h 10 min</div>
-      </div>
-      <div class="stat-item">
+      </a>
+      <a class="stat-item" href="#inwestycja">
         <div class="stat-label">Stopa zwrotu</div>
         <div class="stat-value">~7,5%</div>
-      </div>
+      </a>
     </div>
   </div>
 
@@ -2386,30 +2421,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ─── MOBILE STATS (visible only on mobile, after hero) ─────── -->
 <div class="mobile-stats-section">
   <div class="mobile-stats-grid">
-    <div class="mobile-stat">
+    <a class="mobile-stat" href="#oferta">
       <div class="mobile-stat-label">Powierzchnia domu</div>
       <div class="mobile-stat-value">51 – 56 m²</div>
-    </div>
-    <div class="mobile-stat">
+    </a>
+    <a class="mobile-stat" href="#oferta">
       <div class="mobile-stat-label">Powierzchnia działki</div>
       <div class="mobile-stat-value">176 – 289 m²</div>
-    </div>
-    <div class="mobile-stat">
+    </a>
+    <a class="mobile-stat" href="#lokalizacja">
       <div class="mobile-stat-label">Bytów</div>
       <div class="mobile-stat-value">30 min</div>
-    </div>
-    <div class="mobile-stat">
+    </a>
+    <a class="mobile-stat" href="#lokalizacja">
       <div class="mobile-stat-label">Słupsk</div>
       <div class="mobile-stat-value">45 min</div>
-    </div>
-    <div class="mobile-stat">
+    </a>
+    <a class="mobile-stat" href="#lokalizacja">
       <div class="mobile-stat-label">Morze Bałtyckie</div>
       <div class="mobile-stat-value">1h 10 min</div>
-    </div>
-    <div class="mobile-stat">
+    </a>
+    <a class="mobile-stat" href="#inwestycja">
       <div class="mobile-stat-label">Stopa zwrotu</div>
       <div class="mobile-stat-value">~7,5%</div>
-    </div>
+    </a>
   </div>
 </div>
 
@@ -3257,7 +3292,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="form-consent">
             <label>
               <input type="checkbox" required />
-              Zapoznałem/am się z <a href="https://kaszubskaosada.com.pl/polityka-prywatnosci" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;">Polityką Prywatności</a> strony.
+              <span>Zapoznałem/am się z <a href="https://kaszubskaosada.com.pl/polityka-prywatnosci" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:underline;">Polityką Prywatności</a> strony.</span>
             </label>
           </div>
           <div class="form-consent">
@@ -3379,15 +3414,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="offer-popup-close" id="offerPopupClose" aria-label="Zamknij">&times;</button>
 
     <div class="offer-popup-banner">
-      <i class="ph-bold ph-thermometer"></i>
-      Promocja: do −7% + pompa ciepła z klimatyzacją w cenie
+      <i class="ph-bold ph-thermometer" aria-hidden="true"></i>
+      Pompa ciepła 3 kW z klimatyzacją w cenie + rabat do −7%
     </div>
 
     <div class="offer-popup-left">
       <div class="offer-popup-eyebrow">Kaszubska Osada</div>
-      <div class="offer-popup-title">8 domów<br>nad jeziorami <em>Kaszub</em></div>
+      <div class="offer-popup-title"><span data-avail-text>Zostało 6 z 8 domów</span><br>nad jeziorem <em>na Kaszubach</em></div>
       <ul class="offer-popup-points">
-        <li><i class="ph-bold ph-house-simple"></i><span>8 domów w zabudowie bliźniaczej – każdy z odrębną działką i tarasem</span></li>
+        <li><i class="ph-bold ph-house-simple"></i><span>8 domów w zabudowie bliźniaczej, <strong data-avail-text>6 dostępnych</strong> – każdy z odrębną działką i tarasem</span></li>
         <li><i class="ph-bold ph-tag"></i><span>Ceny brutto od <strong>387 000 zł</strong> (w tym 8% VAT) – własna działka, parking w cenie</span></li>
         <li><i class="ph-bold ph-thermometer"></i><span><strong>Pompa ciepła 3 kW z klimatyzacją</strong> w cenie domu</span></li>
         <li><i class="ph-bold ph-ruler"></i><span>51–56 m² użytkowej, działki 176-289 m²</span></li>
@@ -3400,6 +3435,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="offer-popup-right">
       <div class="offer-popup-form-title">Oddzwonimy do Ciebie</div>
       <p class="offer-popup-form-sub">Doradca oddzwoni w ciągu 24h, a na e-mail od razu wyślemy informator 2026 i karty domków.</p>
+      <!-- phones (bottom sheet): two actions first, the form opens on demand -->
+      <div class="offer-popup-sheet-actions">
+        <a href="tel:+48500299775" class="offer-popup-sheet-call"><i class="ph-bold ph-phone-call" aria-hidden="true"></i> Zadzwoń teraz</a>
+        <button type="button" class="offer-popup-sheet-form" aria-expanded="false" aria-controls="offerCallbackForm">Zostaw numer</button>
+      </div>
       <form class="offer-popup-form" id="offerCallbackForm" onsubmit="return submitCallback(event)">
         <div class="form-group">
           <label for="cb-name">Imię</label>
@@ -3428,7 +3468,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           Administratorem danych jest Kaszubska Osada Sp. z o.o. Dane przetwarzane są wyłącznie w celu odpowiedzi na zapytanie.
         </p>
         <button type="button" class="offer-popup-msg" onclick="popupToContactForm()">Wolisz napisać? <u>Zostaw wiadomość</u> <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
-        <button type="button" class="offer-popup-skip" onclick="closeOfferPopup()">Nie teraz, chcę najpierw przejrzeć ofertę</button>
+        <button type="button" class="offer-popup-skip" onclick="closeOfferPopup('skip')">Nie teraz, chcę najpierw przejrzeć ofertę</button>
       </form>
     </div>
   </div>
@@ -4003,6 +4043,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (window.mCarousels) window.mCarousels.rebuild(grid);
     }
 
+    // a tap on the image or price of an available house opens its data sheet ("Karta + rzut");
+    // a real link click, so GA4 file_download and the Meta ViewContent listener still fire
+    grid.addEventListener('click', e => {
+      const area = e.target.closest('.ko-media, .ko-price-box');
+      const card = area && area.closest('.ko-card');
+      if (!card || card.classList.contains('ko-sold')) return;
+      const sheet = card.querySelector('a[href$=".pdf"]');
+      if (sheet) sheet.click();
+    });
+
     document.querySelectorAll('.ko-pill').forEach(btn => {
       btn.addEventListener('click', () => {
         const kind = btn.dataset.filter ? 'filter' : 'sort';
@@ -4019,17 +4069,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     gaEvent('conversion', { send_to: 'AW-18508894435/Khi4COKZwZwdEOOh3flE', value: 1.0, currency: 'PLN' });
   }
 
+  // Desktop: centred modal with scroll lock. Phones (<= 600 px): non-blocking bottom sheet.
   const offerPopup = $id('offerPopup');
-  function openOfferPopup() {
-    if (!offerPopup) return;
-    gaEvent('popup_view', { popup_name: 'offer_popup' });
+  const popupIsSheet = () => window.matchMedia('(max-width: 600px)').matches;
+  let popupOpenedAt = 0;
+  let popupShown = false;  // in memory too: storage can be blocked in in-app browsers
+  function markPopupSeen() {
+    popupShown = true;
+    try { sessionStorage.setItem('popupDismissed', '1'); } catch (e) {}
+  }
+  function openOfferPopup(info) {
+    if (!offerPopup || offerPopup.classList.contains('visible')) return;
+    const sheet = popupIsSheet();
+    const params = Object.assign({ popup_name: 'offer_popup', popup_layout: sheet ? 'sheet' : 'modal' }, info && typeof info === 'object' ? info : {});
+    gaEvent('popup_view', { popup_name: 'offer_popup' });  // kept for before/after comparison in GA4
+    gaEvent('popup_shown', params);
+    markPopupSeen();
+    popupOpenedAt = Date.now();
+    offerPopup.classList.remove('sheet-form');
+    offerPopup.classList.add('arming');
+    setTimeout(() => offerPopup.classList.remove('arming'), 400);
     offerPopup.style.display = 'flex';
     requestAnimationFrame(() => offerPopup.classList.add('visible'));
-    scrollLock.add('popup');
+    if (!sheet) scrollLock.add('popup');
   }
-  function closeOfferPopup() {
-    try { sessionStorage.setItem('popupDismissed', '1'); } catch (e) {}
+  function closeOfferPopup(method) {
+    markPopupSeen();
     if (!offerPopup || offerPopup.style.display === 'none') return;
+    if (method !== 'lead') gaEvent('popup_dismiss', { method: typeof method === 'string' ? method : 'other', seconds_open: Math.round((Date.now() - popupOpenedAt) / 1000) });
     offerPopup.classList.remove('visible');
     // unlock at once; hide after the fade (or the fallback timeout if transitionend never fires)
     scrollLock.remove('popup');
@@ -4039,7 +4106,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   // "Zostaw wiadomość" w popupie: zamyka popup i przewija do formularza kontaktowego
   function popupToContactForm() {
-    closeOfferPopup();
+    closeOfferPopup('to_contact_form');
     const form = $id('contactForm');
     if (!form) return;
     const navH = (document.querySelector('nav') || {}).offsetHeight || 0;
@@ -4048,12 +4115,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   if (offerPopup) {
     const closeBtn = $id('offerPopupClose');
-    if (closeBtn) closeBtn.addEventListener('click', closeOfferPopup);
+    if (closeBtn) closeBtn.addEventListener('click', () => closeOfferPopup('close_button'));
     offerPopup.addEventListener('click', function(e) {
-      if (e.target === this) closeOfferPopup();
+      if (e.target === this && Date.now() - popupOpenedAt > 400) closeOfferPopup('overlay');
     });
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && offerPopup.classList.contains('visible')) closeOfferPopup();
+      if (e.key === 'Escape' && offerPopup.classList.contains('visible')) closeOfferPopup('escape');
+    });
+    offerPopup.querySelectorAll('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => gaEvent('popup_call')));
+    const formToggle = offerPopup.querySelector('.offer-popup-sheet-form');
+    if (formToggle) formToggle.addEventListener('click', () => {
+      offerPopup.classList.add('sheet-form');
+      formToggle.setAttribute('aria-expanded', 'true');
+      const first = $id('cb-name');
+      if (first) first.focus();
     });
   }
   // Ta sama domena co strona – działa z www i bez www (pełny adres blokował CORS na www.)
@@ -4123,6 +4198,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const json = await r.json();
       if (!json.ok) throw new Error(json.error || 'Błąd');
       gaEvent('generate_lead', { form_name: 'callback_popup' });
+      gaEvent('popup_lead');
       adsFormConversion();
     } catch {
       // cisza – nawet jeśli fetch padnie, pokazujemy sukces żeby nie frustrować użytkownika
@@ -4130,27 +4206,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     btn.classList.remove('btn-callback-loading');
     btn.classList.add('btn-callback-success');
     btn.innerHTML = '<i class="ph-bold ph-check"></i> Dziękujemy! Oddzwonimy wkrótce.';
-    setTimeout(closeOfferPopup, 2200);
+    setTimeout(() => closeOfferPopup('lead'), 2200);
     return false;
   }
-  // Popup dopiero gdy minie 25 s ORAZ użytkownik przewinie stronę – i nie w trakcie
-  // wypełniania formularza, przy widocznym banerze cookies ani gdy otwarty jest inny modal.
-  let popupSeen = false;
-  try { popupSeen = !!sessionStorage.getItem('popupDismissed'); } catch (e) {}
-  if (!popupSeen) {
-    const POPUP_DELAY = 25000;
-    let popupTimeUp = false;
-    const popupBusy = () => scrollLock.active() ||
-      koPrefsShown() ||
-      /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || '');
-    const tryPopup = () => {
-      if (!popupTimeUp || window.scrollY < window.innerHeight * 0.6 || popupBusy()) return;
-      window.removeEventListener('scroll', tryPopup);
-      openOfferPopup();
+  // Popup trigger: at least 25 s on the page AND scrolled to >= 50% of the page AND 1.5 s without
+  // scrolling/touching (never mid-gesture), once per session, never over the cookie banner, the menu,
+  // another overlay or a focused form field.
+  (function () {
+    let seen = false;
+    try { seen = !!sessionStorage.getItem('popupDismissed'); } catch (e) {}
+    if (seen || !offerPopup) return;
+    const MIN_MS = 25000, DEPTH = 0.5, IDLE_MS = 1500;
+    const t0 = Date.now();
+    let lastActivity = t0, maxDepth = 0, timer = 0, done = false;
+    const depth = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      return max > 0 ? Math.min(window.scrollY / max, 1) : 0;
     };
-    setTimeout(() => { popupTimeUp = true; tryPopup(); }, POPUP_DELAY);
-    window.addEventListener('scroll', tryPopup, { passive: true });
-  }
+    const busy = () => scrollLock.active() || koPrefsShown() ||
+      /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || '');
+    function schedule() {
+      clearTimeout(timer);
+      if (done) return;
+      const now = Date.now();
+      timer = setTimeout(check, Math.max(MIN_MS - (now - t0), IDLE_MS - (now - lastActivity), 0) + 20);
+    }
+    function check() {
+      if (done || popupShown) return;
+      const now = Date.now();
+      if (now - t0 < MIN_MS || now - lastActivity < IDLE_MS) return schedule();
+      if (maxDepth < DEPTH) return;  // the next scroll reschedules
+      if (busy()) { timer = setTimeout(check, 2000); return; }
+      done = true;
+      ['scroll', 'touchstart', 'touchmove'].forEach(t => window.removeEventListener(t, onActivity));
+      openOfferPopup({ scroll_percent: Math.round(depth() * 100), max_scroll_percent: Math.round(maxDepth * 100) });
+    }
+    function onActivity() {
+      lastActivity = Date.now();
+      maxDepth = Math.max(maxDepth, depth());
+      schedule();
+    }
+    ['scroll', 'touchstart', 'touchmove'].forEach(t => window.addEventListener(t, onActivity, { passive: true }));
+  })();
 
   // ── Interactive lot + half selector
   (function () {
