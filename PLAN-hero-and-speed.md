@@ -171,3 +171,8 @@ Plan items (owner-side Ads changes, not code; nothing executed):
 3. PMax: audience signals (property buyers, in-market for real estate), exclude brand-less junk placements, and a real conversion signal (see conversions section); evaluate again after 2 weeks.
 4. Landing page is the same for both: first-screen fixes (A) apply to Google traffic first, because Google users scroll 25% vs Meta 49%.
 5. Quality: log how many ad-tap calls were answered (owner), to tell good taps from accidental ones.
+
+## Existing negative keywords (owner, 2026-11-02)
+
+Present: `wynajem`, `olx`, `otodom`, `basenem` (all broad); exact `[aura kaszub]`, `[aura kaszub łączyno]`, `[domki pod kapeluszem]`, `[pod kapeluszem]`, `[osada skoczkowo]`, `[osada wiśniewo rekowo]` (competitor projects); phrase `"kaszubskie chabry"`.
+Gaps: broad negatives do **not** cover other word forms, so `wynajem` does not block "do wynajęcia", "wynajmu", "wynająć". Add as phrase-match negatives: `wynajęcia`, `wynajmu`, `wynająć`, `noclegi`, `nocleg`, `domki letniskowe`, `agroturystyka`, `pokoje`, `booking`, `airbnb`, `wczasy`, `weekend`, `kemping`, `ośrodek`, `tanio`; check intent for `działka`, `projekt domu`, `budowa`, `używany`. Take the final list from the search terms report (still missing), not from guesses. Negatives are per Search campaign; for PMax use account-level negative keyword lists if available in the account (to verify in the Ads UI).
