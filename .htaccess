@@ -17,3 +17,25 @@
   RewriteCond %{HTTP_HOST} ^www\.(kaszubskaosada\.com\.pl)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
 </IfModule>
+
+# Cache przeglądarki. Pliki nie mają wersji w nazwie, więc bez „immutable”:
+# zdjęcia/fonty 30 dni, PDF 1 dzień, HTML zawsze sprawdzany (nowe wdrożenie widać od razu).
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|avif|jpe?g|png|gif|svg|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "\.pdf$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  <FilesMatch "\.html?$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+# Kompresja tekstu (HTML ~200 KB -> ~40 KB).
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/javascript application/json image/svg+xml
+</IfModule>

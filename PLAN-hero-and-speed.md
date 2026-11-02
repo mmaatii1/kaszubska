@@ -191,6 +191,7 @@ Lighthouse mobile (lab, `femtopixel/google-lighthouse` 13.5, local copy served o
 |---|---|---|---|---|---|---|---|---|---|
 | Local baseline (before C) | 46 | 92 | 96 | 100 | 2.5 s | 21.9 s | 1,210 ms | 0.073 | 4,309 KiB |
 | C: gallery/lightbox hardening, `js_error` | 50 | 92 | 96 | 100 | 2.5 s | 22.4 s | 890 ms | 0.038 | 3,925 KiB |
+| D1: hero `<img>` + mobile crops, lazy slides, charset first, cache/gzip (Apache 2.4 container from here on) | 53 | 92 | 100 | 100 | 1.7 s | 8.7 s | 1,010 ms | 0.037 | 2,090 KiB |
 
 Lab note: observed (unthrottled) LCP is 0.8 s; the 20+ s simulated LCP comes from everything requested before the LCP paint (3 hero images 2.3 MB, 3x gtag 600 KB, GTM, Phosphor fonts 300 KB) being replayed on simulated slow 4G. The page's own "4.8 s" is almost all style/layout/paint (infinite `box-shadow` pulse animations, Ken Burns, blurs), only ~90 ms is script.
 
@@ -201,3 +202,11 @@ Lab note: observed (unthrottled) LCP is 0.8 s; the 20+ s simulated LCP comes fro
 - Overlays (lightbox, lot modal, popup): shared `scrollLock` with owners (one overlay closing never unlocks another) and `afterTransition()` with a timeout fallback, so the page can never stay locked if `transitionend` does not fire.
 - Deep links: `scrollTo(0,0)` on load now only runs without a `#hash` (ad sitelinks `/#oferta`, `/#standard` … used to land at the top).
 - `js_error` (GA4): installed in `<head>`, bubbling `error` + `unhandledrejection`, message cut to 100 chars with URLs, e-mails and long numbers masked, browser family only, each message once, max 3 per page view. Owner: register `error_message` / `browser_family` as custom dimensions in GA4 to see them in reports.
+
+### D1. Head order, hero images, cache - done
+- `<meta charset>` + viewport are now the first bytes of `<head>`, followed directly by `dataLayer`, `gtag`, consent default and the `js_error` handler.
+- Hero slide 1 is a `<picture>`: phones get a 720x1280 portrait crop `hero_3-m720.webp` (62 KB, was the 487 KB 2560 px file), desktop picks from the existing 1024-2560 px variants via `srcset`; `fetchpriority=high` + matching `<link rel=preload media=…>`.
+- Slides 2-3 have no image in the HTML any more: after `load` + idle JS sets `data-bg-m` (phones: `osada_hero_1-m720.webp` 172 KB, `home-4-4-m720.webp` 202 KB, instead of 912/918 KB) or `data-bg-d` (desktop 1600 px, 276/303 KB); a slide joins the rotation only once decoded, rotation pauses in a hidden tab. The 2560 px originals stay untouched for the gallery/lightbox (on demand only).
+- Logo: 3991x891 PNG (134 KB) -> 358x80 WebP (8 KB) in nav and footer; all images below the fold are `loading=lazy` with `width`/`height` (incl. the lot modal image that used to load eagerly while hidden).
+- `.htaccess`: `Cache-Control` 30 days for images/fonts, 7 days CSS/JS, 1 day PDF, `no-cache` for HTML (no file versioning, so no `immutable`); gzip for text. Verified on `httpd:2.4` with `AllowOverride All`: headers present, gzip on `/`, `.md`/config still 403, www -> apex 301 keeps `gclid`.
+- CLS fix found on the way: `.float-phone` animated `bottom` when the cookie banner appeared (a layout shift every frame); it now moves with `transform`. Remaining CLS is the Google-Fonts swap in the bottom-anchored hero text (handled in D2).

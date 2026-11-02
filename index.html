@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Google Consent Mode v2 (advanced): tagi Google ładują się zawsze, ale do czasu zgody
        z banera (#koPrefs) działają bez cookies. Meta Pixel ładuje się dopiero po zgodzie. -->
   <script>
@@ -93,9 +95,7 @@
     if (getCookieConsent() === 'accepted') loadMetaPixel();
   </script>
 
-  <meta charset="UTF-8" />
   <meta http-equiv="Content-Language" content="pl" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kaszubska Osada – Domy całoroczne na Kaszubach od 387 000 zł</title>
   <meta name="description" content="Domy całoroczne na Kaszubach nad jeziorem Granicznym (gm. Kołczygłowy) od 387 000 zł brutto. 8 domów z działką i tarasem – do zamieszkania lub pod wynajem, ~7,5% rocznie. Pompa ciepła 3 kW z klimatyzacją w cenie." />
 
@@ -277,8 +277,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://unpkg.com" crossorigin />
-  <!-- Hero image preload — krytyczny LCP -->
-  <link rel="preload" as="image" href="zdjecia/hero_3.webp" fetchpriority="high" />
+  <!-- Hero slide 1 preload (LCP): the same files the <picture> in .hero picks -->
+  <link rel="preload" as="image" href="zdjecia/hero_3-m720.webp" media="(max-width: 600px)" fetchpriority="high" />
+  <link rel="preload" as="image" imagesrcset="zdjecia/hero_3-1024x576.webp 1024w, zdjecia/hero_3-1536x864.webp 1536w, zdjecia/hero_3-2048x1152.webp 2048w, zdjecia/hero_3.webp 2560w" imagesizes="100vw" media="(min-width: 601px)" fetchpriority="high" />
   <!-- Fonty async — nieblokowalny render -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" onload="this.rel='stylesheet'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
@@ -382,6 +383,7 @@
       transition: opacity 1.4s ease;
       will-change: transform, opacity;
     }
+    .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .hero-slide.active {
       opacity: 1;
       animation: kenburns 8s ease-in-out forwards;
@@ -1712,9 +1714,11 @@
     .float-phone {
       position: fixed;
       right: 1.5rem;
-      bottom: calc(2rem + var(--cookie-h, 0px));
+      bottom: 2rem;
       z-index: 310;
-      transition: bottom .4s ease;
+      /* lifted above the cookie banner with transform (animating `bottom` = layout shift) */
+      transform: translateY(calc(-1 * var(--cookie-h, 0px)));
+      transition: transform .4s ease;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -2197,7 +2201,7 @@
       .gallery-dots { display: flex; }
       .float-phone-num { font-size: .8rem; }
       .float-phone-link { padding: .75rem 1.1rem .75rem .95rem; font-size: .82rem; }
-      .float-phone { right: 1rem; bottom: calc(1.5rem + var(--cookie-h, 0px)); }
+      .float-phone { right: 1rem; bottom: 1.5rem; }
       .footer-social-block { flex-wrap: wrap; gap: .6rem; }
     }
 
@@ -2354,7 +2358,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ─── NAV ─────────────────────────────────────────────────── -->
 <nav id="main-nav">
   <div class="nav-logo">
-    <img src="zdjecia/kaszubska-osada-logo-brighter.png" alt="Kaszubska Osada" height="40" style="display:block;" />
+    <img src="zdjecia/kaszubska-osada-logo-h80.webp" alt="Kaszubska Osada" width="179" height="40" style="display:block;" />
   </div>
   <ul class="nav-links" id="nav-links">
     <li><a href="#o-projekcie">Domy</a></li>
@@ -2382,10 +2386,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ─── HERO ─────────────────────────────────────────────────── -->
 <section class="hero" id="hero">
+  <!-- Slide 1 is a real <img> (LCP, fetchpriority=high); slides 2-3 get their background from JS
+       after `load` (data-bg-m: portrait crop for phones, data-bg-d: desktop) -->
   <div class="hero-slider">
-    <div class="hero-slide active" style="background-image:url('zdjecia/hero_3.webp')"></div>
-    <div class="hero-slide" style="background-image:url('zdjecia/osada_hero_1.webp')"></div>
-    <div class="hero-slide" style="background-image:url('zdjecia/home-4-4.webp')"></div>
+    <div class="hero-slide active">
+      <picture>
+        <source media="(max-width: 600px)" srcset="zdjecia/hero_3-m720.webp" width="720" height="1280" />
+        <img class="hero-img" src="zdjecia/hero_3-1536x864.webp" srcset="zdjecia/hero_3-1024x576.webp 1024w, zdjecia/hero_3-1536x864.webp 1536w, zdjecia/hero_3-2048x1152.webp 2048w, zdjecia/hero_3.webp 2560w" sizes="100vw" width="1536" height="864" alt="Rodzina na rowerach przy domach Kaszubskiej Osady" fetchpriority="high" />
+      </picture>
+    </div>
+    <div class="hero-slide" data-bg-m="zdjecia/osada_hero_1-m720.webp" data-bg-d="zdjecia/osada_hero_1-d1600.webp"></div>
+    <div class="hero-slide" data-bg-m="zdjecia/home-4-4-m720.webp" data-bg-d="zdjecia/home-4-4-d1600.webp"></div>
   </div>
   <div class="hero-overlay"></div>
 
@@ -3372,7 +3383,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ─── FOOTER ─────────────────────────────────────────────────── -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo"><img src="zdjecia/kaszubska-osada-logo-brighter.png" alt="Kaszubska Osada" height="36" style="display:block;opacity:.85;" /></div>
+    <div class="footer-logo"><img src="zdjecia/kaszubska-osada-logo-h80.webp" alt="Kaszubska Osada" width="161" height="36" loading="lazy" style="display:block;opacity:.85;" /></div>
     <div class="footer-links">
       <a href="#o-projekcie">Domy</a>
       <a href="#o-osadzie">Osada</a>
@@ -3636,16 +3647,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
   aerialParallax();
 
-  // ── Hero slider (restart Ken Burns on each slide)
-  const slides = document.querySelectorAll('.hero-slide');
+  // ── Hero slider: slide 1 is in the HTML; slides 2-3 load after `load` + idle and join the
+  // rotation only once their image is decoded (never rotate to an empty slide).
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
   let heroIdx = 0;
-  setInterval(() => {
+  function loadHeroSlides() {
+    const mobile = window.matchMedia('(max-width: 600px)').matches;
+    slides.forEach(slide => {
+      const src = mobile ? slide.dataset.bgM : slide.dataset.bgD;
+      if (!src) return;
+      const img = new Image();
+      img.onload = () => {
+        slide.style.backgroundImage = `url('${src}')`;
+        slide.dataset.ready = '1';
+      };
+      img.src = src;
+    });
+  }
+  function nextHeroSlide() {
+    const ready = slides.filter(s => s.dataset.ready || !s.dataset.bgM);
+    if (ready.length < 2 || document.hidden) return;
     const prev = slides[heroIdx];
+    const next = ready[(ready.indexOf(prev) + 1) % ready.length];
+    heroIdx = slides.indexOf(next);
     prev.classList.remove('active');
-    // Remove & re-add to restart animation
+    // Remove & re-add to restart the Ken Burns animation
     prev.style.animation = 'none';
-    heroIdx = (heroIdx + 1) % slides.length;
-    const next = slides[heroIdx];
     next.style.animation = 'none';
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -3653,7 +3680,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         next.classList.add('active');
       });
     });
-  }, 7000);
+  }
+  function whenIdle(fn, timeout) {
+    if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: timeout || 2000 });
+    else setTimeout(fn, 200);
+  }
+  if (slides.length > 1) {
+    const startSlider = () => whenIdle(() => { loadHeroSlides(); setInterval(nextHeroSlide, 7000); });
+    if (document.readyState === 'complete') startSlider();
+    else window.addEventListener('load', startSlider, { once: true });
+  }
 
   // ── Scroll reveal with stagger for siblings
   const revealObs = new IntersectionObserver((entries) => {
@@ -3901,7 +3937,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button class="half-modal-close" id="halfModalClose" aria-label="Zamknij">×</button>
     </div>
     <div class="half-modal-img-wrap">
-      <img src="zdjecia/wiz_4.webp" alt="Widok domu bliźniaczego" />
+      <img src="zdjecia/wiz_4.webp" alt="Widok domu bliźniaczego" width="1500" height="838" loading="lazy" />
       <div class="half-modal-halves">
         <div class="half-unit" id="halfLeft">
           <span class="half-label" id="halfLeftLabel">Domek 1</span>
