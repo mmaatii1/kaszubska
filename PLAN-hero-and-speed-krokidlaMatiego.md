@@ -14,3 +14,8 @@
 - [ ] GTM (GTM-T4VCGMDB): export the container JSON (Admin -> Export) so duplicate gtag loaders can be removed safely.
 - [ ] Who answers the phone during ad hours? Decide on voicemail / missed-call SMS.
 - [ ] After each change: deploy via the FTP workflow (push to main), check on your phone.
+- [x] Search terms CSV received (GitHub main, 7 days).
+- [ ] Google Ads: check Search campaign Settings -> Networks: are "Include Google Search Partners" and "Include Google Display Network" ON? (turn Display Network off for Search).
+- [ ] Meta: actual spend for 26.10-1.11 and results per ad set (CSV to `marketing/data/` on GitHub).
+- [ ] Google Ads campaign report as CSV (Campaigns -> download), same period, with "Network" segment, to `marketing/data/`.
+- [ ] Apply the negative keywords and keyword match-type changes from `marketing/google-ads.md` in the Ads UI after reviewing them (nothing is applied yet).
