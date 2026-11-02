@@ -148,3 +148,26 @@ Contacts per session (form + phone tap): paid Google 39 / 1,803 = 2.2% (all taps
 ## Current budgets (owner, 2026-11-02; assumed daily, to confirm)
 
 Meta 55 zł, PMax 28 zł, Search 68 zł. Observation: Search has the largest budget but the fewest sessions (Paid Search 189 vs Cross-network 1,377), so it likely has a high CPC or is limited by narrow targeting/low impression share; PMax is cheap per session but low quality. Need: daily vs. period, report period dates, actual spend per campaign, Search CPC / impression share / top search terms.
+
+## Google Ads, last 7 days (owner data, 2026-11-02)
+
+| Campaign | Cost | Clicks | CPC | CTR |
+|---|---|---|---|---|
+| Search-10.14.2026 | 361.04 zł | 218 | ~1.66 zł | 1.86% |
+| Perf max 10.14.2026 | 213.68 zł | 1,243 | ~0.17 zł | 8.40% |
+
+Week over week: Search -95.21 zł (-20.9%), PMax +53.88 zł (+33.7%). Search spends ~52 zł/day against a 68 zł budget (under-delivering), PMax ~30.5 zł/day against 28.
+
+Rough cost per contact (GA4 period is slightly longer than 7 days, so order of magnitude only):
+- Search: 2 phone taps, 0 forms -> ~180 zł per contact.
+- PMax (Cross-network + Display + Paid Other): 37 phone taps, 0 forms -> ~6 zł per tap, but tap quality is doubtful (Paid Other: 20 s on site, 11.9% key-event rate; accidental taps on the floating phone button likely).
+- Meta: 12 contacts (5 forms + 7 taps); spend not provided, ~385 zł if the 55 zł/day budget was fully used -> ~30 zł per contact (to confirm).
+
+Search keywords (match type: broad / "dopasowanie przybliżone"): top cost "domki na kaszubach nad jeziorem" 36.64 zł / 24 clicks, "domy na kaszubach" 31.49 / 22, "domy na sprzedaż przy jeziorze" 24.83 / 12, "dom całoroczny na kaszubach" 10.99 / 5, **"apartamenty na kaszubach" 10.88 zł for 1 click**, "domy na sprzedaż pomorze" 10.66 / 7. Many head terms have no "sprzedaż" (domki / apartamenty), so they attract holiday renters and tourists, not buyers. Only 15 of the keywords have any cost; the panel shows 150 zł of the 361 zł, so the rest is on other pages.
+
+Plan items (owner-side Ads changes, not code; nothing executed):
+1. Pull the **search terms report** (not keywords) for the last 30 days: what people really typed, how many are rental / tourist queries.
+2. Search: move to phrase / exact match on purchase-intent terms ("na sprzedaż", "sprzedaż", "kupię", "dom całoroczny"), add negatives (wynajem, noclegi, do wynajęcia, domki letniskowe, agroturystyka, tanio, olx), drop "apartamenty" unless purchase intent shown; ad copy from `marketing/google-ads.md` with 6 of 8, heat pump, location, price.
+3. PMax: audience signals (property buyers, in-market for real estate), exclude brand-less junk placements, and a real conversion signal (see conversions section); evaluate again after 2 weeks.
+4. Landing page is the same for both: first-screen fixes (A) apply to Google traffic first, because Google users scroll 25% vs Meta 49%.
+5. Quality: log how many ad-tap calls were answered (owner), to tell good taps from accidental ones.
