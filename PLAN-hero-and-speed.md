@@ -182,3 +182,22 @@ Gaps: broad negatives do **not** cover other word forms, so `wynajem` does not b
 
 374 rows. Search 361 zł / 218 clicks / 4 conversions; PMax 214 zł / 1,243 clicks / 8 conversions (mostly phone taps). Visible search terms cover only ~63 zł of Search spend (+95 zł "other terms", ~203 zł not broken down) and only ~6 zł of PMax spend: PMax is almost entirely Display/YouTube/Discover inventory. Findings, new negative keywords, keyword changes and the "negative `wynajem` kills ad group 2" conflict are written into `marketing/google-ads.md` (section "Aktualizacja po analizie haseł"). Also updated there: 6 of 8 houses, price extensions (425 tys. zł is sold), new headlines/descriptions/sitelink/callouts with the heat pump and the "last stage of a larger osada with ready infrastructure" message (all within Google Ads character limits, checked by script).
 Open: check whether Search has the Display Network / search partners enabled (CTR 1.86%, large unexplained spend); the CSV lives in the public repo root, move it to `marketing/data/` or keep out of git. Search-term text is not personal data, but the repo is public.
+
+## Implementation log (branch `perf-conversion-fixes`)
+
+Lighthouse mobile (lab, `femtopixel/google-lighthouse` 13.5, local copy served on 127.0.0.1, third parties live). Live-site baseline from the evidence section: Performance 45, LCP 20.3 s, TBT 2.1 s, 4.1 MB.
+
+| Step | Perf | A11y | BP | SEO | FCP | LCP | TBT | CLS | Weight |
+|---|---|---|---|---|---|---|---|---|---|
+| Local baseline (before C) | 46 | 92 | 96 | 100 | 2.5 s | 21.9 s | 1,210 ms | 0.073 | 4,309 KiB |
+| C: gallery/lightbox hardening, `js_error` | 50 | 92 | 96 | 100 | 2.5 s | 22.4 s | 890 ms | 0.038 | 3,925 KiB |
+
+Lab note: observed (unthrottled) LCP is 0.8 s; the 20+ s simulated LCP comes from everything requested before the LCP paint (3 hero images 2.3 MB, 3x gtag 600 KB, GTM, Phosphor fonts 300 KB) being replayed on simulated slow 4G. The page's own "4.8 s" is almost all style/layout/paint (infinite `box-shadow` pulse animations, Ken Burns, blurs), only ~90 ms is script.
+
+### C. Gallery / lightbox / JS errors - done
+- Headless repro (Chromium with FacebookApp, SamsungInternet and Chrome Android UAs, 360/390 px, touch) did **not** reproduce an exception in the old code; the Clarity errors may come from Facebook's own injected scripts. So the fixes are defensive and the new `js_error` event will show the real messages.
+- Gallery: all lookups guarded; state (tab, index) changes at once, the image swap is coalesced with a token, so fast taps / tab switches cannot apply a stale index; thumbnails/dots built once per tab (no 2560 px thumbnail reloads); thumbnail strip scrolled with `scrollTo` on the strip (no `scrollIntoView`, which can scroll the page in old webviews); tabs/arrows/dots are buttons with listeners instead of inline handlers; keyboard opens the lightbox.
+- Lightbox: one source of truth (`openLightboxSet(paths, index)`; static galleries use `data-lightbox` and their own block as the set); swipe vs. click separated (`onSwipe()` + 400 ms guard only for the background-close tap); interrupted fades cannot leave the image hidden; close is a real `<button>` 48 px.
+- Overlays (lightbox, lot modal, popup): shared `scrollLock` with owners (one overlay closing never unlocks another) and `afterTransition()` with a timeout fallback, so the page can never stay locked if `transitionend` does not fire.
+- Deep links: `scrollTo(0,0)` on load now only runs without a `#hash` (ad sitelinks `/#oferta`, `/#standard` … used to land at the top).
+- `js_error` (GA4): installed in `<head>`, bubbling `error` + `unhandledrejection`, message cut to 100 chars with URLs, e-mails and long numbers masked, browser family only, each message once, max 3 per page view. Owner: register `error_message` / `browser_family` as custom dimensions in GA4 to see them in reports.

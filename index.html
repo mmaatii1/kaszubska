@@ -19,6 +19,32 @@
     gtag('set', 'ads_data_redaction', true);
     gtag('set', 'url_passthrough', true);
 
+    // Uncaught JS errors -> GA4 `js_error`: short message + browser family only
+    // (no URL, stack or user data), each message once, max 3 per page view.
+    (function () {
+      var ua = navigator.userAgent || '', sent = {}, count = 0;
+      var browser = /FBAN|FBAV|FB_IAB/.test(ua) ? 'FacebookApp' : /Instagram/.test(ua) ? 'Instagram'
+        : /SamsungBrowser/.test(ua) ? 'SamsungInternet' : /EdgA?\/|EdgiOS/.test(ua) ? 'Edge'
+        : /OPR\/|Opera/.test(ua) ? 'Opera' : /Firefox|FxiOS/.test(ua) ? 'Firefox'
+        : /CriOS|Chrome\//.test(ua) ? 'Chrome' : /Safari\//.test(ua) ? 'Safari' : 'Other';
+      function report(kind, msg) {
+        msg = String(msg || 'unknown')
+          .replace(/[a-z][\w+.-]*:\/\/\S+/gi, '[url]')
+          .replace(/\S+@\S+/g, '[email]')
+          .replace(/\d{5,}/g, '#')
+          .slice(0, 100);
+        if (count >= 3 || sent[msg]) return;
+        sent[msg] = 1; count++;
+        gtag('event', 'js_error', { error_kind: kind, error_message: msg, browser_family: browser });
+      }
+      // bubbling listener only: resource load errors (img/script 404) do not reach window
+      window.addEventListener('error', function (e) { if (e && typeof e.message === 'string') report('error', e.message); });
+      window.addEventListener('unhandledrejection', function (e) {
+        var r = e && e.reason;
+        report('rejection', r && r.message ? r.message : r);
+      });
+    })();
+
     function getCookieConsent() {
       try { return localStorage.getItem('cookieConsent'); } catch (e) { return null; }
     }
@@ -995,7 +1021,7 @@
     }
     .gallery-thumbs::-webkit-scrollbar { display: none; }
     .gallery-thumb {
-      flex-shrink: 0;
+      flex-shrink: 0; padding: 0; background: none;
       width: 96px; height: 64px;
       border-radius: 6px; overflow: hidden;
       cursor: pointer; border: 2.5px solid transparent;
@@ -1166,10 +1192,13 @@
     }
     .lightbox:not(.open) img { transform: scale(.88); opacity: 0; }
     .lightbox-close {
-      position: absolute; top: 1.5rem; right: 2rem;
+      position: absolute; top: 1rem; right: 1rem;
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: 0; font-family: inherit;
       font-size: 2rem; color: var(--cream);
       cursor: pointer; line-height: 1;
-      opacity: .7; transition: opacity .2s;
+      opacity: .8; transition: opacity .2s;
     }
     .lightbox-close:hover { opacity: 1; }
     .lightbox-prev, .lightbox-next {
@@ -1215,6 +1244,7 @@
     #gallery-main-img.fading { opacity: 0; }
 
     .lightbox.open img { transform: scale(1) !important; opacity: 1 !important; }
+    .lightbox.open img.lb-fading { transform: scale(.97) !important; opacity: 0 !important; transition-duration: .18s; }
 
     /* ─── HOVER MICRO-INTERACTIONS ───────────────────────────── */
     .spec-card {
@@ -2962,9 +2992,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="domy-gallery reveal" data-carousel>
-        <img src="zdjecia/hero_3.webp" srcset="zdjecia/hero_3-768x432.webp 768w, zdjecia/hero_3-1024x576.webp 1024w, zdjecia/hero_3-1536x864.webp 1536w, zdjecia/hero_3-2048x1152.webp 2048w, zdjecia/hero_3.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Dom w Kaszubskiej Osadzie" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/home-4-4.webp" srcset="zdjecia/home-4-4-768x432.webp 768w, zdjecia/home-4-4-1024x576.webp 1024w, zdjecia/home-4-4-1536x864.webp 1536w, zdjecia/home-4-4-2048x1152.webp 2048w, zdjecia/home-4-4.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Dom – widok z tarasu" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/osada_hero_1.webp" srcset="zdjecia/osada_hero_1-768x427.webp 768w, zdjecia/osada_hero_1-1024x570.webp 1024w, zdjecia/osada_hero_1-1536x854.webp 1536w, zdjecia/osada_hero_1-2048x1139.webp 2048w, zdjecia/osada_hero_1.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Kaszubska Osada" loading="lazy" width="2560" height="1424" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/hero_3.webp" srcset="zdjecia/hero_3-768x432.webp 768w, zdjecia/hero_3-1024x576.webp 1024w, zdjecia/hero_3-1536x864.webp 1536w, zdjecia/hero_3-2048x1152.webp 2048w, zdjecia/hero_3.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Dom w Kaszubskiej Osadzie" loading="lazy" width="2560" height="1440" data-lightbox />
+        <img src="zdjecia/home-4-4.webp" srcset="zdjecia/home-4-4-768x432.webp 768w, zdjecia/home-4-4-1024x576.webp 1024w, zdjecia/home-4-4-1536x864.webp 1536w, zdjecia/home-4-4-2048x1152.webp 2048w, zdjecia/home-4-4.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Dom – widok z tarasu" loading="lazy" width="2560" height="1440" data-lightbox />
+        <img src="zdjecia/osada_hero_1.webp" srcset="zdjecia/osada_hero_1-768x427.webp 768w, zdjecia/osada_hero_1-1024x570.webp 1024w, zdjecia/osada_hero_1-1536x854.webp 1536w, zdjecia/osada_hero_1-2048x1139.webp 2048w, zdjecia/osada_hero_1.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Kaszubska Osada" loading="lazy" width="2560" height="1424" data-lightbox />
       </div>
     </div>
   </div>
@@ -2982,11 +3012,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="section-inner">
     <div class="osada-grid">
       <div class="osada-gallery reveal" data-carousel>
-        <img src="zdjecia/ostoja_galeria_15.webp" srcset="zdjecia/ostoja_galeria_15-768x512.webp 768w, zdjecia/ostoja_galeria_15-1024x683.webp 1024w, zdjecia/ostoja_galeria_15-1536x1024.webp 1536w, zdjecia/ostoja_galeria_15.webp 1680w" sizes="(max-width: 900px) 90vw, 50vw" alt="Jezioro Graniczne" loading="lazy" width="1680" height="1120" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/ostoja_galeria_8.webp" srcset="zdjecia/ostoja_galeria_8-768x512.webp 768w, zdjecia/ostoja_galeria_8-1024x683.webp 1024w, zdjecia/ostoja_galeria_8-1536x1025.webp 1536w, zdjecia/ostoja_galeria_8.webp 1595w" sizes="(max-width: 900px) 90vw, 50vw" alt="Kaszuby – natura" loading="lazy" width="1595" height="1064" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/kaszubska_osada_6.webp" alt="Okolica osady" loading="lazy" width="1064" height="1262" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/ostoja_galeria_7.webp" srcset="zdjecia/ostoja_galeria_7-768x512.webp 768w, zdjecia/ostoja_galeria_7-1024x683.webp 1024w, zdjecia/ostoja_galeria_7-1536x1024.webp 1536w, zdjecia/ostoja_galeria_7.webp 1585w" sizes="(max-width: 900px) 90vw, 50vw" alt="Zachód słońca" loading="lazy" width="1585" height="1057" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/ostoja_galeria_12.webp" srcset="zdjecia/ostoja_galeria_12-768x512.webp 768w, zdjecia/ostoja_galeria_12-1024x683.webp 1024w, zdjecia/ostoja_galeria_12-1536x1024.webp 1536w, zdjecia/ostoja_galeria_12.webp 1680w" sizes="(max-width: 900px) 90vw, 50vw" alt="Plaża" loading="lazy" width="1680" height="1120" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/ostoja_galeria_15.webp" srcset="zdjecia/ostoja_galeria_15-768x512.webp 768w, zdjecia/ostoja_galeria_15-1024x683.webp 1024w, zdjecia/ostoja_galeria_15-1536x1024.webp 1536w, zdjecia/ostoja_galeria_15.webp 1680w" sizes="(max-width: 900px) 90vw, 50vw" alt="Jezioro Graniczne" loading="lazy" width="1680" height="1120" data-lightbox />
+        <img src="zdjecia/ostoja_galeria_8.webp" srcset="zdjecia/ostoja_galeria_8-768x512.webp 768w, zdjecia/ostoja_galeria_8-1024x683.webp 1024w, zdjecia/ostoja_galeria_8-1536x1025.webp 1536w, zdjecia/ostoja_galeria_8.webp 1595w" sizes="(max-width: 900px) 90vw, 50vw" alt="Kaszuby – natura" loading="lazy" width="1595" height="1064" data-lightbox />
+        <img src="zdjecia/kaszubska_osada_6.webp" alt="Okolica osady" loading="lazy" width="1064" height="1262" data-lightbox />
+        <img src="zdjecia/ostoja_galeria_7.webp" srcset="zdjecia/ostoja_galeria_7-768x512.webp 768w, zdjecia/ostoja_galeria_7-1024x683.webp 1024w, zdjecia/ostoja_galeria_7-1536x1024.webp 1536w, zdjecia/ostoja_galeria_7.webp 1585w" sizes="(max-width: 900px) 90vw, 50vw" alt="Zachód słońca" loading="lazy" width="1585" height="1057" data-lightbox />
+        <img src="zdjecia/ostoja_galeria_12.webp" srcset="zdjecia/ostoja_galeria_12-768x512.webp 768w, zdjecia/ostoja_galeria_12-1024x683.webp 1024w, zdjecia/ostoja_galeria_12-1536x1024.webp 1536w, zdjecia/ostoja_galeria_12.webp 1680w" sizes="(max-width: 900px) 90vw, 50vw" alt="Plaża" loading="lazy" width="1680" height="1120" data-lightbox />
       </div>
 
       <div class="osada-text reveal">
@@ -3177,13 +3207,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="inv-gallery reveal" data-carousel>
-        <img src="zdjecia/interior_6.webp" srcset="zdjecia/interior_6-768x432.webp 768w, zdjecia/interior_6-1024x576.webp 1024w, zdjecia/interior_6-1536x864.webp 1536w, zdjecia/interior_6-2048x1152.webp 2048w, zdjecia/interior_6.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze domku" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_1-scaled.webp" srcset="zdjecia/interior_1-768x432.webp 768w, zdjecia/interior_1-1024x577.webp 1024w, zdjecia/interior_1-1536x865.webp 1536w, zdjecia/interior_1-2048x1153.webp 2048w, zdjecia/interior_1-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – salon" loading="lazy" width="2560" height="1441" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_2-scaled.webp" srcset="zdjecia/interior_2-768x432.webp 768w, zdjecia/interior_2-1024x576.webp 1024w, zdjecia/interior_2-1536x864.webp 1536w, zdjecia/interior_2-2048x1152.webp 2048w, zdjecia/interior_2-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – sypialnia" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_3-1-scaled.webp" srcset="zdjecia/interior_3-1-768x432.webp 768w, zdjecia/interior_3-1-1024x576.webp 1024w, zdjecia/interior_3-1-1536x864.webp 1536w, zdjecia/interior_3-1-2048x1152.webp 2048w, zdjecia/interior_3-1-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – kuchnia" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_4-scaled.webp" srcset="zdjecia/interior_4-768x432.webp 768w, zdjecia/interior_4-1024x576.webp 1024w, zdjecia/interior_4-1536x864.webp 1536w, zdjecia/interior_4-2048x1152.webp 2048w, zdjecia/interior_4-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – łazienka" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_5.webp" srcset="zdjecia/interior_5-768x432.webp 768w, zdjecia/interior_5-1024x576.webp 1024w, zdjecia/interior_5-1536x864.webp 1536w, zdjecia/interior_5-2048x1152.webp 2048w, zdjecia/interior_5.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – detal" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
-        <img src="zdjecia/interior_4-1.webp" srcset="zdjecia/interior_4-1-768x432.webp 768w, zdjecia/interior_4-1-1024x576.webp 1024w, zdjecia/interior_4-1-1536x864.webp 1536w, zdjecia/interior_4-1-2048x1152.webp 2048w, zdjecia/interior_4-1.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – detal" loading="lazy" width="2560" height="1440" onclick="openLightbox(this.src)" />
+        <img src="zdjecia/interior_6.webp" srcset="zdjecia/interior_6-768x432.webp 768w, zdjecia/interior_6-1024x576.webp 1024w, zdjecia/interior_6-1536x864.webp 1536w, zdjecia/interior_6-2048x1152.webp 2048w, zdjecia/interior_6.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze domku" loading="lazy" width="2560" height="1440" data-lightbox />
+        <img src="zdjecia/interior_1-scaled.webp" srcset="zdjecia/interior_1-768x432.webp 768w, zdjecia/interior_1-1024x577.webp 1024w, zdjecia/interior_1-1536x865.webp 1536w, zdjecia/interior_1-2048x1153.webp 2048w, zdjecia/interior_1-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – salon" loading="lazy" width="2560" height="1441" data-lightbox />
+        <img src="zdjecia/interior_2-scaled.webp" srcset="zdjecia/interior_2-768x432.webp 768w, zdjecia/interior_2-1024x576.webp 1024w, zdjecia/interior_2-1536x864.webp 1536w, zdjecia/interior_2-2048x1152.webp 2048w, zdjecia/interior_2-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – sypialnia" loading="lazy" width="2560" height="1440" data-lightbox />
+        <img src="zdjecia/interior_3-1-scaled.webp" srcset="zdjecia/interior_3-1-768x432.webp 768w, zdjecia/interior_3-1-1024x576.webp 1024w, zdjecia/interior_3-1-1536x864.webp 1536w, zdjecia/interior_3-1-2048x1152.webp 2048w, zdjecia/interior_3-1-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – kuchnia" loading="lazy" width="2560" height="1440" data-lightbox />
+        <img src="zdjecia/interior_4-scaled.webp" srcset="zdjecia/interior_4-768x432.webp 768w, zdjecia/interior_4-1024x576.webp 1024w, zdjecia/interior_4-1536x864.webp 1536w, zdjecia/interior_4-2048x1152.webp 2048w, zdjecia/interior_4-scaled.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – łazienka" loading="lazy" width="2560" height="1440" data-lightbox />
+        <img src="zdjecia/interior_5.webp" srcset="zdjecia/interior_5-768x432.webp 768w, zdjecia/interior_5-1024x576.webp 1024w, zdjecia/interior_5-1536x864.webp 1536w, zdjecia/interior_5-2048x1152.webp 2048w, zdjecia/interior_5.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – detal" loading="lazy" width="2560" height="1440" data-lightbox />
+        <img src="zdjecia/interior_4-1.webp" srcset="zdjecia/interior_4-1-768x432.webp 768w, zdjecia/interior_4-1-1024x576.webp 1024w, zdjecia/interior_4-1-1536x864.webp 1536w, zdjecia/interior_4-1-2048x1152.webp 2048w, zdjecia/interior_4-1.webp 2560w" sizes="(max-width: 900px) 90vw, 50vw" alt="Wnętrze – detal" loading="lazy" width="2560" height="1440" data-lightbox />
       </div>
     </div>
   </div>
@@ -3205,21 +3235,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="divider"></div>
 
       <!-- Tab filter -->
-      <div class="gallery-tabs">
-        <button class="gallery-tab active" onclick="switchTab('zewnetrze', this)">Zewnętrze</button>
-        <button class="gallery-tab" onclick="switchTab('wnetrze', this)">Wnętrza</button>
-        <button class="gallery-tab" onclick="switchTab('otoczenie', this)">Otoczenie</button>
+      <div class="gallery-tabs" role="group" aria-label="Kategorie zdjęć">
+        <button type="button" class="gallery-tab active" data-tab="zewnetrze" aria-pressed="true">Zewnętrze</button>
+        <button type="button" class="gallery-tab" data-tab="wnetrze" aria-pressed="false">Wnętrza</button>
+        <button type="button" class="gallery-tab" data-tab="otoczenie" aria-pressed="false">Otoczenie</button>
       </div>
     </div>
 
     <!-- Carousel -->
     <div class="gallery-carousel-wrap reveal">
-      <div class="gallery-main" id="gallery-main" onclick="openGalleryLightbox()">
+      <div class="gallery-main" id="gallery-main" role="button" tabindex="0" aria-label="Powiększ zdjęcie">
         <img id="gallery-main-img" src="zdjecia/hero_3.webp" alt="Kaszubska Osada" loading="lazy" width="2560" height="1440" />
       </div>
       <div class="gallery-counter" id="gallery-counter">1 / 6</div>
-      <button class="gallery-arrow gallery-arrow-prev" onclick="galleryNav(-1)" aria-label="Poprzednie">&#8249;</button>
-      <button class="gallery-arrow gallery-arrow-next" onclick="galleryNav(1)" aria-label="Następne">&#8250;</button>
+      <button type="button" class="gallery-arrow gallery-arrow-prev" data-dir="-1" aria-label="Poprzednie zdjęcie">&#8249;</button>
+      <button type="button" class="gallery-arrow gallery-arrow-next" data-dir="1" aria-label="Następne zdjęcie">&#8250;</button>
 
       <!-- Thumbnails (desktop) -->
       <div class="gallery-thumbs" id="gallery-thumbs"></div>
@@ -3467,17 +3497,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <!-- ─── LIGHTBOX ───────────────────────────────────────────────── -->
-<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
-  <span class="lightbox-close" onclick="closeLightbox()">×</span>
-  <button class="lightbox-prev" onclick="lbNav(-1)">‹</button>
-  <img id="lightbox-img" src="" alt="" />
-  <button class="lightbox-next" onclick="lbNav(1)">›</button>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Powiększone zdjęcie" aria-hidden="true">
+  <button type="button" class="lightbox-close" aria-label="Zamknij">×</button>
+  <button type="button" class="lightbox-prev" data-dir="-1" aria-label="Poprzednie zdjęcie">‹</button>
+  <img id="lightbox-img" alt="" />
+  <button type="button" class="lightbox-next" data-dir="1" aria-label="Następne zdjęcie">›</button>
 </div>
 
 <script>
-  // Always start at top — disable browser scroll restoration
+  // ── Shared helpers (used by both scripts; declared first so nothing above can stop them)
+  const $id = id => document.getElementById(id);
+  // Scroll lock with named owners: closing one overlay never unlocks the page under another.
+  const scrollLock = (function () {
+    const owners = new Set();
+    const apply = () => { document.body.style.overflow = owners.size ? 'hidden' : ''; };
+    return {
+      add(owner) { owners.add(owner); apply(); },
+      remove(owner) { owners.delete(owner); apply(); },
+      active() { return owners.size > 0; }
+    };
+  })();
+  // Run fn once when el's own transition ends, or after `ms` if transitionend never fires
+  // (prefers-reduced-motion, hidden tab, element hidden mid-transition).
+  function afterTransition(el, fn, ms) {
+    let done = false, timer = 0;
+    const onEnd = e => { if (e.target === el) finish(); };
+    function finish() {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      el.removeEventListener('transitionend', onEnd);
+      fn();
+    }
+    el.addEventListener('transitionend', onEnd);
+    timer = setTimeout(finish, ms || 600);
+  }
+  // Smooth horizontal scroll inside an element; falls back to an instant jump in old webviews.
+  function scrollElTo(el, left) {
+    try { el.scrollTo({ left: left, behavior: 'smooth' }); } catch (e) { el.scrollLeft = left; }
+  }
+  // Horizontal swipe on el -> handler(+1 | -1). Returns recent(): true right after a swipe,
+  // so the click that the browser synthesizes from the same touch can be ignored.
+  function onSwipe(el, handler) {
+    let x0 = null, y0 = 0, lastSwipe = 0;
+    el.addEventListener('touchstart', e => {
+      const t = e.touches && e.touches[0];
+      x0 = t ? t.clientX : null;
+      y0 = t ? t.clientY : 0;
+    }, { passive: true });
+    el.addEventListener('touchend', e => {
+      const t = e.changedTouches && e.changedTouches[0];
+      if (x0 === null || !t) return;
+      const dx = t.clientX - x0, dy = t.clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        lastSwipe = Date.now();
+        handler(dx < 0 ? 1 : -1);
+      }
+    }, { passive: true });
+    return () => Date.now() - lastSwipe < 400;
+  }
+
+  // Start at the top on reload, but keep deep links (ad sitelinks point to /#oferta, /#standard …)
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
+  if (!location.hash) window.scrollTo(0, 0);
 
   // ── Cookie consent banner
   const koPrefs = document.getElementById('koPrefs');
@@ -3618,73 +3701,103 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     ],
   };
 
-  let activeTab = 'zewnetrze';
-  let gIdx = 0;
-  let galleryReady = false;
+  // State is updated at once on every tap; only the image swap is deferred and coalesced
+  // (token), so fast taps and tab switches can never apply a stale index or tab.
+  const gallery = { tab: 'zewnetrze', idx: 0, token: 0 };
+  const gMain    = $id('gallery-main');
+  const gMainImg = $id('gallery-main-img');
+  const gThumbs  = $id('gallery-thumbs');
+  const gDots    = $id('gallery-dots');
+  const gCounter = $id('gallery-counter');
 
-  function updateGalleryUI() {
-    const images = TABS[activeTab];
-    const thumbsEl = document.getElementById('gallery-thumbs');
-    const dotsEl   = document.getElementById('gallery-dots');
-    const counter  = document.getElementById('gallery-counter');
+  function galleryImages() { return TABS[gallery.tab] || TABS.zewnetrze; }
 
-    counter.textContent = `${gIdx + 1} / ${images.length}`;
-
-    thumbsEl.innerHTML = images.map((img, i) => `
-      <div class="gallery-thumb ${i === gIdx ? 'active' : ''}" onclick="goToSlide(${i})" title="${img.label}">
-        <img src="${img.src}" alt="${img.label}" loading="lazy" />
-      </div>`).join('');
-    const activeThumb = thumbsEl.children[gIdx];
-    if (galleryReady && activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-
-    dotsEl.innerHTML = images.map((_, i) =>
-      `<button class="gallery-dot ${i === gIdx ? 'active' : ''}" onclick="goToSlide(${i})" aria-label="Zdjęcie ${i+1}"></button>`
-    ).join('');
+  // thumbnails (desktop) and dots (mobile) are rebuilt only when the tab changes
+  function buildGalleryNav() {
+    const images = galleryImages();
+    if (gThumbs) gThumbs.innerHTML = images.map((img, i) =>
+      `<button type="button" class="gallery-thumb" data-slide="${i}" aria-label="${img.label}"><img src="${img.src}" alt="" loading="lazy" /></button>`).join('');
+    if (gDots) gDots.innerHTML = images.map((_, i) =>
+      `<button type="button" class="gallery-dot" data-slide="${i}" aria-label="Zdjęcie ${i + 1}"></button>`).join('');
   }
 
-  function buildGallery(animate) {
-    const images = TABS[activeTab];
-    const mainImg = document.getElementById('gallery-main-img');
+  function markGalleryNav() {
+    const images = galleryImages();
+    if (gCounter) gCounter.textContent = `${gallery.idx + 1} / ${images.length}`;
+    [gThumbs, gDots].forEach(box => {
+      if (!box) return;
+      Array.from(box.children).forEach((el, i) => el.classList.toggle('active', i === gallery.idx));
+    });
+    // keep the active thumbnail visible inside its strip – never scroll the page itself
+    const thumb = gThumbs && gThumbs.children[gallery.idx];
+    if (thumb && gThumbs.offsetParent !== null) {
+      scrollElTo(gThumbs, thumb.offsetLeft - (gThumbs.clientWidth - thumb.offsetWidth) / 2);
+    }
+  }
 
+  function showGallerySlide(animate) {
+    const token = ++gallery.token;
+    markGalleryNav();
+    if (!gMainImg) return;
+    const apply = () => {
+      if (token !== gallery.token) return;
+      const images = galleryImages();
+      const img = images[gallery.idx] || images[0];
+      gMainImg.src = img.src;
+      gMainImg.alt = img.label;
+      gMainImg.classList.remove('fading');
+    };
     if (animate) {
-      mainImg.classList.add('fading');
-      setTimeout(() => {
-        mainImg.src = images[gIdx].src;
-        mainImg.alt = images[gIdx].label;
-        mainImg.classList.remove('fading');
-        updateGalleryUI();
-      }, 360);
+      gMainImg.classList.add('fading');
+      setTimeout(apply, 360);
     } else {
-      mainImg.src = images[gIdx].src;
-      mainImg.alt = images[gIdx].label;
-      updateGalleryUI();
+      apply();
     }
   }
 
   function goToSlide(i) {
-    gIdx = i;
-    buildGallery(true);
+    const len = galleryImages().length;
+    gallery.idx = Math.min(Math.max(i | 0, 0), len - 1);
+    showGallerySlide(true);
   }
 
   function galleryNav(dir) {
-    const len = TABS[activeTab].length;
-    gIdx = (gIdx + dir + len) % len;
-    buildGallery(true);
+    const len = galleryImages().length;
+    gallery.idx = (gallery.idx + dir + len) % len;
+    showGallerySlide(true);
   }
 
-  function switchTab(tab, btn) {
-    activeTab = tab;
-    gIdx = 0;
-    document.querySelectorAll('.gallery-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    buildGallery(true);
+  function switchTab(tab) {
+    if (!TABS[tab]) return;
+    gallery.tab = tab;
+    gallery.idx = 0;
+    document.querySelectorAll('.gallery-tab').forEach(b => {
+      const on = b.dataset.tab === tab;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    buildGalleryNav();
+    showGallerySlide(true);
   }
 
-  function openGalleryLightbox() {
-    lbImages = TABS[activeTab].map(i => i.src);
-    lbIndex = gIdx;
-    openLightboxWithSrc(lbImages[lbIndex]);
+  document.querySelectorAll('.gallery-tab').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+  document.querySelectorAll('.gallery-arrow').forEach(b => b.addEventListener('click', () => galleryNav(+b.dataset.dir)));
+  [gThumbs, gDots].forEach(box => {
+    if (box) box.addEventListener('click', e => {
+      const b = e.target.closest('[data-slide]');
+      if (b) goToSlide(+b.dataset.slide);
+    });
+  });
+  if (gMain) {
+    const gSwiped = onSwipe(gMain, galleryNav);
+    const openCurrent = () => openLightboxSet(galleryImages().map(i => i.src), gallery.idx);
+    gMain.addEventListener('click', () => { if (!gSwiped()) openCurrent(); });
+    gMain.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCurrent(); }
+    });
   }
+  buildGalleryNav();
+  showGallerySlide(false);
 
   // ── Count-up animation
   function animateCountUp(el) {
@@ -3713,73 +3826,67 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }, { threshold: 0.5 });
   document.querySelectorAll('.countup').forEach(el => countObs.observe(el));
 
-  // Touch swipe on gallery
-  let gTouchX = 0;
-  const gMain = document.getElementById('gallery-main');
-  gMain.addEventListener('touchstart', e => { gTouchX = e.touches[0].clientX; }, { passive: true });
-  gMain.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - gTouchX;
-    if (Math.abs(dx) > 40) galleryNav(dx < 0 ? 1 : -1);
-  });
-
-  // Init gallery
-  buildGallery();
-  galleryReady = true;
-
   // ── Lightbox ────────────────────────────────────────────────
-  let lbImages = [];
-  let lbIndex = 0;
-  const lightboxEl = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
+  // One source of truth: every open passes the list of image paths (getAttribute('src'),
+  // never the resolved URL) and the index, so prev/next can never point at a missing item.
+  const lb = { images: [], idx: 0, token: 0 };
+  const lightboxEl  = $id('lightbox');
+  const lightboxImg = $id('lightbox-img');
 
-  function openLightboxWithSrc(src) {
-    lightboxImg.src = src;
+  function openLightboxSet(srcs, idx) {
+    if (!lightboxEl || !lightboxImg || !srcs || !srcs.length) return;
+    lb.images = srcs.slice();
+    lb.idx = Math.min(Math.max(idx | 0, 0), lb.images.length - 1);
+    lb.token++;
+    lightboxImg.classList.remove('lb-fading');
+    lightboxImg.src = lb.images[lb.idx];
     lightboxEl.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function openLightbox(src) {
-    lbImages = Array.from(document.querySelectorAll('img[onclick^="openLightbox"]')).map(i => i.src);
-    lbIndex = lbImages.indexOf(src);
-    openLightboxWithSrc(src);
+    lightboxEl.setAttribute('aria-hidden', 'false');
+    scrollLock.add('lightbox');
   }
 
   function closeLightbox() {
+    if (!lightboxEl) return;
+    lb.token++;
     lightboxEl.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  function closeLightboxOnBg(e) {
-    if (e.target === lightboxEl) closeLightbox();
+    lightboxEl.setAttribute('aria-hidden', 'true');
+    if (lightboxImg) lightboxImg.classList.remove('lb-fading');
+    scrollLock.remove('lightbox');
   }
 
   function lbNav(dir) {
-    if (!lbImages.length) return;
-    lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
-    // Crossfade in lightbox too
-    lightboxImg.style.opacity = '0';
-    lightboxImg.style.transform = `scale(.95) translateX(${dir > 0 ? '-' : ''}20px)`;
+    if (!lightboxImg || !lb.images.length || !lightboxEl.classList.contains('open')) return;
+    lb.idx = (lb.idx + dir + lb.images.length) % lb.images.length;
+    const token = ++lb.token;
+    lightboxImg.classList.add('lb-fading');
     setTimeout(() => {
-      lightboxImg.src = lbImages[lbIndex];
-      lightboxImg.style.transition = 'none';
-      setTimeout(() => {
-        lightboxImg.style.transition = '';
-        lightboxImg.style.opacity = '1';
-        lightboxImg.style.transform = '';
-      }, 20);
-    }, 200);
+      if (token !== lb.token) return;
+      lightboxImg.src = lb.images[lb.idx];
+      lightboxImg.classList.remove('lb-fading');
+    }, 180);
   }
 
-  // Touch swipe on lightbox
-  let lbTouchX = 0;
-  lightboxEl.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive: true });
-  lightboxEl.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - lbTouchX;
-    if (Math.abs(dx) > 40) lbNav(dx < 0 ? 1 : -1);
+  // Static gallery images (data-lightbox): the set is the images of the same gallery block.
+  document.addEventListener('click', e => {
+    const img = e.target.closest && e.target.closest('img[data-lightbox]');
+    if (!img) return;
+    const set = Array.from((img.parentElement || document).querySelectorAll('img[data-lightbox]'));
+    openLightboxSet(set.map(i => i.getAttribute('src')), set.indexOf(img));
   });
 
+  if (lightboxEl) {
+    const lbSwiped = onSwipe(lightboxEl, lbNav);
+    lightboxEl.addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (btn && btn.dataset.dir) lbNav(+btn.dataset.dir);
+      else if (btn) closeLightbox();
+      // a tap on the dark background closes, the tail of a swipe does not
+      else if (e.target === lightboxEl && !lbSwiped()) closeLightbox();
+    });
+  }
+
   document.addEventListener('keydown', e => {
-    if (!lightboxEl.classList.contains('open')) return;
+    if (!lightboxEl || !lightboxEl.classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') lbNav(-1);
     if (e.key === 'ArrowRight') lbNav(1);
@@ -3828,7 +3935,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           : left - parseFloat(getComputedStyle(track).paddingLeft);
       };
       let idx = 0;
-      const go = (i) => { const its = items(); if (its[i]) track.scrollTo({ left: pos(its[i]), behavior: 'smooth' }); };
+      const go = (i) => { const its = items(); if (its[i]) scrollElTo(track, pos(its[i])); };
       function build() {
         // in a grid/flex parent the nav becomes its own item – cancel the parent's gap
         const ps = getComputedStyle(track.parentElement);
@@ -3911,37 +4018,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     gaEvent('conversion', { send_to: 'AW-18508894435/Khi4COKZwZwdEOOh3flE', value: 1.0, currency: 'PLN' });
   }
 
+  const offerPopup = $id('offerPopup');
   function openOfferPopup() {
+    if (!offerPopup) return;
     gaEvent('popup_view', { popup_name: 'offer_popup' });
-    const overlay = document.getElementById('offerPopup');
-    overlay.style.display = 'flex';
-    requestAnimationFrame(() => overlay.classList.add('visible'));
-    document.body.style.overflow = 'hidden';
+    offerPopup.style.display = 'flex';
+    requestAnimationFrame(() => offerPopup.classList.add('visible'));
+    scrollLock.add('popup');
   }
   function closeOfferPopup() {
-    const overlay = document.getElementById('offerPopup');
-    overlay.classList.remove('visible');
-    overlay.addEventListener('transitionend', () => {
-      overlay.style.display = 'none';
-      document.body.style.overflow = '';
-    }, { once: true });
     try { sessionStorage.setItem('popupDismissed', '1'); } catch (e) {}
+    if (!offerPopup || offerPopup.style.display === 'none') return;
+    offerPopup.classList.remove('visible');
+    // unlock at once; hide after the fade (or the fallback timeout if transitionend never fires)
+    scrollLock.remove('popup');
+    afterTransition(offerPopup, () => {
+      if (!offerPopup.classList.contains('visible')) offerPopup.style.display = 'none';
+    }, 500);
   }
   // "Zostaw wiadomość" w popupie: zamyka popup i przewija do formularza kontaktowego
   function popupToContactForm() {
     closeOfferPopup();
-    document.body.style.overflow = '';
-    const form = document.getElementById('contactForm');
+    const form = $id('contactForm');
+    if (!form) return;
     const navH = (document.querySelector('nav') || {}).offsetHeight || 0;
-    window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - navH - 24, behavior: 'smooth' });
+    const top = form.getBoundingClientRect().top + window.scrollY - navH - 24;
+    try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, top); }
   }
-  document.getElementById('offerPopupClose').addEventListener('click', closeOfferPopup);
-  document.getElementById('offerPopup').addEventListener('click', function(e) {
-    if (e.target === this) closeOfferPopup();
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && document.getElementById('offerPopup').classList.contains('visible')) closeOfferPopup();
-  });
+  if (offerPopup) {
+    const closeBtn = $id('offerPopupClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeOfferPopup);
+    offerPopup.addEventListener('click', function(e) {
+      if (e.target === this) closeOfferPopup();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && offerPopup.classList.contains('visible')) closeOfferPopup();
+    });
+  }
   // Ta sama domena co strona – działa z www i bez www (pełny adres blokował CORS na www.)
   const KONTAKT_URL = '/kontakt.php';
 
@@ -4026,7 +4139,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   if (!popupSeen) {
     const POPUP_DELAY = 25000;
     let popupTimeUp = false;
-    const popupBusy = () => document.body.style.overflow === 'hidden' ||
+    const popupBusy = () => scrollLock.active() ||
       koPrefsShown() ||
       /^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement || {}).tagName || '');
     const tryPopup = () => {
@@ -4051,6 +4164,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     let activeBld = null;
     const modal    = document.getElementById('halfModal');
+    if (!modal) return;
     const bldSpan  = document.getElementById('halfBldNum');
     const leftUnit = document.getElementById('halfLeft');
     const rightUnit= document.getElementById('halfRight');
@@ -4068,15 +4182,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       rightUnit.classList.toggle('half-sold', sold[1]);
       modal.style.display = 'flex';
       requestAnimationFrame(() => modal.classList.add('visible'));
-      document.body.style.overflow = 'hidden';
+      scrollLock.add('half');
     }
 
     function closeHalfModal() {
       modal.classList.remove('visible');
-      modal.addEventListener('transitionend', () => {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-      }, { once: true });
+      scrollLock.remove('half');
+      afterTransition(modal, () => {
+        if (!modal.classList.contains('visible')) modal.style.display = 'none';
+      }, 400);
     }
 
     const PDFS = { 1: 'karty/1-1A-New.pdf', 2: 'karty/2-2A-New.pdf', 3: 'karty/3-3A-New.pdf', 4: 'karty/4-4A-New.pdf' };
