@@ -135,3 +135,7 @@ Conclusions:
 - The site also fires a direct Ads conversion (`AW-18508894435/Khi4COKZwZwdEOOh3flE`, index.html:3913). It is not visible in the list above, and a `send_to` event does not show in GA4. Confirm in Ads whether an action with that label still exists; if not, remove the dead call; if it does, make sure it does not double count with the imported `generate_lead`.
 - `popup_view` on 64% of users with ~16 callback/contact leads means the popup mostly interrupts. Moving it to scroll depth + idle (B1) will cut impressions sharply; compare `generate_lead` per `popup_view` before/after to make sure leads do not drop.
 - `file_download` (5% of users, presentation/PDF) is a real interest signal: candidate secondary conversion / retargeting audience.
+
+## `generate_lead` by channel (owner data, 2026-11-02)
+
+Key-event column filtered to `generate_lead`: 9 total (4.8% of all key events; 25 raw events exist, so the key-event flag covers only part of the period). Paid Social 5 (of 519 sessions), Direct 3, Organic Search 1, **all paid Google channels 0** (Cross-network 1,377 + Paid Search 189 + Display 153 + Paid Other 84 = 1,803 sessions). Reading: no form leads from paid Google in this window; Meta is the only paid source with forms. Caveats: tiny numbers (9), the flag's start date is unknown, phone taps are not included (Ads shows 12 phone taps from campaigns). Still to get: `phone_click` by channel and campaign cost, then cost per contact for Google vs Meta.
