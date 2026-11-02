@@ -279,19 +279,32 @@
   }
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <!-- Self-hosted variable fonts (tools/build_assets.py): 3 files instead of ~10 from Google Fonts -->
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-var.woff2" crossorigin fetchpriority="low" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-italic-var.woff2" crossorigin fetchpriority="low" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-var.woff2" crossorigin fetchpriority="low" />
   <!-- Hero slide 1 preload (LCP): the same files the <picture> in .hero picks -->
   <link rel="preload" as="image" href="zdjecia/hero_3-m720.webp" media="(max-width: 600px)" fetchpriority="high" />
   <link rel="preload" as="image" imagesrcset="zdjecia/hero_3-1024x576.webp 1024w, zdjecia/hero_3-1536x864.webp 1536w, zdjecia/hero_3-2048x1152.webp 2048w, zdjecia/hero_3.webp 2560w" imagesizes="100vw" media="(min-width: 601px)" fetchpriority="high" />
-  <!-- Fonty async — nieblokowalny render -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" onload="this.rel='stylesheet'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" /></noscript>
-  <!-- Phosphor — nieblokowalny, ładowany po parsowaniu HTML -->
-  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1" defer></script>
   <style>
+    @font-face {
+      font-family: 'Inter'; font-style: normal; font-weight: 300 800; font-display: swap;
+      src: url('assets/fonts/inter-var.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Playfair Display'; font-style: normal; font-weight: 400 700; font-display: swap;
+      src: url('assets/fonts/playfair-var.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Playfair Display'; font-style: italic; font-weight: 400 700; font-display: swap;
+      src: url('assets/fonts/playfair-italic-var.woff2') format('woff2');
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Icons: <i class="ph[-bold] ph-NAME"><svg><use href="#b-NAME|#r-NAME"></use></svg></i>,
+       symbols inlined at the end of <body>; size = font-size, colour = currentColor */
+    i.ph, i.ph-bold { display: inline-block; width: 1em; height: 1em; line-height: 1; vertical-align: -.125em; flex-shrink: 0; font-style: normal; }
+    i.ph > svg, i.ph-bold > svg { display: block; width: 100%; height: 100%; fill: currentColor; }
 
     :root {
       --forest:   #1e3d2b;
@@ -303,7 +316,9 @@
       --cream-dark: #ede7db;
       --text:     #1a1a18;
       --text-mid: #4a4a44;
-      --text-light: #7a7a72;
+      --text-light: #6b6b63;
+      --gold-text: #8f6418;  /* gold for small text on light backgrounds (5.2:1 on white) */
+      --on-gold:  #1a1a18;   /* text on the gold brand colour (white on --gold is only 2.7:1) */
       --white:    #ffffff;
       --radius:   12px;
       --shadow:   0 8px 40px rgba(30,61,43,.12);
@@ -1068,7 +1083,7 @@
     #kontakt .divider { background: var(--gold-light); }
     .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; }
     .contact-info { display: flex; flex-direction: column; gap: 2rem; }
-    .contact-block h4 {
+    .contact-block h3 {
       font-size: .7rem;
       font-weight: 700;
       letter-spacing: .12em;
@@ -2125,7 +2140,7 @@
     }
     .footer-social-name {
       font-size: .8rem;
-      color: rgba(247,243,236,.45);
+      color: rgba(247,243,236,.7);
     }
     .footer-social {
       display: flex;
@@ -2306,6 +2321,14 @@
       .gallery-arrow-next { right: 8px; }
       .aerial-section img { max-height: 340px; }
     }
+    /* ─── CONTRAST ────────────────────────────────────────────── */
+    #offer-bar a, .btn-primary, .nav-links .nav-cta, .ko-prefs-yes, .float-phone-link, .offer-popup-banner,
+    .offer-popup-form .btn-callback, .offer-popup-call, .offer-popup-sheet-call, .btn-submit { color: var(--on-gold); }
+    .btn-submit-success, .btn-submit-error, .offer-popup-form .btn-callback-success { color: var(--white); }
+    .eyebrow, .hl-gold, .seo-info-intro { color: var(--gold-text); }
+    .scroll-hint { color: #5f5f58; }
+    .scroll-hint-dark { color: rgba(247,243,236,.72); }
+
     /* ─── REDUCED MOTION ──────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -2336,7 +2359,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li><a href="#wizualizacje">Galeria</a></li>
     <li class="nav-m-only"><a href="#kontakt">Kontakt</a></li>
     <li class="nav-actions">
-      <a href="tel:+48500299775" class="nav-phone"><i class="ph-bold ph-phone" aria-hidden="true"></i> <span class="nav-m-only">Zadzwoń</span><span class="nav-d-only">+48 500 299 775</span></a>
+      <a href="tel:+48500299775" class="nav-phone"><i class="ph-bold ph-phone" aria-hidden="true"><svg><use href="#b-phone"></use></svg></i> <span class="nav-m-only">Zadzwoń</span><span class="nav-d-only">+48 500 299 775</span></a>
       <a href="#kontakt" class="nav-cta">Zapytaj</a>
     </li>
     <li class="nav-note nav-m-only"><span data-avail-text>6 z 8 domów dostępnych</span> · pompa ciepła w cenie</li>
@@ -2352,7 +2375,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a href="#oferta">
     <span class="offer-bar-tag">Promocja</span>
     <span class="offer-bar-txt"><strong>do −7%</strong> + pompa ciepła<span class="offer-bar-long"> 3 kW z klimatyzacją</span> w cenie<span class="offer-bar-long"> · Sprawdź ofertę</span></span>
-    <i class="ph ph-arrow-right offer-bar-arrow" aria-hidden="true" style="font-size:15px"></i>
+    <i class="ph ph-arrow-right offer-bar-arrow" aria-hidden="true" style="font-size:15px"><svg><use href="#r-arrow-right"></use></svg></i>
   </a>
 </div>
 
@@ -2377,13 +2400,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="hero-h1-main">Dom nad jeziorem na&nbsp;Kaszubach</span>
       <em class="hero-price">od 387&nbsp;000&nbsp;zł <small>brutto</small></em>
     </h1>
-    <p class="hero-loc"><i class="ph-bold ph-map-pin" aria-hidden="true"></i> gm. Kołczygłowy · Bytów 30&nbsp;min · Słupsk 45&nbsp;min</p>
+    <p class="hero-loc"><i class="ph-bold ph-map-pin" aria-hidden="true"><svg><use href="#b-map-pin"></use></svg></i> gm. Kołczygłowy · Bytów 30&nbsp;min · Słupsk 45&nbsp;min</p>
     <p class="hero-left"><strong data-avail-text>Zostało 6 z 8 domów</strong> · odbiór kluczy w&nbsp;2026</p>
-    <a class="hero-promo" href="#oferta"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span>Pompa ciepła 3&nbsp;kW z&nbsp;klimatyzacją w&nbsp;cenie + rabat do&nbsp;−7%</span></a>
+    <a class="hero-promo" href="#oferta"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span>Pompa ciepła 3&nbsp;kW z&nbsp;klimatyzacją w&nbsp;cenie + rabat do&nbsp;−7%</span></a>
     <a class="hero-osada" href="#o-osadzie">Ostatni etap Kaszubskiej Osady – gotowa infrastruktura: jezioro, restauracja, plac zabaw <span aria-hidden="true">→</span></a>
     <div class="hero-btns">
       <a href="#oferta" class="btn btn-primary hero-cta">Zobacz dostępne domy</a>
-      <a href="tel:+48500299775" class="btn hero-call" aria-label="Zadzwoń: +48 500 299 775"><i class="ph-bold ph-phone" aria-hidden="true"></i> Zadzwoń</a>
+      <a href="tel:+48500299775" class="btn hero-call" aria-label="Zadzwoń: +48 500 299 775"><i class="ph-bold ph-phone" aria-hidden="true"><svg><use href="#b-phone"></use></svg></i> Zadzwoń</a>
     </div>
   </div>
 
@@ -2466,34 +2489,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-promo-plus" aria-hidden="true">+</div>
           <div class="ko-promo-item ko-promo-item--pump">
-            <div class="ko-promo-icon"><i class="ph-bold ph-thermometer" aria-hidden="true"></i></div>
+            <div class="ko-promo-icon"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i></div>
             <div><strong>Pompa ciepła 3 kW z klimatyzacją</strong><span>w cenie każdego domu – grzeje zimą, chłodzi latem</span></div>
           </div>
         </div>
       </div>
 
       <div class="ko-facts">
-        <div class="ko-fact"><i class="ph-bold ph-trend-up"></i><div><strong>~7,5% rocznie</strong><span>szacowany zwrot z najmu*</span></div></div>
-        <div class="ko-fact"><i class="ph-bold ph-house-line"></i><div><strong>od 7 429 zł/m²</strong><span>cena promocyjna, brutto</span></div></div>
-        <div class="ko-fact"><i class="ph-bold ph-map-pin"></i><div><strong>Jezioro Graniczne</strong><span>2 plaże · 1h 10 min do Ustki</span></div></div>
-        <div class="ko-fact"><i class="ph-bold ph-file-text"></i><div><strong>Stan deweloperski</strong><span><a href="#standard">co dokładnie jest w cenie</a></span></div></div>
+        <div class="ko-fact"><i class="ph-bold ph-trend-up" aria-hidden="true"><svg><use href="#b-trend-up"></use></svg></i><div><strong>~7,5% rocznie</strong><span>szacowany zwrot z najmu*</span></div></div>
+        <div class="ko-fact"><i class="ph-bold ph-house-line" aria-hidden="true"><svg><use href="#b-house-line"></use></svg></i><div><strong>od 7 429 zł/m²</strong><span>cena promocyjna, brutto</span></div></div>
+        <div class="ko-fact"><i class="ph-bold ph-map-pin" aria-hidden="true"><svg><use href="#b-map-pin"></use></svg></i><div><strong>Jezioro Graniczne</strong><span>2 plaże · 1h 10 min do Ustki</span></div></div>
+        <div class="ko-fact"><i class="ph-bold ph-file-text" aria-hidden="true"><svg><use href="#b-file-text"></use></svg></i><div><strong>Stan deweloperski</strong><span><a href="#standard">co dokładnie jest w cenie</a></span></div></div>
       </div>
 
       <div class="ko-deck">
         <div class="ko-deck-txt">
-          <i class="ph-bold ph-file-pdf" aria-hidden="true"></i>
+          <i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i>
           <div><strong>Prezentacja inwestycji 2026</strong><span>Jeszcze więcej szczegółów o domach, osadzie i inwestycji – wszystko w jednym pliku PDF.</span></div>
         </div>
         <div class="ko-deck-btns">
-          <a class="ko-btn-gold" href="Informator_Kaszubska_Osada_2026.pdf" download><i class="ph-bold ph-download-simple" aria-hidden="true"></i> Pobierz</a>
-          <a class="ko-btn-outline-light" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-eye" aria-hidden="true"></i> Podgląd</a>
+          <a class="ko-btn-gold" href="Informator_Kaszubska_Osada_2026.pdf" download><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Pobierz</a>
+          <a class="ko-btn-outline-light" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-eye" aria-hidden="true"><svg><use href="#b-eye"></use></svg></i> Podgląd</a>
         </div>
       </div>
     </div>
 
     <div class="lot-selector reveal">
       <div class="lot-selector-intro">
-        <p class="lot-selector-lead"><i class="ph-bold ph-cursor-click"></i> <strong class="hl-gold">Kliknij budynek</strong> na planie, aby zobaczyć układ i&nbsp;<strong class="hl-gold">pobrać kartę domku</strong> — lub przewiń niżej i&nbsp;przeglądaj karty wszystkich domków.</p>
+        <p class="lot-selector-lead"><i class="ph-bold ph-cursor-click" aria-hidden="true"><svg><use href="#b-cursor-click"></use></svg></i> <strong class="hl-gold">Kliknij budynek</strong> na planie, aby zobaczyć układ i&nbsp;<strong class="hl-gold">pobrać kartę domku</strong> — lub przewiń niżej i&nbsp;przeglądaj karty wszystkich domków.</p>
       </div>
       <div class="lot-map-wrap">
         <img src="zdjecia/wiz-lot-hq-new-1024x678.webp" alt="Plan budynków Kaszubska Osada" loading="lazy" width="1024" height="678" />
@@ -2540,21 +2563,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">393 000 zł</span><s class="ko-old">405 000 zł</s></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 706 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">393 000 zł</span></div>
           </div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>213 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>213 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
           <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 1</a>
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zapytaj o domek 1</a>
             <div class="ko-btn-row">
-              <a class="ko-btn-ghost" href="karty/1-1A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
-              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+              <a class="ko-btn-ghost" href="karty/1-1A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Standard</a>
             </div>
           </div>
         </div>
@@ -2579,21 +2602,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">408 000 zł</span><s class="ko-old">429 000 zł</s></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 21 000 zł</span><span>7 429 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">408 000 zł</span></div>
           </div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>194 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>194 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
           <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 1a</a>
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zapytaj o domek 1a</a>
             <div class="ko-btn-row">
-              <a class="ko-btn-ghost" href="karty/1-1A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
-              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+              <a class="ko-btn-ghost" href="karty/1-1A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Standard</a>
             </div>
           </div>
         </div>
@@ -2617,10 +2640,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-sold-note">Ten dom znalazł już właściciela. Zapytaj o podobny układ – domki 1, 3, 4.</div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>258 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>258 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
         </div>
       </article>
@@ -2643,10 +2666,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-sold-note">Ten dom znalazł już właściciela. Zapytaj o podobny układ – domki 1a, 3a, 4a.</div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>219 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>219 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
         </div>
       </article>
@@ -2670,21 +2693,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">388 000 zł</span><s class="ko-old">400 000 zł</s></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 608 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">388 000 zł</span></div>
           </div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>176 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>176 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
           <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 3</a>
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zapytaj o domek 3</a>
             <div class="ko-btn-row">
-              <a class="ko-btn-ghost" href="karty/3-3A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
-              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+              <a class="ko-btn-ghost" href="karty/3-3A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Standard</a>
             </div>
           </div>
         </div>
@@ -2709,21 +2732,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">413 000 zł</span><s class="ko-old">435 000 zł</s></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 520 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">413 000 zł</span></div>
           </div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>262 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>262 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
           <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 3a</a>
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zapytaj o domek 3a</a>
             <div class="ko-btn-row">
-              <a class="ko-btn-ghost" href="karty/3-3A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
-              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+              <a class="ko-btn-ghost" href="karty/3-3A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Standard</a>
             </div>
           </div>
         </div>
@@ -2748,21 +2771,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">387 000 zł</span><s class="ko-old">399 000 zł</s></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 12 000 zł</span><span>7 588 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">387 000 zł</span></div>
           </div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>289 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>51 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>289 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
           <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 4</a>
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zapytaj o domek 4</a>
             <div class="ko-btn-row">
-              <a class="ko-btn-ghost" href="karty/4-4A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
-              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+              <a class="ko-btn-ghost" href="karty/4-4A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Standard</a>
             </div>
           </div>
         </div>
@@ -2787,21 +2810,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="ko-price-box">
             <div class="ko-price-row"><span class="ko-price">409 000 zł</span><s class="ko-old">431 000 zł</s></div>
-            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
+            <div class="ko-bonus"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span><strong>+ pompa ciepła 3 kW</strong> z klimatyzacją w cenie</span></div>
             <div class="ko-price-meta"><span class="ko-save">Oszczędzasz 22 000 zł</span><span>7 447 zł/m²</span></div>
             <div class="ko-lowest">Najniższa cena z 30 dni: <span class="ko-nw">409 000 zł</span></div>
           </div>
           <div class="ko-specs">
-            <div class="ko-spec"><i class="ph-bold ph-ruler"></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-tree"></i><div><strong>238 m²</strong><span>własna działka</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-umbrella"></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
-            <div class="ko-spec"><i class="ph-bold ph-car"></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>238 m²</strong><span>własna działka</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
+            <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
           <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text"></i> Zapytaj o domek 4a</a>
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zapytaj o domek 4a</a>
             <div class="ko-btn-row">
-              <a class="ko-btn-ghost" href="karty/4-4A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf"></i> Karta + rzut</a>
-              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple"></i> Standard</a>
+              <a class="ko-btn-ghost" href="karty/4-4A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i> Karta + rzut</a>
+              <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Standard</a>
             </div>
           </div>
         </div>
@@ -2816,7 +2839,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3>Stan deweloperski – zobacz, co dokładnie dostajesz</h3>
         <p>Gotowa bryła, dach, okna, drzwi, schody, taras, rozprowadzone instalacje oraz pompa ciepła 3 kW z klimatyzacją. Podłogi, łazienka i kuchnia są do wykończenia – samodzielnie albo z nami.</p>
         <div class="ko-included-btns">
-          <a class="ko-btn-gold" href="OPIS STANDARDU WYKOŃCZENIA.pdf" target="_blank"><i class="ph-bold ph-download-simple"></i> Pobierz opis standardu (PDF)</a>
+          <a class="ko-btn-gold" href="OPIS STANDARDU WYKOŃCZENIA.pdf" target="_blank"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Pobierz opis standardu (PDF)</a>
           <a class="ko-btn-outline-light" href="#standard">Zobacz online →</a>
         </div>
       </div>
@@ -2842,7 +2865,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <div class="scroll-hint-wrap scroll-hint-wrap-white">
-  <a href="#o-projekcie" class="scroll-hint" aria-label="Przejdź do sekcji Domy">
+  <a href="#o-projekcie" class="scroll-hint">
     <span class="scroll-hint-label">Twój dom</span>
     <span class="scroll-hint-chevron"></span>
   </a>
@@ -2864,27 +2887,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
         <div class="std-file-btns">
-          <a class="std-btn-dark" href="OPIS STANDARDU WYKOŃCZENIA.pdf" download><i class="ph-bold ph-download-simple"></i> Pobierz</a>
-          <a class="std-btn-ghost" href="OPIS STANDARDU WYKOŃCZENIA.pdf" target="_blank"><i class="ph-bold ph-eye"></i> Podgląd</a>
+          <a class="std-btn-dark" href="OPIS STANDARDU WYKOŃCZENIA.pdf" download><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Pobierz</a>
+          <a class="std-btn-ghost" href="OPIS STANDARDU WYKOŃCZENIA.pdf" target="_blank"><i class="ph-bold ph-eye" aria-hidden="true"><svg><use href="#b-eye"></use></svg></i> Podgląd</a>
         </div>
       </div>
     </div>
     <div class="std-right reveal">
       <div class="standard-grid" data-carousel>
         <div class="standard-card">
-          <div class="standard-card-title"><i class="ph-bold ph-house-line"></i> Bryła i dach</div>
+          <div class="standard-card-title"><i class="ph-bold ph-house-line" aria-hidden="true"><svg><use href="#b-house-line"></use></svg></i> Bryła i dach</div>
           <ul class="standard-list"><li>Ściany z gazobetonu + 20 cm ocieplenia</li><li>Elewacja: tynk mineralny z szachulcem, cokół klinkier/kamień</li><li>Dachówka ceramiczna, wełna 18 + 5 cm</li><li>Okna dachowe Velux 118×78 cm</li></ul>
         </div>
         <div class="standard-card">
-          <div class="standard-card-title"><i class="ph-bold ph-stairs"></i> Stolarka i schody</div>
+          <div class="standard-card-title"><i class="ph-bold ph-stairs" aria-hidden="true"><svg><use href="#b-stairs"></use></svg></i> Stolarka i schody</div>
           <ul class="standard-list"><li>Okna PCV drewnopodobne, U ≤ 1,0</li><li>Drzwi wejściowe stalowe, ocieplane</li><li>Schody ażurowe z drewna sosnowego</li><li>Strop z desek strugowanych na belkach</li></ul>
         </div>
         <div class="standard-card">
-          <div class="standard-card-title"><i class="ph-bold ph-drop"></i> Instalacje</div>
+          <div class="standard-card-title"><i class="ph-bold ph-drop" aria-hidden="true"><svg><use href="#b-drop"></use></svg></i> Instalacje</div>
           <ul class="standard-list"><li>Woda zimna i ciepła (bojler 50 L), kanalizacja – rozprowadzone, zakończone korkami</li><li><strong>Pompa ciepła 3 kW z funkcją klimatyzacji</strong> – ogrzewanie zimą, chłodzenie latem</li><li>Grzejniki elektryczne</li><li>Elektryka z gniazdami i włącznikami, RTV w salonie</li></ul>
         </div>
         <div class="standard-card">
-          <div class="standard-card-title"><i class="ph-bold ph-tree"></i> Teren</div>
+          <div class="standard-card-title"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i> Teren</div>
           <ul class="standard-list"><li>Taras z ryflowanej deski sosnowej</li><li>Miejsce parkingowe i ścieżka z kostki</li><li>Trawnik i zieleń urządzona</li></ul>
         </div>
       </div>
@@ -2973,7 +2996,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <div class="scroll-hint-wrap scroll-hint-wrap-cream">
-  <a href="#o-osadzie" class="scroll-hint" aria-label="Przejdź do sekcji Osada">
+  <a href="#o-osadzie" class="scroll-hint">
     <span class="scroll-hint-label">Natura i aktywność</span>
     <span class="scroll-hint-chevron"></span>
   </a>
@@ -3000,12 +3023,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Latem pachnąca soczysta zieleń, zimą głucha cisza i gwieździste niebo. Jesienią <strong>rykowisko jeleni</strong> na pobliskiej polanie.</p>
 
         <div class="amenities">
-          <div class="amenity"><div class="amenity-icon"><i class="ph ph-fork-knife" aria-hidden="true" style="font-size:17px"></i></div> Restauracja</div>
-          <div class="amenity"><div class="amenity-icon"><i class="ph ph-smiley" aria-hidden="true" style="font-size:17px"></i></div> Plac zabaw</div>
-          <div class="amenity"><div class="amenity-icon"><i class="ph ph-bicycle" aria-hidden="true" style="font-size:17px"></i></div> Rowerownia</div>
-          <div class="amenity"><div class="amenity-icon"><i class="ph ph-campfire" aria-hidden="true" style="font-size:17px"></i></div> Miejsca na ogniska</div>
-          <div class="amenity"><div class="amenity-icon"><i class="ph ph-volleyball" aria-hidden="true" style="font-size:17px"></i></div> Boisko do siatkówki</div>
-          <div class="amenity"><div class="amenity-icon"><i class="ph ph-fish" aria-hidden="true" style="font-size:17px"></i></div> Łowisko rekreacyjne</div>
+          <div class="amenity"><div class="amenity-icon"><i class="ph ph-fork-knife" aria-hidden="true" style="font-size:17px"><svg><use href="#r-fork-knife"></use></svg></i></div> Restauracja</div>
+          <div class="amenity"><div class="amenity-icon"><i class="ph ph-smiley" aria-hidden="true" style="font-size:17px"><svg><use href="#r-smiley"></use></svg></i></div> Plac zabaw</div>
+          <div class="amenity"><div class="amenity-icon"><i class="ph ph-bicycle" aria-hidden="true" style="font-size:17px"><svg><use href="#r-bicycle"></use></svg></i></div> Rowerownia</div>
+          <div class="amenity"><div class="amenity-icon"><i class="ph ph-campfire" aria-hidden="true" style="font-size:17px"><svg><use href="#r-campfire"></use></svg></i></div> Miejsca na ogniska</div>
+          <div class="amenity"><div class="amenity-icon"><i class="ph ph-volleyball" aria-hidden="true" style="font-size:17px"><svg><use href="#r-volleyball"></use></svg></i></div> Boisko do siatkówki</div>
+          <div class="amenity"><div class="amenity-icon"><i class="ph ph-fish" aria-hidden="true" style="font-size:17px"><svg><use href="#r-fish"></use></svg></i></div> Łowisko rekreacyjne</div>
         </div>
       </div>
     </div>
@@ -3024,56 +3047,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="atuty-grid" data-carousel>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-house" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-house" aria-hidden="true" style="font-size:18px"><svg><use href="#r-house"></use></svg></i>
         </div>
         <div class="atut-title">Dom na własność</div>
         <p class="atut-desc">Odrębna działka 176 - 289 m², 2 kondygnacje, przestronny taras i wydzielone miejsce parkingowe – wszystko Twoje na zawsze.</p>
       </div>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-currency-dollar" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-currency-dollar" aria-hidden="true" style="font-size:18px"><svg><use href="#r-currency-dollar"></use></svg></i>
         </div>
         <div class="atut-title">Od 387 000 zł</div>
         <p class="atut-desc">Dom całoroczny w sercu Kaszub w tej cenie, z pompą ciepła 3 kW i klimatyzacją – jeden z najlepszych stosunków ceny do lokalizacji w całym regionie.</p>
       </div>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-trend-up" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-trend-up" aria-hidden="true" style="font-size:18px"><svg><use href="#r-trend-up"></use></svg></i>
         </div>
         <div class="atut-title">~7,5% rocznej stopy zwrotu</div>
         <p class="atut-desc">Gotowy model biznesowy najmu krótkoterminowego. Chroń kapitał i zarabiaj, nawet gdy sam nie korzystasz z domu.</p>
       </div>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-waves" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-waves" aria-hidden="true" style="font-size:18px"><svg><use href="#r-waves"></use></svg></i>
         </div>
         <div class="atut-title">Najczystsze jezioro Kaszub</div>
         <p class="atut-desc">Jezioro Graniczne – piaszczysta plaża, wypożyczalnia sprzętu wodnego, morsowanie zimą i łowisko rekreacyjne 1,3 ha².</p>
       </div>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-tree" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-tree" aria-hidden="true" style="font-size:18px"><svg><use href="#r-tree"></use></svg></i>
         </div>
         <div class="atut-title">Cały rok w naturze</div>
         <p class="atut-desc">Soczysta zieleń latem, gwieździste niebo zimą, jesienne rykowisko jeleni na polanie – każda pora roku ma tu swój urok.</p>
       </div>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-squares-four" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-squares-four" aria-hidden="true" style="font-size:18px"><svg><use href="#r-squares-four"></use></svg></i>
         </div>
         <div class="atut-title">Pełna infrastruktura</div>
         <p class="atut-desc">Restauracja, plac zabaw, rowerownia, boisko do siatkówki i zadaszane wiaty na ognisko – bez wychodzenia poza osadę.</p>
       </div>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-map-pin" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-map-pin" aria-hidden="true" style="font-size:18px"><svg><use href="#r-map-pin"></use></svg></i>
         </div>
         <div class="atut-title">Doskonała lokalizacja</div>
         <p class="atut-desc">Bytów w 30 min, Słupsk w 45 min, Morze Bałtyckie w 1h 10 min. Centrum Kaszub – blisko wszystkiego, daleko od zgiełku.</p>
       </div>
       <div class="atut-card reveal">
         <div class="atut-icon">
-          <i class="ph ph-shield-check" aria-hidden="true" style="font-size:18px"></i>
+          <i class="ph ph-shield-check" aria-hidden="true" style="font-size:18px"><svg><use href="#r-shield-check"></use></svg></i>
         </div>
         <div class="atut-title">Obsługa pod klucz</div>
         <p class="atut-desc">Kompleksowe zarządzanie wynajmem przez Rental24 sp. z o.o.</p>
@@ -3083,7 +3106,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <div class="scroll-hint-wrap scroll-hint-wrap-forest">
-  <a href="#lokalizacja" class="scroll-hint scroll-hint-dark" aria-label="Przejdź do sekcji Lokalizacja">
+  <a href="#lokalizacja" class="scroll-hint scroll-hint-dark">
     <span class="scroll-hint-label">Lokalizacja</span>
     <span class="scroll-hint-chevron"></span>
   </a>
@@ -3103,10 +3126,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="lok-chips">
-          <span><i class="ph-bold ph-waves"></i> 2 plaże przy jeziorze Granicznym</span>
-          <span><i class="ph-bold ph-fish"></i> Łowisko specjalne</span>
-          <span><i class="ph-bold ph-fire"></i> Wiata grillowa i ognisko</span>
-          <span><i class="ph-bold ph-barbell"></i> Outdoor fitness i plac zabaw</span>
+          <span><i class="ph-bold ph-waves" aria-hidden="true"><svg><use href="#b-waves"></use></svg></i> 2 plaże przy jeziorze Granicznym</span>
+          <span><i class="ph-bold ph-fish" aria-hidden="true"><svg><use href="#b-fish"></use></svg></i> Łowisko specjalne</span>
+          <span><i class="ph-bold ph-fire" aria-hidden="true"><svg><use href="#b-fire"></use></svg></i> Wiata grillowa i ognisko</span>
+          <span><i class="ph-bold ph-barbell" aria-hidden="true"><svg><use href="#b-barbell"></use></svg></i> Outdoor fitness i plac zabaw</span>
         </div>
         <div class="lok-sub">Czas dojazdu samochodem</div>
 
@@ -3130,14 +3153,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           referrerpolicy="no-referrer-when-downgrade"
           title="Lokalizacja Kaszubskiej Osady"
         ></iframe>
-        <a class="lok-nav-btn" href="https://maps.google.com/maps?q=Kaszubska+Osada,+Ko%C5%82czyg%C5%82owy" target="_blank" rel="noopener"><i class="ph-bold ph-navigation-arrow"></i> Prowadź do osady</a>
+        <a class="lok-nav-btn" href="https://maps.google.com/maps?q=Kaszubska+Osada,+Ko%C5%82czyg%C5%82owy" target="_blank" rel="noopener"><i class="ph-bold ph-navigation-arrow" aria-hidden="true"><svg><use href="#b-navigation-arrow"></use></svg></i> Prowadź do osady</a>
       </div>
     </div>
   </div>
 </section>
 
 <div class="scroll-hint-wrap scroll-hint-wrap-forest">
-  <a href="#inwestycja" class="scroll-hint scroll-hint-dark" aria-label="Przejdź do sekcji Inwestycja">
+  <a href="#inwestycja" class="scroll-hint scroll-hint-dark">
     <span class="scroll-hint-label">Inwestycja</span>
     <span class="scroll-hint-chevron"></span>
   </a>
@@ -3159,21 +3182,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="inv-features">
           <div class="inv-feature">
-            <div class="inv-feature-icon"><i class="ph ph-house" aria-hidden="true" style="font-size:18px"></i></div>
+            <div class="inv-feature-icon"><i class="ph ph-house" aria-hidden="true" style="font-size:18px"><svg><use href="#r-house"></use></svg></i></div>
             <div>Gotowy, sprawdzony model biznesowy najmu krótkoterminowego</div>
           </div>
           <div class="inv-feature">
-            <div class="inv-feature-icon"><i class="ph ph-clipboard-text" aria-hidden="true" style="font-size:18px"></i></div>
+            <div class="inv-feature-icon"><i class="ph ph-clipboard-text" aria-hidden="true" style="font-size:18px"><svg><use href="#r-clipboard-text"></use></svg></i></div>
             <div>Kompleksowe wsparcie w zarządzaniu nieruchomością</div>
           </div>
           <div class="inv-feature">
-            <div class="inv-feature-icon"><i class="ph ph-users" aria-hidden="true" style="font-size:18px"></i></div>
+            <div class="inv-feature-icon"><i class="ph ph-users" aria-hidden="true" style="font-size:18px"><svg><use href="#r-users"></use></svg></i></div>
             <div>Wieloletni partner operacyjny – <a href="https://rental24pro.pl" target="_blank" rel="noopener">Rental24 sp. z o.o.</a></div>
           </div>
         </div>
         <div class="inv-deck-btns">
-          <a class="inv-deck-btn" href="Informator_Kaszubska_Osada_2026.pdf" download><i class="ph-bold ph-download-simple" aria-hidden="true"></i> Pobierz prezentację <small>(PDF)</small></a>
-          <a class="inv-deck-btn inv-deck-ghost" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-eye" aria-hidden="true"></i> Podgląd</a>
+          <a class="inv-deck-btn" href="Informator_Kaszubska_Osada_2026.pdf" download><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Pobierz prezentację <small>(PDF)</small></a>
+          <a class="inv-deck-btn inv-deck-ghost" href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener"><i class="ph-bold ph-eye" aria-hidden="true"><svg><use href="#b-eye"></use></svg></i> Podgląd</a>
         </div>
         <p class="inv-deck-note">W prezentacji znajdziesz jeszcze więcej szczegółów o inwestycji.</p>
       </div>
@@ -3192,7 +3215,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <div class="scroll-hint-wrap scroll-hint-wrap-dark">
-  <a href="#wizualizacje" class="scroll-hint" aria-label="Przejdź do sekcji Galeria">
+  <a href="#wizualizacje" class="scroll-hint">
     <span class="scroll-hint-label">Galeria</span>
     <span class="scroll-hint-chevron"></span>
   </a>
@@ -3243,27 +3266,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="contact-info">
           <div class="contact-block">
-            <h4>Biuro sprzedaży</h4>
+            <h3>Biuro sprzedaży</h3>
             <p><strong style="color:var(--cream)">Mateusz Szreder</strong></p>
           </div>
           <div class="contact-block">
-            <h4>Telefon</h4>
+            <h3>Telefon</h3>
             <a href="tel:+48500299775" class="contact-phone">
-              <i class="ph ph-phone" aria-hidden="true" style="font-size:20px"></i>
+              <i class="ph ph-phone" aria-hidden="true" style="font-size:20px"><svg><use href="#r-phone"></use></svg></i>
               +48 500 299 775
             </a>
           </div>
           <div class="contact-block">
-            <h4>E-mail</h4>
+            <h3>E-mail</h3>
             <a href="mailto:kontakt@kaszubskaosada.com.pl">kontakt@kaszubskaosada.com.pl</a>
           </div>
           <div class="contact-block">
-            <h4>Prezentacja inwestycji</h4>
+            <h3>Prezentacja inwestycji</h3>
             <a href="Informator_Kaszubska_Osada_2026.pdf" target="_blank" rel="noopener">Informator Kaszubska Osada 2026 (PDF)</a>
             <p>Jeszcze więcej szczegółów o domach i inwestycji.</p>
           </div>
           <div class="contact-block">
-            <h4>Adres spółki</h4>
+            <h3>Adres spółki</h3>
             <p>ul. Poznańska 71C<br />76-200 Słupsk</p>
           </div>
         </div>
@@ -3358,10 +3381,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="footer-social-name">Jarosław Szreder</span>
       <div class="footer-social">
         <a href="https://pl.linkedin.com/in/jaros%C5%82aw-szreder-86058a5b" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn – Jarosław Szreder">
-          <i class="ph ph-linkedin-logo" aria-hidden="true" style="font-size:16px"></i>
+          <i class="ph ph-linkedin-logo" aria-hidden="true" style="font-size:16px"><svg><use href="#r-linkedin-logo"></use></svg></i>
         </a>
         <a href="https://www.facebook.com/share/1AMAFqa5P8/" target="_blank" rel="noopener" class="footer-social-link" aria-label="Facebook – Kaszubska Osada">
-          <i class="ph ph-facebook-logo" aria-hidden="true" style="font-size:16px"></i>
+          <i class="ph ph-facebook-logo" aria-hidden="true" style="font-size:16px"><svg><use href="#r-facebook-logo"></use></svg></i>
         </a>
       </div>
     </div>
@@ -3373,8 +3396,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <div class="footer-credit">
     <span>Wykonanie, obsługa i marketing: <strong>Mateusz Szreder</strong></span>
-    <a href="https://www.linkedin.com/in/mateusz-szreder00" target="_blank" rel="noopener" aria-label="LinkedIn – Mateusz Szreder"><i class="ph ph-linkedin-logo" aria-hidden="true"></i> LinkedIn</a>
-    <a href="https://mszreder.pl" target="_blank" rel="noopener"><i class="ph ph-globe" aria-hidden="true"></i> mszreder.pl</a>
+    <a href="https://www.linkedin.com/in/mateusz-szreder00" target="_blank" rel="noopener" aria-label="LinkedIn – Mateusz Szreder"><i class="ph ph-linkedin-logo" aria-hidden="true"><svg><use href="#r-linkedin-logo"></use></svg></i> LinkedIn</a>
+    <a href="https://mszreder.pl" target="_blank" rel="noopener"><i class="ph ph-globe" aria-hidden="true"><svg><use href="#r-globe"></use></svg></i> mszreder.pl</a>
   </div>
 </footer>
 
@@ -3382,7 +3405,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="ko-prefs-shade" aria-hidden="true"></div>
 <div class="ko-prefs" id="koPrefs" role="dialog" aria-labelledby="koPrefsTitle" aria-describedby="koPrefsText">
   <div class="ko-prefs-head">
-    <i class="ph ph-cookie" aria-hidden="true"></i>
+    <i class="ph ph-cookie" aria-hidden="true"><svg><use href="#r-cookie"></use></svg></i>
     <h2 id="koPrefsTitle">Zanim zaczniesz – zgoda na cookies</h2>
   </div>
   <p class="ko-prefs-text" id="koPrefsText">
@@ -3391,7 +3414,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="polityka-prywatnosci.html" target="_blank" rel="noopener">Polityce prywatności</a>.
   </p>
   <div class="ko-prefs-actions">
-    <button type="button" class="ko-prefs-yes" onclick="setCookieConsent(true)"><i class="ph-bold ph-check" aria-hidden="true"></i> Akceptuję<span class="ko-prefs-long"> wszystkie</span></button>
+    <button type="button" class="ko-prefs-yes" onclick="setCookieConsent(true)"><i class="ph-bold ph-check" aria-hidden="true"><svg><use href="#b-check"></use></svg></i> Akceptuję<span class="ko-prefs-long"> wszystkie</span></button>
     <button type="button" class="ko-prefs-no" onclick="setCookieConsent(false)">Tylko niezbędne</button>
   </div>
 </div>
@@ -3400,7 +3423,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="float-phone">
   <span class="float-phone-label">Zadzwoń teraz</span>
   <a href="tel:+48500299775" class="float-phone-link" aria-label="Zadzwoń: +48 500 299 775">
-    <i class="ph ph-phone" aria-hidden="true"></i>
+    <i class="ph ph-phone" aria-hidden="true"><svg><use href="#r-phone"></use></svg></i>
     <span class="float-phone-num">+48 500 299 775</span>
   </a>
 </div>
@@ -3408,13 +3431,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ─── OFFER POPUP ─────────────────────────────────────────────── -->
 <div class="offer-popup-overlay" id="offerPopup" role="dialog" aria-modal="true" aria-label="Oferta Kaszubska Osada" style="display:none">
   <a href="tel:+48500299775" class="offer-popup-call" aria-label="Zadzwoń teraz: +48 500 299 775">
-    <i class="ph-bold ph-phone-call" aria-hidden="true"></i> Zadzwoń teraz <small>+48 500 299 775</small>
+    <i class="ph-bold ph-phone-call" aria-hidden="true"><svg><use href="#b-phone-call"></use></svg></i> Zadzwoń teraz <small>+48 500 299 775</small>
   </a>
   <div class="offer-popup">
     <button class="offer-popup-close" id="offerPopupClose" aria-label="Zamknij">&times;</button>
 
     <div class="offer-popup-banner">
-      <i class="ph-bold ph-thermometer" aria-hidden="true"></i>
+      <i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i>
       Pompa ciepła 3 kW z klimatyzacją w cenie + rabat do −7%
     </div>
 
@@ -3422,13 +3445,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="offer-popup-eyebrow">Kaszubska Osada</div>
       <div class="offer-popup-title"><span data-avail-text>Zostało 6 z 8 domów</span><br>nad jeziorem <em>na Kaszubach</em></div>
       <ul class="offer-popup-points">
-        <li><i class="ph-bold ph-house-simple"></i><span>8 domów w zabudowie bliźniaczej, <strong data-avail-text>6 dostępnych</strong> – każdy z odrębną działką i tarasem</span></li>
-        <li><i class="ph-bold ph-tag"></i><span>Ceny brutto od <strong>387 000 zł</strong> (w tym 8% VAT) – własna działka, parking w cenie</span></li>
-        <li><i class="ph-bold ph-thermometer"></i><span><strong>Pompa ciepła 3 kW z klimatyzacją</strong> w cenie domu</span></li>
-        <li><i class="ph-bold ph-ruler"></i><span>51–56 m² użytkowej, działki 176-289 m²</span></li>
-        <li><i class="ph-bold ph-chart-line-up"></i><span>Szacowana rentowność <strong>~7,5% rocznie</strong> z najmu</span></li>
-        <li><i class="ph-bold ph-fork-knife"></i><span>Restauracja, plac zabaw, przystań rybacka na terenie osady</span></li>
-        <li><i class="ph-bold ph-key"></i><span>Odbiór kluczy – <strong>do końca 2026</strong></span></li>
+        <li><i class="ph-bold ph-house-simple" aria-hidden="true"><svg><use href="#b-house-simple"></use></svg></i><span>8 domów w zabudowie bliźniaczej, <strong data-avail-text>6 dostępnych</strong> – każdy z odrębną działką i tarasem</span></li>
+        <li><i class="ph-bold ph-tag" aria-hidden="true"><svg><use href="#b-tag"></use></svg></i><span>Ceny brutto od <strong>387 000 zł</strong> (w tym 8% VAT) – własna działka, parking w cenie</span></li>
+        <li><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i><span><strong>Pompa ciepła 3 kW z klimatyzacją</strong> w cenie domu</span></li>
+        <li><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><span>51–56 m² użytkowej, działki 176-289 m²</span></li>
+        <li><i class="ph-bold ph-chart-line-up" aria-hidden="true"><svg><use href="#b-chart-line-up"></use></svg></i><span>Szacowana rentowność <strong>~7,5% rocznie</strong> z najmu</span></li>
+        <li><i class="ph-bold ph-fork-knife" aria-hidden="true"><svg><use href="#b-fork-knife"></use></svg></i><span>Restauracja, plac zabaw, przystań rybacka na terenie osady</span></li>
+        <li><i class="ph-bold ph-key" aria-hidden="true"><svg><use href="#b-key"></use></svg></i><span>Odbiór kluczy – <strong>do końca 2026</strong></span></li>
       </ul>
     </div>
 
@@ -3437,7 +3460,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="offer-popup-form-sub">Doradca oddzwoni w ciągu 24h, a na e-mail od razu wyślemy informator 2026 i karty domków.</p>
       <!-- phones (bottom sheet): two actions first, the form opens on demand -->
       <div class="offer-popup-sheet-actions">
-        <a href="tel:+48500299775" class="offer-popup-sheet-call"><i class="ph-bold ph-phone-call" aria-hidden="true"></i> Zadzwoń teraz</a>
+        <a href="tel:+48500299775" class="offer-popup-sheet-call"><i class="ph-bold ph-phone-call" aria-hidden="true"><svg><use href="#b-phone-call"></use></svg></i> Zadzwoń teraz</a>
         <button type="button" class="offer-popup-sheet-form" aria-expanded="false" aria-controls="offerCallbackForm">Zostaw numer</button>
       </div>
       <form class="offer-popup-form" id="offerCallbackForm" onsubmit="return submitCallback(event)">
@@ -3462,12 +3485,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <label for="cb-rodo">Wyrażam zgodę na przetwarzanie moich danych osobowych (imię, numer telefonu, e-mail) przez Kaszubska Osada Sp. z o.o. w celu kontaktu w sprawie oferty. <a href="https://kaszubskaosada.com.pl/polityka-prywatnosci" target="_blank" rel="noopener">Polityka prywatności</a>.</label>
         </div>
         <button type="submit" class="btn-callback" id="btnCallback">
-          <i class="ph-bold ph-phone-call"></i> Zadzwońcie do mnie
+          <i class="ph-bold ph-phone-call" aria-hidden="true"><svg><use href="#b-phone-call"></use></svg></i> Zadzwońcie do mnie
         </button>
         <p class="offer-popup-privacy">
           Administratorem danych jest Kaszubska Osada Sp. z o.o. Dane przetwarzane są wyłącznie w celu odpowiedzi na zapytanie.
         </p>
-        <button type="button" class="offer-popup-msg" onclick="popupToContactForm()">Wolisz napisać? <u>Zostaw wiadomość</u> <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+        <button type="button" class="offer-popup-msg" onclick="popupToContactForm()">Wolisz napisać? <u>Zostaw wiadomość</u> <i class="ph ph-arrow-right" aria-hidden="true"><svg><use href="#r-arrow-right"></use></svg></i></button>
         <button type="button" class="offer-popup-skip" onclick="closeOfferPopup('skip')">Nie teraz, chcę najpierw przejrzeć ofertę</button>
       </form>
     </div>
@@ -3773,8 +3796,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Array.from(box.children).forEach((el, i) => el.classList.toggle('active', i === gallery.idx));
     });
     // keep the active thumbnail visible inside its strip – never scroll the page itself
+    // (skipped on the first render: reading offsetParent there would force a layout at start-up)
     const thumb = gThumbs && gThumbs.children[gallery.idx];
-    if (thumb && gThumbs.offsetParent !== null) {
+    if (gallery.token > 1 && thumb && gThumbs.offsetParent !== null) {
       scrollElTo(gThumbs, thumb.offsetLeft - (gThumbs.clientWidth - thumb.offsetWidth) / 2);
     }
   }
@@ -3960,10 +3984,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <script>
-  /* ── Mobile carousels: dots + arrows (CSS shows them only ≤600px) ── */
+  /* ── Mobile carousels: dots + arrows (CSS shows them only ≤600px) ──
+     Start-up reads only computed styles (gap compensation, no layout); scroll positions are
+     measured on phones when a carousel comes near the viewport (measuring them all at start-up
+     forced a full synchronous layout). The gap must be set up front: changing it later would
+     change section heights while an anchor jump is scrolling. */
   window.mCarousels = (function () {
     const ARROW = d => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"></path></svg>';
+    const mobile = window.matchMedia('(max-width: 600px)');
     const list = [];
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const c = list.find(c => c.track === e.target);
+      if (c) c.measure();
+    }), { rootMargin: '300px 0px' }) : null;
     document.querySelectorAll('[data-carousel]').forEach(track => {
       const nav = document.createElement('div');
       nav.className = 'm-nav' + (track.closest('#standard, #lokalizacja') ? ' m-dark' : '');
@@ -3981,12 +4016,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       };
       let idx = 0;
       const go = (i) => { const its = items(); if (its[i]) scrollElTo(track, pos(its[i])); };
-      function build() {
-        // in a grid/flex parent the nav becomes its own item – cancel the parent's gap
-        const ps = getComputedStyle(track.parentElement);
-        const stacked = /grid/.test(ps.display) || (/flex/.test(ps.display) && (ps.flexDirection.startsWith('column') || ps.flexWrap === 'wrap'));
-        const gap = stacked ? parseFloat(ps.rowGap) || 0 : 0;
-        nav.style.marginTop = gap ? 'calc(.6rem - ' + gap + 'px)' : '';
+      function mark(i) {
+        idx = i;
+        Array.from(dots.children).forEach((d, j) => d.classList.toggle('active', j === i));
+        prev.disabled = i <= 0;
+        next.disabled = i >= dots.children.length - 1;
+      }
+      function buildDots() {
         dots.innerHTML = '';
         items().forEach((item, i) => {
           const b = document.createElement('button');
@@ -3995,28 +4031,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           b.addEventListener('click', () => go(i));
           dots.appendChild(b);
         });
-        update();
+        mark(0);
       }
       function update() {
+        if (!mobile.matches) return;
         const its = items();
         const max = track.scrollWidth - track.clientWidth;
-        idx = 0;
+        let i = 0;
         if (max > 0) {
-          idx = track.scrollLeft >= max - 4 ? its.length - 1
-            : its.reduce((best, it, i) => Math.abs(pos(it) - track.scrollLeft) < Math.abs(pos(its[best]) - track.scrollLeft) ? i : best, 0);
+          i = track.scrollLeft >= max - 4 ? its.length - 1
+            : its.reduce((best, it, j) => Math.abs(pos(it) - track.scrollLeft) < Math.abs(pos(its[best]) - track.scrollLeft) ? j : best, 0);
         }
-        Array.from(dots.children).forEach((d, i) => d.classList.toggle('active', i === idx));
-        prev.disabled = idx <= 0;
-        next.disabled = idx >= its.length - 1;
+        mark(i);
+      }
+      function fixGap() {
+        if (!mobile.matches) { nav.style.marginTop = ''; return; }
+        // in a grid/flex parent the nav becomes its own item – cancel the parent's gap
+        const ps = getComputedStyle(track.parentElement);
+        const stacked = /grid/.test(ps.display) || (/flex/.test(ps.display) && (ps.flexDirection.startsWith('column') || ps.flexWrap === 'wrap'));
+        const gap = stacked ? parseFloat(ps.rowGap) || 0 : 0;
+        nav.style.marginTop = gap ? 'calc(.6rem - ' + gap + 'px)' : '';
       }
       prev.addEventListener('click', () => go(idx - 1));
       next.addEventListener('click', () => go(idx + 1));
       track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
-      list.push({ track, build });
-      build();
+      list.push({ track, measure: update, fixGap, rebuild() { buildDots(); update(); } });
+      buildDots();
+      fixGap();
+      if (io) io.observe(track); else update();
     });
-    window.addEventListener('resize', () => list.forEach(c => c.build()));
-    return { rebuild: (el) => list.forEach(c => { if (!el || c.track === el) { c.track.scrollLeft = 0; c.build(); } }) };
+    // only real width changes (the mobile URL bar changes the height on every scroll)
+    let lastWidth = window.innerWidth;
+    window.addEventListener('resize', () => {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
+      list.forEach(c => { c.fixGap(); c.measure(); });
+    });
+    return { rebuild: (el) => list.forEach(c => { if (!el || c.track === el) { c.track.scrollLeft = 0; c.rebuild(); } }) };
   })();
 
   /* ── Apartment grid: filter + sort ── */
@@ -4159,7 +4210,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         adsFormConversion();
         btn.classList.remove('btn-submit-loading');
         btn.classList.add('btn-submit-success');
-        btn.innerHTML = '<i class="ph-bold ph-check"></i> Wiadomość wysłana!';
+        btn.innerHTML = '<i class="ph-bold ph-check" aria-hidden="true"><svg><use href="#b-check"></use></svg></i> Wiadomość wysłana!';
         e.target.reset();
       } else {
         throw new Error(json.error || 'Błąd');
@@ -4167,7 +4218,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     } catch {
       btn.classList.remove('btn-submit-loading');
       btn.classList.add('btn-submit-error');
-      btn.innerHTML = '<i class="ph-bold ph-warning"></i> Błąd – spróbuj ponownie';
+      btn.innerHTML = '<i class="ph-bold ph-warning" aria-hidden="true"><svg><use href="#b-warning"></use></svg></i> Błąd – spróbuj ponownie';
       btn.disabled = false;
       setTimeout(() => {
         btn.classList.remove('btn-submit-error');
@@ -4205,7 +4256,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
     btn.classList.remove('btn-callback-loading');
     btn.classList.add('btn-callback-success');
-    btn.innerHTML = '<i class="ph-bold ph-check"></i> Dziękujemy! Oddzwonimy wkrótce.';
+    btn.innerHTML = '<i class="ph-bold ph-check" aria-hidden="true"><svg><use href="#b-check"></use></svg></i> Dziękujemy! Oddzwonimy wkrótce.';
     setTimeout(() => closeOfferPopup('lead'), 2200);
     return false;
   }
@@ -4359,5 +4410,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (typeof fbq === 'function') fbq('trackCustom', 'LongEngagement', { seconds: 10 });
   }, 10000);
 </script>
+<!-- icons:start -->
+<!-- Phosphor Icons 2.1.1 (MIT, https://phosphoricons.com); generated by tools/build_assets.py -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="b-barbell" viewBox="0 0 256 256"><path d="M244,116V88a20,20,0,0,0-20-20H208V64a20,20,0,0,0-20-20H164a20,20,0,0,0-20,20v52H112V64A20,20,0,0,0,92,44H68A20,20,0,0,0,48,64v4H32A20,20,0,0,0,12,88v28a12,12,0,0,0,0,24v28a20,20,0,0,0,20,20H48v4a20,20,0,0,0,20,20H92a20,20,0,0,0,20-20V140h32v52a20,20,0,0,0,20,20h24a20,20,0,0,0,20-20v-4h16a20,20,0,0,0,20-20V140a12,12,0,0,0,0-24ZM36,164V92H48v72Zm52,24H72V68H88Zm96,0H168V68h16Zm36-24H208V92h12Z"/></symbol>
+<symbol id="b-car" viewBox="0 0 256 256"><path d="M240,100h-8.2L205.08,39.88A20,20,0,0,0,186.8,28H69.2A20,20,0,0,0,50.92,39.88L24.2,100H16a12,12,0,0,0,0,24h4v76a20,20,0,0,0,20,20H68a20,20,0,0,0,20-20V180h80v20a20,20,0,0,0,20,20h28a20,20,0,0,0,20-20V124h4a12,12,0,0,0,0-24ZM71.8,52H184.2l21.33,48H50.47ZM64,196H44V180H64Zm128,0V180h20v16Zm20-40H44V124H212Z"/></symbol>
+<symbol id="b-chart-line-up" viewBox="0 0 256 256"><path d="M236,208a12,12,0,0,1-12,12H32a12,12,0,0,1-12-12V48a12,12,0,0,1,24,0v99l43.51-43.52a12,12,0,0,1,17,0L128,127l43-43H160a12,12,0,0,1,0-24h40a12,12,0,0,1,12,12v40a12,12,0,0,1-24,0V101l-51.51,51.52a12,12,0,0,1-17,0L96,129,44,181v15H224A12,12,0,0,1,236,208Z"/></symbol>
+<symbol id="b-chat-circle-text" viewBox="0 0 256 256"><path d="M172,108a12,12,0,0,1-12,12H96a12,12,0,0,1,0-24h64A12,12,0,0,1,172,108Zm-12,28H96a12,12,0,0,0,0,24h64a12,12,0,0,0,0-24Zm76-8A108,108,0,0,1,78.77,224.15L46.34,235A20,20,0,0,1,21,209.66l10.81-32.43A108,108,0,1,1,236,128Zm-24,0A84,84,0,1,0,55.27,170.06a12,12,0,0,1,1,9.81l-9.93,29.79,29.79-9.93a12.1,12.1,0,0,1,3.8-.62,12,12,0,0,1,6,1.62A84,84,0,0,0,212,128Z"/></symbol>
+<symbol id="b-check" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></symbol>
+<symbol id="b-cursor-click" viewBox="0 0 256 256"><path d="M224.15,179.17l-46.82-46.82,37.92-13.51c.26-.09.51-.19.76-.3a20,20,0,0,0-1.76-37.27L54.16,29A20,20,0,0,0,29,54.16L81.27,214.24A20,20,0,0,0,118.54,216c.11-.25.21-.5.3-.76l13.51-37.92,46.83,46.82a20,20,0,0,0,28.28,0l16.69-16.68A20,20,0,0,0,224.15,179.17Zm-30.83,25.17-48.48-48.48A20,20,0,0,0,130.7,150a20.47,20.47,0,0,0-3.73.35A20,20,0,0,0,112.35,162c-.11.25-.2.5-.3.76L100.4,195.5,54.29,54.29,195.5,100.4l-32.71,11.65c-.25.09-.51.19-.76.3a20,20,0,0,0-6.16,32.48h0l48.48,48.48ZM84,16V12a12,12,0,0,1,24,0v4a12,12,0,0,1-24,0ZM12,108a12,12,0,0,1,0-24h4a12,12,0,0,1,0,24ZM120.62,24.21l4-12a12,12,0,0,1,22.77,7.58l-4,12a12,12,0,0,1-22.77-7.58Zm-81.23,104a12,12,0,0,1-7.59,15.17l-12,4a12,12,0,1,1-7.59-22.76l12-4A12,12,0,0,1,39.39,128.21Z"/></symbol>
+<symbol id="b-download-simple" viewBox="0 0 256 256"><path d="M228,144v64a12,12,0,0,1-12,12H40a12,12,0,0,1-12-12V144a12,12,0,0,1,24,0v52H204V144a12,12,0,0,1,24,0Zm-108.49,8.49a12,12,0,0,0,17,0l40-40a12,12,0,0,0-17-17L140,115V32a12,12,0,0,0-24,0v83L96.49,95.51a12,12,0,0,0-17,17Z"/></symbol>
+<symbol id="b-drop" viewBox="0 0 256 256"><path d="M134.88,6.17a12,12,0,0,0-13.76,0,259,259,0,0,0-42.18,39C50.85,77.43,36,111.62,36,144a92,92,0,0,0,184,0C220,66.64,138.36,8.6,134.88,6.17ZM128,212a68.07,68.07,0,0,1-68-68c0-33.31,20-63.37,36.7-82.71A249.35,249.35,0,0,1,128,31.11a249.35,249.35,0,0,1,31.3,30.18C176,80.63,196,110.69,196,144A68.07,68.07,0,0,1,128,212Zm49.62-52.4a52,52,0,0,1-34,34,12.2,12.2,0,0,1-3.6.55,12,12,0,0,1-3.6-23.45,28,28,0,0,0,18.32-18.32,12,12,0,0,1,22.9,7.2Z"/></symbol>
+<symbol id="b-eye" viewBox="0 0 256 256"><path d="M251,123.13c-.37-.81-9.13-20.26-28.48-39.61C196.63,57.67,164,44,128,44S59.37,57.67,33.51,83.52C14.16,102.87,5.4,122.32,5,123.13a12.08,12.08,0,0,0,0,9.75c.37.82,9.13,20.26,28.49,39.61C59.37,198.34,92,212,128,212s68.63-13.66,94.48-39.51c19.36-19.35,28.12-38.79,28.49-39.61A12.08,12.08,0,0,0,251,123.13Zm-46.06,33C183.47,177.27,157.59,188,128,188s-55.47-10.73-76.91-31.88A130.36,130.36,0,0,1,29.52,128,130.45,130.45,0,0,1,51.09,99.89C72.54,78.73,98.41,68,128,68s55.46,10.73,76.91,31.89A130.36,130.36,0,0,1,226.48,128,130.45,130.45,0,0,1,204.91,156.12ZM128,84a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,84Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,128,148Z"/></symbol>
+<symbol id="b-file-pdf" viewBox="0 0 256 256"><path d="M200,164v8h12a12,12,0,0,1,0,24H200v12a12,12,0,0,1-24,0V152a12,12,0,0,1,12-12h32a12,12,0,0,1,0,24ZM92,172a32,32,0,0,1-32,32H56v4a12,12,0,0,1-24,0V152a12,12,0,0,1,12-12H60A32,32,0,0,1,92,172Zm-24,0a8,8,0,0,0-8-8H56v16h4A8,8,0,0,0,68,172Zm100,8a40,40,0,0,1-40,40H112a12,12,0,0,1-12-12V152a12,12,0,0,1,12-12h16A40,40,0,0,1,168,180Zm-24,0a16,16,0,0,0-16-16h-4v32h4A16,16,0,0,0,144,180ZM36,108V40A20,20,0,0,1,56,20h96a12,12,0,0,1,8.49,3.52l56,56A12,12,0,0,1,220,88v20a12,12,0,0,1-24,0v-4H148a12,12,0,0,1-12-12V44H60v64a12,12,0,0,1-24,0ZM160,57V80h23Z"/></symbol>
+<symbol id="b-file-text" viewBox="0 0 256 256"><path d="M216.49,79.52l-56-56A12,12,0,0,0,152,20H56A20,20,0,0,0,36,40V216a20,20,0,0,0,20,20H200a20,20,0,0,0,20-20V88A12,12,0,0,0,216.49,79.52ZM160,57l23,23H160ZM60,212V44h76V92a12,12,0,0,0,12,12h48V212Zm112-80a12,12,0,0,1-12,12H96a12,12,0,0,1,0-24h64A12,12,0,0,1,172,132Zm0,40a12,12,0,0,1-12,12H96a12,12,0,0,1,0-24h64A12,12,0,0,1,172,172Z"/></symbol>
+<symbol id="b-fire" viewBox="0 0 256 256"><path d="M177.62,159.6a52,52,0,0,1-34,34,12.2,12.2,0,0,1-3.6.55,12,12,0,0,1-3.6-23.45,28,28,0,0,0,18.32-18.32,12,12,0,0,1,22.9,7.2ZM220,144a92,92,0,0,1-184,0c0-28.81,11.27-58.18,33.48-87.28a12,12,0,0,1,17.9-1.33L107.07,74.5,127,19.89a12,12,0,0,1,18.94-5.12C168.2,33.25,220,82.85,220,144Zm-24,0c0-41.71-30.61-78.39-52.52-99.29l-20.21,55.4a12,12,0,0,1-19.63,4.5L80.71,82.36C67,103.38,60,124.06,60,144a68,68,0,0,0,136,0Z"/></symbol>
+<symbol id="b-fish" viewBox="0 0 256 256"><path d="M172,76a16,16,0,1,1-16-16A16,16,0,0,1,172,76Zm48.22,69.58a102,102,0,0,1-26.78,31.29c-.24.2-.47.39-.72.56a109.52,109.52,0,0,1-13.55,8.83c-18.3,10.07-40.88,15.9-67.22,17.36L91,249a12,12,0,0,1-10.89,7q-.41,0-.81,0a12,12,0,0,1-10.66-8.44l-14.16-46-46-14.19A12,12,0,0,1,7,165l45.4-20.92c1.47-26.33,7.3-48.91,17.37-67.2A110.62,110.62,0,0,1,78.57,63.3c.16-.22.34-.44.51-.66A101.91,101.91,0,0,1,110.41,35.8c25.55-14.19,54.33-16.37,74-15.69,17.76.61,36.49,4,40.76,6.52a12.07,12.07,0,0,1,4.23,4.23c2.52,4.26,5.92,23,6.53,40.76C236.57,91.26,234.4,120,220.22,145.58Zm-68.7,26.66a56.92,56.92,0,0,1-11.12-8.64,55.81,55.81,0,0,1-15.9-32.1,55.81,55.81,0,0,1-32.1-15.9,56.63,56.63,0,0,1-8.63-11.13q-7,20.48-7.7,47.69a12,12,0,0,1-7,10.61L45.51,173.64l22.1,6.82a12,12,0,0,1,7.94,7.94l6.79,22.09L93.23,186.9a12,12,0,0,1,10.61-7Q131,179.29,151.52,172.24ZM209,47c-16.25-3.14-61.81-9-95,14.91a76.73,76.73,0,0,0-14,13,32,32,0,0,0,35,32.94,12,12,0,0,1,13.09,13.09,32,32,0,0,0,33,35,76.33,76.33,0,0,0,13-14C218.05,108.81,212.18,63.22,209,47Z"/></symbol>
+<symbol id="b-fork-knife" viewBox="0 0 256 256"><path d="M68,88V40a12,12,0,0,1,24,0V88a12,12,0,0,1-24,0ZM220,40V224a12,12,0,0,1-24,0V180H152a12,12,0,0,1-12-12,273.23,273.23,0,0,1,7.33-57.82C157.42,68.42,176.76,40.33,203.27,29A12,12,0,0,1,220,40ZM196,62.92C182.6,77,175,98,170.77,115.38A254.41,254.41,0,0,0,164.55,156H196ZM128,39A12,12,0,0,0,104,41l4,47.46a28,28,0,0,1-56,0L56,41A12,12,0,1,0,32,39L28,87c0,.34,0,.67,0,1a52.1,52.1,0,0,0,40,50.59V224a12,12,0,0,0,24,0V138.59A52.1,52.1,0,0,0,132,88c0-.33,0-.66,0-1Z"/></symbol>
+<symbol id="b-house-line" viewBox="0 0 256 256"><path d="M240,204H228V144a12,12,0,0,0,12.49-19.78L142.14,25.85a20,20,0,0,0-28.28,0L15.51,124.2A12,12,0,0,0,28,144v60H16a12,12,0,0,0,0,24H240a12,12,0,0,0,0-24ZM52,121.65l76-76,76,76V204H164V152a12,12,0,0,0-12-12H104a12,12,0,0,0-12,12v52H52ZM140,204H116V164h24Z"/></symbol>
+<symbol id="b-house-simple" viewBox="0 0 256 256"><path d="M222.14,105.85l-80-80a20,20,0,0,0-28.28,0l-80,80A19.86,19.86,0,0,0,28,120v96a12,12,0,0,0,12,12H216a12,12,0,0,0,12-12V120A19.86,19.86,0,0,0,222.14,105.85ZM204,204H52V121.65l76-76,76,76Z"/></symbol>
+<symbol id="b-key" viewBox="0 0 256 256"><path d="M196,76a16,16,0,1,1-16-16A16,16,0,0,1,196,76Zm48,22.74A84.3,84.3,0,0,1,160.11,180H160a83.52,83.52,0,0,1-23.65-3.38l-7.86,7.87A12,12,0,0,1,120,188H108v12a12,12,0,0,1-12,12H84v12a12,12,0,0,1-12,12H40a20,20,0,0,1-20-20V187.31a19.86,19.86,0,0,1,5.86-14.14l53.52-53.52A84,84,0,1,1,244,98.74ZM202.43,53.57A59.48,59.48,0,0,0,158,36c-32,1-58,27.89-58,59.89a59.69,59.69,0,0,0,4.2,22.19,12,12,0,0,1-2.55,13.21L44,189v23H60V200a12,12,0,0,1,12-12H84V176a12,12,0,0,1,12-12h19l9.65-9.65a12,12,0,0,1,13.22-2.55A59.58,59.58,0,0,0,160,156h.08c32,0,58.87-26.07,59.89-58A59.55,59.55,0,0,0,202.43,53.57Z"/></symbol>
+<symbol id="b-map-pin" viewBox="0 0 256 256"><path d="M128,60a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,60Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,128,124Zm0-112a92.1,92.1,0,0,0-92,92c0,77.36,81.64,135.4,85.12,137.83a12,12,0,0,0,13.76,0,259,259,0,0,0,42.18-39C205.15,170.57,220,136.37,220,104A92.1,92.1,0,0,0,128,12Zm31.3,174.71A249.35,249.35,0,0,1,128,216.89a249.35,249.35,0,0,1-31.3-30.18C80,167.37,60,137.31,60,104a68,68,0,0,1,136,0C196,137.31,176,167.37,159.3,186.71Z"/></symbol>
+<symbol id="b-navigation-arrow" viewBox="0 0 256 256"><path d="M238.7,102.46,62.81,37.21l-.25-.09A20,20,0,0,0,37.12,62.56l.09.25L102.46,238.7A20,20,0,0,0,121.3,252h.35a20,20,0,0,0,18.77-14.12l.09-.29,21.23-75.85,75.85-21.23.29-.09a20,20,0,0,0,.82-38Zm-89.93,38a12,12,0,0,0-8.32,8.32l-19.68,70.29L62.8,62.8l156.26,58Z"/></symbol>
+<symbol id="b-phone" viewBox="0 0 256 256"><path d="M224,154.8l-47.09-21.11-.18-.08a19.94,19.94,0,0,0-19,1.75,13.08,13.08,0,0,0-1.12.84l-22.31,19c-13-7.05-26.43-20.37-33.49-33.21l19.06-22.66a11.76,11.76,0,0,0,.85-1.15,20,20,0,0,0,1.66-18.83,1.42,1.42,0,0,1-.08-.18L101.2,32A20.06,20.06,0,0,0,80.42,20.15,60.27,60.27,0,0,0,28,80c0,81.61,66.39,148,148,148a60.27,60.27,0,0,0,59.85-52.42A20.06,20.06,0,0,0,224,154.8ZM176,204A124.15,124.15,0,0,1,52,80,36.29,36.29,0,0,1,80.48,44.46l18.82,42L80.14,109.28a12,12,0,0,0-.86,1.16A20,20,0,0,0,78,130.08c9.42,19.28,28.83,38.56,48.31,48A20,20,0,0,0,146,176.63a11.63,11.63,0,0,0,1.11-.85l22.43-19.07,42,18.81A36.29,36.29,0,0,1,176,204Z"/></symbol>
+<symbol id="b-phone-call" viewBox="0 0 256 256"><path d="M140.41,44.9a12,12,0,0,1,14.69-8.49,90.12,90.12,0,0,1,64.49,64.49,12,12,0,1,1-23.18,6.2A66.42,66.42,0,0,0,148.9,59.59,12,12,0,0,1,140.41,44.9Zm87.44,138.68A60.27,60.27,0,0,1,168,236C86.39,236,20,169.61,20,88A60.27,60.27,0,0,1,72.42,28.15,20.05,20.05,0,0,1,93.2,40l21.11,47.13a1.42,1.42,0,0,0,.08.18,20,20,0,0,1-1.66,18.83,10.67,10.67,0,0,1-.85,1.15L92.82,130c7.06,12.84,20.5,26.16,33.49,33.21l22.31-19a13.08,13.08,0,0,1,1.12-.84,19.91,19.91,0,0,1,19-1.74l.18.08L216,162.8A20.06,20.06,0,0,1,227.85,183.58Zm-24.31-.06-42-18.81-22.43,19.07a11.63,11.63,0,0,1-1.11.85A20,20,0,0,1,118.31,186c-19.48-9.4-38.89-28.68-48.31-48a20,20,0,0,1,1.28-19.64,10.75,10.75,0,0,1,.86-1.15L91.3,94.49l-18.82-42A36.29,36.29,0,0,0,44,88,124.15,124.15,0,0,0,168,212,36.29,36.29,0,0,0,203.54,183.52ZM137.63,97.47a32,32,0,0,1,20.9,20.9,12,12,0,0,0,11.44,8.4,12.22,12.22,0,0,0,3.61-.55,12,12,0,0,0,7.84-15,56,56,0,0,0-36.59-36.59,12,12,0,1,0-7.2,22.89Z"/></symbol>
+<symbol id="b-ruler" viewBox="0 0 256 256"><path d="M238.15,70.54,185.46,17.86a20,20,0,0,0-28.29,0L17.85,157.17a20,20,0,0,0,0,28.29l52.69,52.68a20,20,0,0,0,28.29,0L238.15,98.83A20,20,0,0,0,238.15,70.54ZM84.68,218.34l-47-47L64,145l23.52,23.52a12,12,0,0,0,17-17L81,128l15-15,23.51,23.52a12,12,0,0,0,17-17L113,96l15-15,23.52,23.52a12,12,0,0,0,17-17L145,64l26.35-26.34,47,47Z"/></symbol>
+<symbol id="b-stairs" viewBox="0 0 256 256"><path d="M200,20H56A20,20,0,0,0,36,40V216a20,20,0,0,0,20,20H200a20,20,0,0,0,20-20V40A20,20,0,0,0,200,20ZM152,148h44v16H116V148Zm12-24V108h32v16Zm32-80V84H152a12,12,0,0,0-12,12v28H104a12,12,0,0,0-12,12v28H60V44ZM60,212V188H196v24Z"/></symbol>
+<symbol id="b-tag" viewBox="0 0 256 256"><path d="M246.15,133.18,146.83,33.86A19.85,19.85,0,0,0,132.69,28H40A12,12,0,0,0,28,40v92.69a19.85,19.85,0,0,0,5.86,14.14l99.32,99.32a20,20,0,0,0,28.28,0l84.69-84.69A20,20,0,0,0,246.15,133.18Zm-98.83,93.17L52,131V52h79l95.32,95.32ZM104,88A16,16,0,1,1,88,72,16,16,0,0,1,104,88Z"/></symbol>
+<symbol id="b-thermometer" viewBox="0 0 256 256"><path d="M212,52a32,32,0,1,0,32,32A32,32,0,0,0,212,52Zm0,40a8,8,0,1,1,8-8A8,8,0,0,1,212,92ZM160,56A52,52,0,0,0,56,56v94.69a64,64,0,1,0,104,0ZM108,228a40,40,0,0,1-30.91-65.39A12,12,0,0,0,80,154.78V56a28,28,0,0,1,56,0v98.77a12,12,0,0,0,2.77,7.68A40,40,0,0,1,108,228Zm24-40a24,24,0,1,1-36-20.78V92a12,12,0,0,1,24,0v75.22A24,24,0,0,1,132,188Z"/></symbol>
+<symbol id="b-tree" viewBox="0 0 256 256"><path d="M201.17,59.62a80,80,0,0,0-146.34,0,76,76,0,0,0,61.17,139V232a12,12,0,0,0,24,0V198.64A76.26,76.26,0,0,0,168,204l1.92,0A76,76,0,0,0,201.17,59.62ZM169.35,180A52,52,0,0,1,140,171.79V135.42l41.37-20.69a12,12,0,1,0-10.74-21.46L140,108.58V88a12,12,0,0,0-24,0v44.58L85.37,117.27a12,12,0,0,0-10.74,21.46L116,159.42v12.37A52.24,52.24,0,0,1,86.65,180c-27.53-.69-50.72-24.56-50.65-52.13a51.81,51.81,0,0,1,32.61-48.1,12,12,0,0,0,6.78-7,56,56,0,0,1,105.22,0,12,12,0,0,0,6.78,7A51.81,51.81,0,0,1,220,127.85C220.08,155.41,196.88,179.29,169.35,180Z"/></symbol>
+<symbol id="b-trend-up" viewBox="0 0 256 256"><path d="M244,56v64a12,12,0,0,1-24,0V85l-75.51,75.52a12,12,0,0,1-17,0L96,129,32.49,192.49a12,12,0,0,1-17-17l72-72a12,12,0,0,1,17,0L136,135l67-67H168a12,12,0,0,1,0-24h64A12,12,0,0,1,244,56Z"/></symbol>
+<symbol id="b-umbrella" viewBox="0 0 256 256"><path d="M243.93,126.3A116.43,116.43,0,0,0,49,50.81a115.45,115.45,0,0,0-37,75.49A20,20,0,0,0,32,148h84v52a36,36,0,0,0,72,0,12,12,0,0,0-24,0,12,12,0,0,1-24,0V148h84a20,20,0,0,0,20-21.7ZM100.41,124c2.67-39.33,18.08-63.51,27.59-74.87,9.52,11.39,24.92,35.56,27.59,74.87ZM65.31,68.46A92,92,0,0,1,99,48.65C88.8,65.25,78.39,90.08,76.36,124H36.44A91.56,91.56,0,0,1,65.31,68.46ZM179.64,124c-2-33.92-12.44-58.75-22.65-75.35A92.19,92.19,0,0,1,219.56,124Z"/></symbol>
+<symbol id="b-warning" viewBox="0 0 256 256"><path d="M240.26,186.1,152.81,34.23h0a28.74,28.74,0,0,0-49.62,0L15.74,186.1a27.45,27.45,0,0,0,0,27.71A28.31,28.31,0,0,0,40.55,228h174.9a28.31,28.31,0,0,0,24.79-14.19A27.45,27.45,0,0,0,240.26,186.1Zm-20.8,15.7a4.46,4.46,0,0,1-4,2.2H40.55a4.46,4.46,0,0,1-4-2.2,3.56,3.56,0,0,1,0-3.73L124,46.2a4.77,4.77,0,0,1,8,0l87.44,151.87A3.56,3.56,0,0,1,219.46,201.8ZM116,136V104a12,12,0,0,1,24,0v32a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,176Z"/></symbol>
+<symbol id="b-waves" viewBox="0 0 256 256"><path d="M225.24,174.74a12,12,0,0,1-1.58,16.89C205.49,206.71,189.06,212,174.15,212c-19.76,0-36.86-9.29-51.88-17.44-25.06-13.62-44.86-24.37-74.61.3a12,12,0,1,1-15.32-18.48c42.25-35,75-17.23,101.39-2.92,25.06,13.61,44.86,24.37,74.61-.3A12,12,0,0,1,225.24,174.74Zm-16.9-57.59c-29.75,24.67-49.55,13.91-74.61.3-26.35-14.3-59.14-32.11-101.39,2.92a12,12,0,0,0,15.32,18.48c29.75-24.67,49.55-13.92,74.61-.3,15,8.15,32.12,17.44,51.88,17.44,14.91,0,31.34-5.29,49.51-20.36a12,12,0,0,0-15.32-18.48ZM47.66,82.84c29.75-24.67,49.55-13.92,74.61-.3,15,8.15,32.12,17.44,51.88,17.44,14.91,0,31.34-5.29,49.51-20.36a12,12,0,0,0-15.32-18.48c-29.75,24.67-49.55,13.92-74.61.3-26.35-14.3-59.14-32.11-101.39,2.93A12,12,0,1,0,47.66,82.84Z"/></symbol>
+<symbol id="r-arrow-right" viewBox="0 0 256 256"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol>
+<symbol id="r-bicycle" viewBox="0 0 256 256"><path d="M208,112a47.81,47.81,0,0,0-16.93,3.09L165.93,72H192a8,8,0,0,1,8,8,8,8,0,0,0,16,0,24,24,0,0,0-24-24H152a8,8,0,0,0-6.91,12l11.65,20H99.26L82.91,60A8,8,0,0,0,76,56H48a8,8,0,0,0,0,16H71.41L85.12,95.51,69.41,117.06a48.13,48.13,0,1,0,12.92,9.44l11.59-15.9L125.09,164A8,8,0,1,0,138.91,156l-30.32-52h57.48l11.19,19.17A48,48,0,1,0,208,112ZM80,160a32,32,0,1,1-20.21-29.74l-18.25,25a8,8,0,1,0,12.92,9.42l18.25-25A31.88,31.88,0,0,1,80,160Zm128,32a32,32,0,0,1-22.51-54.72L201.09,164A8,8,0,1,0,214.91,156L199.3,129.21A32,32,0,1,1,208,192Z"/></symbol>
+<symbol id="r-campfire" viewBox="0 0 256 256"><path d="M223.62,226.42a8,8,0,0,1-10.05,5.2L128,204.39,42.43,231.62a8,8,0,1,1-4.85-15.25l64-20.37-64-20.38a8,8,0,1,1,4.85-15.24L128,187.6l85.57-27.22a8,8,0,1,1,4.85,15.24l-64,20.38,64,20.37A8,8,0,0,1,223.62,226.42ZM68,108c0-20.1,9.77-40.87,28.24-60a156,156,0,0,1,27.57-22.76,8,8,0,0,1,8.38,0C134.47,26.59,188,60.08,188,108a60,60,0,0,1-120,0Zm60,44a16,16,0,0,0,16-16c0-13.57-10-24.46-16-29.79-6,5.33-16,16.22-16,29.79A16,16,0,0,0,128,152ZM84,108a43.83,43.83,0,0,0,12.09,30.24c0-.74-.09-1.49-.09-2.24,0-28,26.44-45.91,27.56-46.66a8,8,0,0,1,8.88,0C133.56,90.09,160,108,160,136c0,.75,0,1.5-.09,2.24A43.83,43.83,0,0,0,172,108c0-32-32.26-58-44-66.34C116.27,50,84,76,84,108Z"/></symbol>
+<symbol id="r-clipboard-text" viewBox="0 0 256 256"><path d="M168,152a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,152Zm-8-40H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm56-64V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V48A16,16,0,0,1,56,32H92.26a47.92,47.92,0,0,1,71.48,0H200A16,16,0,0,1,216,48ZM96,64h64a32,32,0,0,0-64,0ZM200,48H173.25A47.93,47.93,0,0,1,176,64v8a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V64a47.93,47.93,0,0,1,2.75-16H56V216H200Z"/></symbol>
+<symbol id="r-cookie" viewBox="0 0 256 256"><path d="M164.49,163.51a12,12,0,1,1-17,0A12,12,0,0,1,164.49,163.51Zm-81-8a12,12,0,1,0,17,0A12,12,0,0,0,83.51,155.51Zm9-39a12,12,0,1,0-17,0A12,12,0,0,0,92.49,116.49Zm48-1a12,12,0,1,0,0,17A12,12,0,0,0,140.49,115.51ZM232,128A104,104,0,1,1,128,24a8,8,0,0,1,8,8,40,40,0,0,0,40,40,8,8,0,0,1,8,8,40,40,0,0,0,40,40A8,8,0,0,1,232,128Zm-16.31,7.39A56.13,56.13,0,0,1,168.5,87.5a56.13,56.13,0,0,1-47.89-47.19,88,88,0,1,0,95.08,95.08Z"/></symbol>
+<symbol id="r-currency-dollar" viewBox="0 0 256 256"><path d="M152,120H136V56h8a32,32,0,0,1,32,32,8,8,0,0,0,16,0,48.05,48.05,0,0,0-48-48h-8V24a8,8,0,0,0-16,0V40h-8a48,48,0,0,0,0,96h8v64H104a32,32,0,0,1-32-32,8,8,0,0,0-16,0,48.05,48.05,0,0,0,48,48h16v16a8,8,0,0,0,16,0V216h16a48,48,0,0,0,0-96Zm-40,0a32,32,0,0,1,0-64h8v64Zm40,80H136V136h16a32,32,0,0,1,0,64Z"/></symbol>
+<symbol id="r-facebook-logo" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z"/></symbol>
+<symbol id="r-fish" viewBox="0 0 256 256"><path d="M168,76a12,12,0,1,1-12-12A12,12,0,0,1,168,76Zm48.72,67.64c-19.37,34.9-55.44,53.76-107.24,56.1l-22,51.41A8,8,0,0,1,80.1,256l-.51,0a8,8,0,0,1-7.19-5.78L57.6,198.39,5.8,183.56a8,8,0,0,1-1-15.05l51.41-22c2.35-51.78,21.21-87.84,56.09-107.22,24.75-13.74,52.74-15.84,71.88-15.18,18.64.64,36,4.27,38.86,6a8,8,0,0,1,2.83,2.83c1.69,2.85,5.33,20.21,6,38.85C232.55,90.89,230.46,118.89,216.72,143.64Zm-55.18,29a52.11,52.11,0,0,1-33.4-44.78A52.09,52.09,0,0,1,83.37,94.47q-10.45,23.79-11.3,57.59a8,8,0,0,1-4.85,7.17L31.83,174.37l34.45,9.86a8,8,0,0,1,5.49,5.5l9.84,34.44,15.16-35.4a8,8,0,0,1,7.17-4.84Q137.71,183.12,161.54,172.64ZM212.42,43.57c-14.15-3-64.1-11-100.3,14.75a81.21,81.21,0,0,0-16,15.07,36,36,0,0,0,39.35,38.44,8,8,0,0,1,8.73,8.73,36,36,0,0,0,38.47,39.34,80.81,80.81,0,0,0,15-16C223.42,107.73,215.42,57.74,212.42,43.57Z"/></symbol>
+<symbol id="r-fork-knife" viewBox="0 0 256 256"><path d="M72,88V40a8,8,0,0,1,16,0V88a8,8,0,0,1-16,0ZM216,40V224a8,8,0,0,1-16,0V176H152a8,8,0,0,1-8-8,268.75,268.75,0,0,1,7.22-56.88c9.78-40.49,28.32-67.63,53.63-78.47A8,8,0,0,1,216,40ZM200,53.9c-32.17,24.57-38.47,84.42-39.7,106.1H200ZM119.89,38.69a8,8,0,1,0-15.78,2.63L112,88.63a32,32,0,0,1-64,0l7.88-47.31a8,8,0,1,0-15.78-2.63l-8,48A8.17,8.17,0,0,0,32,88a48.07,48.07,0,0,0,40,47.32V224a8,8,0,0,0,16,0V135.32A48.07,48.07,0,0,0,128,88a8.17,8.17,0,0,0-.11-1.31Z"/></symbol>
+<symbol id="r-globe" viewBox="0 0 256 256"><path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm88,104a87.61,87.61,0,0,1-3.33,24H174.16a157.44,157.44,0,0,0,0-48h38.51A87.61,87.61,0,0,1,216,128ZM102,168H154a115.11,115.11,0,0,1-26,45A115.27,115.27,0,0,1,102,168Zm-3.9-16a140.84,140.84,0,0,1,0-48h59.88a140.84,140.84,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.84a157.44,157.44,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154,88H102a115.11,115.11,0,0,1,26-45A115.27,115.27,0,0,1,154,88Zm52.33,0H170.71a135.28,135.28,0,0,0-22.3-45.6A88.29,88.29,0,0,1,206.37,88ZM107.59,42.4A135.28,135.28,0,0,0,85.29,88H49.63A88.29,88.29,0,0,1,107.59,42.4ZM49.63,168H85.29a135.28,135.28,0,0,0,22.3,45.6A88.29,88.29,0,0,1,49.63,168Zm98.78,45.6a135.28,135.28,0,0,0,22.3-45.6h35.66A88.29,88.29,0,0,1,148.41,213.6Z"/></symbol>
+<symbol id="r-house" viewBox="0 0 256 256"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></symbol>
+<symbol id="r-linkedin-logo" viewBox="0 0 256 256"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></symbol>
+<symbol id="r-map-pin" viewBox="0 0 256 256"><path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/></symbol>
+<symbol id="r-phone" viewBox="0 0 256 256"><path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"/></symbol>
+<symbol id="r-shield-check" viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></symbol>
+<symbol id="r-smiley" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z"/></symbol>
+<symbol id="r-squares-four" viewBox="0 0 256 256"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z"/></symbol>
+<symbol id="r-tree" viewBox="0 0 256 256"><path d="M198.1,62.59a76,76,0,0,0-140.2,0A71.71,71.71,0,0,0,16,127.8C15.9,166,48,199,86.14,200A72.09,72.09,0,0,0,120,192.47V232a8,8,0,0,0,16,0V192.47A72.17,72.17,0,0,0,168,200l1.82,0C208,199,240.11,166,240,127.8A71.71,71.71,0,0,0,198.1,62.59ZM169.45,184a56.08,56.08,0,0,1-33.45-10v-41l43.58-21.78a8,8,0,1,0-7.16-14.32L136,115.06V88a8,8,0,0,0-16,0v51.06L83.58,120.84a8,8,0,1,0-7.16,14.32L120,156.94v17a56,56,0,0,1-33.45,10C56.9,183.23,31.92,157.52,32,127.84A55.77,55.77,0,0,1,67.11,76a8,8,0,0,0,4.53-4.67,60,60,0,0,1,112.72,0A8,8,0,0,0,188.89,76,55.79,55.79,0,0,1,224,127.84C224.08,157.52,199.1,183.23,169.45,184Z"/></symbol>
+<symbol id="r-trend-up" viewBox="0 0 256 256"><path d="M240,56v64a8,8,0,0,1-16,0V75.31l-82.34,82.35a8,8,0,0,1-11.32,0L96,123.31,29.66,189.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0L136,140.69,212.69,64H168a8,8,0,0,1,0-16h64A8,8,0,0,1,240,56Z"/></symbol>
+<symbol id="r-users" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></symbol>
+<symbol id="r-volleyball" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm81.74,136.58a88,88,0,0,1-93.49,3.78L132.62,136h83A87.16,87.16,0,0,1,209.74,160.58ZM91.12,48.11a87.57,87.57,0,0,1,24.22-7.2,88,88,0,0,1,50,79.09H132.62ZM215.63,120H181.37a104.18,104.18,0,0,0-35.78-78.23A88.18,88.18,0,0,1,215.63,120ZM77.27,56.13,94.39,85.78a104.14,104.14,0,0,0-49.86,70.09A87.95,87.95,0,0,1,77.27,56.13ZM58.9,182.43a88,88,0,0,1,43.49-82.79L118.76,128,77.27,199.87A88.62,88.62,0,0,1,58.9,182.43ZM128,216a87.5,87.5,0,0,1-36.88-8.11l17.13-29.67a104.23,104.23,0,0,0,85.53,8.17A87.81,87.81,0,0,1,128,216Z"/></symbol>
+<symbol id="r-waves" viewBox="0 0 256 256"><path d="M222.16,177.25a8,8,0,0,1-1,11.25c-17.36,14.39-32.86,19.5-47,19.5-18.58,0-34.82-8.82-49.93-17-25.35-13.76-47.24-25.64-79.07.74a8,8,0,1,1-10.22-12.31c40.17-33.28,70.32-16.92,96.93-2.48,25.35,13.75,47.24,25.63,79.07-.74A8,8,0,0,1,222.16,177.25Zm-11.27-57c-31.83,26.38-53.72,14.5-79.07.74-26.61-14.43-56.76-30.79-96.93,2.49a8,8,0,0,0,10.22,12.31c31.83-26.38,53.72-14.5,79.07-.74,15.11,8.19,31.35,17,49.93,17,14.14,0,29.64-5.11,47-19.5a8,8,0,1,0-10.22-12.31ZM45.11,79.8c31.83-26.37,53.72-14.49,79.07-.74,15.11,8.2,31.35,17,49.93,17,14.14,0,29.64-5.12,47-19.5a8,8,0,1,0-10.22-12.31c-31.83,26.38-53.72,14.5-79.07.74C105.21,50.58,75.06,34.22,34.89,67.5A8,8,0,1,0,45.11,79.8Z"/></symbol>
+</svg>
+<!-- icons:end -->
 </body>
 </html>
