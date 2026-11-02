@@ -118,3 +118,20 @@ Redesign of lower sections, new pages, switching ad platforms, hosting changes.
 ## Open question on campaign structure (decision stays with owner, after data)
 
 PMax (Cross-network) is 54% of sessions and spreads over Display/Discover/YouTube, which fits the low scroll and short time on site. Options to evaluate once real lead events per channel are known: keep PMax with a lower budget and strong audience signals, add or boost a plain Search campaign (high-intent queries, ads from `marketing/google-ads.md`), exclude low-value placements. No budget move before the first-screen/popup/measurement fixes are live and 1-2 weeks of data exist.
+
+## GA4 events + Google Ads conversion list (owner data, 2026-11-02)
+
+GA4 (2,033 users, 2,515 sessions in the report period): `cookie_consent_accept` 1,835 events / 1,818 users (89% of users), `popup_view` 1,678 / 1,300 users (**64% of all users saw the popup**), `scroll` (90% depth) 609 / 515 users (25%), `file_download` 144 / 97 users (5%), `form_start` 72, `phone_click` = `ads_conversion_phone_call_lead` 49 / 44 users, `generate_lead` 25 / 16 users (0.8% of users).
+
+Google Ads conversion actions:
+1. "Przesłanie formularza kontaktowego" = GA4 import of `generate_lead`, **Primary**, 0 conversions, status "Oczekiwanie na konwersje" / needs attention.
+2. "Połączenie telefoniczne – kontakt do potencjalnego klienta" = call-from-ads asset, **Primary**, 0 conversions, pending.
+3. "Kaszubska Osada (web) ads_conversion_phone_call_lead" = GA4 import of the phone tap, **Secondary**, 12 conversions, value 47.28, active.
+
+Conclusions:
+- Consent is **not** the blocker (89% accept), so cause (2) in item E is largely ruled out; Enhanced conversions are optional, not urgent.
+- The only conversion Ads receives is the phone tap (12 of 49), and it is **Secondary**, so it is not used for bidding. The Primary goals have 0 conversions. **PMax therefore optimises without any conversion signal**, which fits the junk Display/Paid Other traffic and the low scroll. Highest-leverage fix, no code needed: make the phone tap a Primary goal (or give PMax a real signal another way), and decide one phone source of truth (call asset vs tap) to avoid double counting.
+- 0 form conversions in Ads vs 25 `generate_lead` in GA4: need the per-channel split of `generate_lead` (Google vs Meta vs direct) before concluding Google gives no forms. Also check `form_name` (contact_form vs callback_popup).
+- The site also fires a direct Ads conversion (`AW-18508894435/Khi4COKZwZwdEOOh3flE`, index.html:3913). It is not visible in the list above, and a `send_to` event does not show in GA4. Confirm in Ads whether an action with that label still exists; if not, remove the dead call; if it does, make sure it does not double count with the imported `generate_lead`.
+- `popup_view` on 64% of users with ~16 callback/contact leads means the popup mostly interrupts. Moving it to scroll depth + idle (B1) will cut impressions sharply; compare `generate_lead` per `popup_view` before/after to make sure leads do not drop.
+- `file_download` (5% of users, presentation/PDF) is a real interest signal: candidate secondary conversion / retargeting audience.
