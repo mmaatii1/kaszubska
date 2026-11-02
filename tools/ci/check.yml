@@ -1,0 +1,13 @@
+name: Consistency check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Availability, prices and JSON-LD agree with the house cards
+        run: python3 tools/check_consistency.py
