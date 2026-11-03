@@ -1,7 +1,7 @@
 # Kaszubska Osada – Google Ads
 
 Strona: https://kaszubskaosada.com.pl/ · Tel.: +48 500 299 775
-Fakty użyte w tekstach: 8 domów (6 dostępnych), od 387 000 zł brutto (8% VAT), 51–56 m², działka 176–289 m², taras, parking, księga wieczysta, stan deweloperski, rabat 3–7% / do 32 000 zł (do 31.12.2026), odbiór kluczy 2026, jezioro Graniczne (2 plaże), gm. Kołczygłowy, Bytów 30 min, Słupsk 45 min, Ustka 1h 10 min, najem przez Rental24, szac. ~7,5% rocznie (szacunek, nie gwarancja).
+Fakty użyte w tekstach: 8 domów (6 dostępnych), od 387 000 zł brutto (8% VAT), 51–56 m², działka 176–289 m², taras, parking, księga wieczysta, stan deweloperski, rabat 3–5% / do 22 000 zł (do 31.12.2026), odbiór kluczy 2026, jezioro Graniczne (2 plaże), gm. Kołczygłowy, Bytów 30 min, Słupsk 45 min, Ustka 1h 10 min, najem przez Rental24, szac. ~7,5% rocznie (szacunek, nie gwarancja).
 
 Limity: nagłówek 30, długi nagłówek 90, opis 90, krótki opis (PMax) 60, nazwa firmy 25, ścieżka 15, link podstrony 25/35, rozszerzenie objaśnień 25, snippet 25. Wszystko poniżej sprawdzone skryptem.
 
@@ -20,7 +20,7 @@ H1–H3 do przypięcia (opcjonalnie): pozycja 1 – „Domy na Kaszubach”, poz
 3. Od 387 000 zł brutto
 4. Dom nad jeziorem Granicznym
 5. Domy całoroczne na Kaszubach
-6. Rabat do 32 000 zł
+6. Rabat do 22 000 zł
 7. Promocja do 31.12.2026
 8. Własna działka do 289 m²
 9. 51–56 m² na 2 kondygnacjach
@@ -50,7 +50,7 @@ H1–H3 do przypięcia (opcjonalnie): pozycja 1 – „Domy na Kaszubach”, poz
 1. Domy całoroczne nad jeziorem Granicznym na Kaszubach – od 387 000 zł brutto
 2. Własny dom na Kaszubach z działką, tarasem i parkingiem. Zostało 6 z 8 domów
 3. Zamieszkaj albo zarabiaj na najmie – dom nad jeziorem z gotowym modelem wynajmu
-4. Promocja do 31.12.2026: rabat 3–7% i oszczędność do 32 000 zł na domu na Kaszubach
+4. Promocja do 31.12.2026: rabat 3–5% i oszczędność do 22 000 zł na domu na Kaszubach
 5. Dom 51–56 m² z własną działką do 289 m² i księgą wieczystą. Odbiór kluczy w 2026
 6. Kaszubska Osada – 8 domów wśród lasów i jezior, 30 min od Bytowa, 45 min od Słupska
 7. Nowy etap Kaszubskiej Osady: gotowa infrastruktura, jezioro, restauracja i sąsiedzi
@@ -59,7 +59,7 @@ H1–H3 do przypięcia (opcjonalnie): pozycja 1 – „Domy na Kaszubach”, poz
 ## Opisy (RSA, max 90)
 1. Domy całoroczne nad jeziorem Granicznym. Działka, taras i parking w cenie. Od 387 tys. zł.
 2. 51–56 m² na 2 kondygnacjach, własna działka 176–289 m² i księga wieczysta. Zobacz ofertę.
-3. Promocja do 31.12.2026: rabaty 3–7%, oszczędzasz nawet 32 000 zł. Zostało 6 z 8 domów.
+3. Promocja do 31.12.2026: rabaty 3–5%, oszczędzasz nawet 22 000 zł. Zostało 6 z 8 domów.
 4. Zamieszkaj lub wynajmuj. Gotowy model najmu z obsługą Rental24 – szac. ~7,5% rocznie.
 5. 2 plaże, restauracja i przystań rybacka na miejscu. Ustka 1h 10 min. Zadzwoń i umów się.
 6. Ostatni etap Kaszubskiej Osady: gotowa infrastruktura, restauracja, plac zabaw, plaża.
@@ -71,7 +71,7 @@ H1–H3 do przypięcia (opcjonalnie): pozycja 1 – „Domy na Kaszubach”, poz
 ## Linki do podstron (sitelinki: tekst max 25, opisy max 35)
 | Tekst | Opis 1 | Opis 2 | URL |
 |---|---|---|---|
-| Dostępne domy i ceny | 6 domów od 387 000 zł brutto | Rabat do 32 000 zł do końca roku | /#oferta |
+| Dostępne domy i ceny | 6 domów od 387 000 zł brutto | Rabat do 22 000 zł do końca roku | /#oferta |
 | Standard deweloperski | Bryła, dach, okna, taras, media | Pobierz opis standardu PDF | /#standard |
 | Wykończenie pod klucz | Wykończymy dom przed odbiorem | Klucze do gotowego domu | /#pod-klucz |
 | Lokalizacja | Nad jeziorem Granicznym | Bytów 30 min, Słupsk 45 min | /#lokalizacja |
@@ -84,7 +84,7 @@ H1–H3 do przypięcia (opcjonalnie): pozycja 1 – „Domy na Kaszubach”, poz
 - Własna działka do 289 m²
 - Taras i parking w cenie
 - Księga wieczysta
-- Rabat do 32 000 zł
+- Rabat do 22 000 zł
 - Odbiór kluczy 2026
 - 2 plaże przy jeziorze
 - Najem z obsługą Rental24
@@ -109,7 +109,7 @@ H1–H3 do przypięcia (opcjonalnie): pozycja 1 – „Domy na Kaszubach”, poz
   - od 388 000 zł – „Działka 176 m², taras, parking”
   - od 393 000 zł – „Działka 213 m², taras, parking”
   (nazwy dopasuj do numerów domów z kart; dostępne ceny: 387, 388, 393, 408, 409, 413 tys. zł – 425 tys. zł jest już sprzedane; sprawdzić pozycje przy każdej sprzedaży)
-- Rozszerzenie promocji: „Rabat do 32 000 zł”, ważne do 31.12.2026, kwota rabatu do 32 000 PLN
+- Rozszerzenie promocji: „Rabat do 22 000 zł”, ważne do 31.12.2026, kwota rabatu do 22 000 PLN
 
 ## Słowa kluczowe (Search)
 Dopasowanie do frazy „…” i ścisłe […]:
