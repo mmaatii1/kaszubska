@@ -11,7 +11,8 @@
 - [ ] Decision for later (not now): make phone tap a Primary goal.
 - [ ] Google Ads: import the GA4 phone-tap key event as a conversion (Goals -> Conversions -> New -> Import -> Google Analytics 4).
 - [ ] Google Ads: exclude Audience Network placement / "an" source; send search-terms report (top 30) if you want it reviewed.
-- [ ] GTM (GTM-T4VCGMDB): export the container JSON (Admin -> Export) so duplicate gtag loaders can be removed safely.
+- [x] GTM export not needed: I read the published container (Clarity, Conversion Linker, 3 unused listeners; no G-/AW- tags). The duplicate was `gtag('config','AW-…')` re-downloading the combined Google tag; removed.
+- [ ] Google tag `G-9YM5FV534P` -> Manage Google tag -> destinations: unlink the second Ads account `AW-18063980473` (owner said it can go).
 - [ ] Who answers the phone during ad hours? Decide on voicemail / missed-call SMS.
 - [ ] After each change: deploy via the FTP workflow (push to main), check on your phone.
 - [x] Search terms CSV received (GitHub main, 7 days).
@@ -28,4 +29,3 @@
 - [x] **Promo claims**: owner chose "do −5%" / "do 22 000 zł"; changed in index.html, `marketing/google-ads.md`, `marketing/brevo-oferta.html` header.
 - [ ] GA4 Admin -> Custom definitions -> event-scoped dimensions: `error_message`, `browser_family`, `error_kind` (js_error), `popup_layout`, `method`, `scroll_percent` (popup), `link_target`, `menu_type` (menu). Without them the values are collected but not visible in reports.
 - [ ] After ~2 weeks live: compare in Clarity dead-click share, JS errors from FacebookApp/Samsung, scroll depth; in GA4 `generate_lead` per `popup_view`/`popup_shown`, `popup_dismiss` by `method`, `menu_click` by `link_target`, `js_error` messages. Expect fewer `phone_click` from the floating button (it is hidden while the hero with its own "Zadzwoń" is visible): compare calls actually answered, not taps.
-- [ ] GTM export (item above) is now also the main remaining speed lever: removing the duplicated direct gtag loader is worth roughly Performance +2-4 / TBT -100 to -200 ms in the lab.
