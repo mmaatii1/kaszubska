@@ -12,7 +12,7 @@
 - [ ] Google Ads: import the GA4 phone-tap key event as a conversion (Goals -> Conversions -> New -> Import -> Google Analytics 4).
 - [ ] Google Ads: exclude Audience Network placement / "an" source; send search-terms report (top 30) if you want it reviewed.
 - [x] GTM export not needed: I read the published container (Clarity, Conversion Linker, 3 unused listeners; no G-/AW- tags). The duplicate was `gtag('config','AW-…')` re-downloading the combined Google tag; removed.
-- [ ] Google tag `G-9YM5FV534P` -> Manage Google tag -> destinations: unlink the second Ads account `AW-18063980473` (owner said it can go).
+- [x] Second Ads account `AW-18063980473` unlinked from the Google tag by owner (2026-11-05); destinations now G-9YM5FV534P + AW-18508894435.
 - [ ] Who answers the phone during ad hours? Decide on voicemail / missed-call SMS.
 - [ ] After each change: deploy via the FTP workflow (push to main), check on your phone.
 - [x] Search terms CSV received (GitHub main, 7 days).
