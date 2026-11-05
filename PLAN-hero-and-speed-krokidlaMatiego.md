@@ -19,6 +19,7 @@
 - [ ] Google Ads: check Search campaign Settings -> Networks: are "Include Google Search Partners" and "Include Google Display Network" ON? (turn Display Network off for Search).
 - [ ] Meta: actual spend for 26.10-1.11 and results per ad set (CSV to `marketing/data/` on GitHub).
 - [ ] Google Ads campaign report as CSV (Campaigns -> download), same period, with "Network" segment, to `marketing/data/`.
+- [ ] Google Ads + Meta: replace every "32 000 zł" / "−7%" / "3–7%" in live ads with "22 000 zł" / "−5%" / "3–5%" (headlines, descriptions, sitelink, callout, promotion asset; see `marketing/google-ads.md`).
 - [ ] Apply the negative keywords and keyword match-type changes from `marketing/google-ads.md` in the Ads UI after reviewing them (nothing is applied yet).
 
 ## After the code changes (branch `perf-conversion-fixes`, 2026-11-02)
