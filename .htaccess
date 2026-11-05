@@ -1,6 +1,6 @@
 # Blokada plików, których nie wolno serwować publicznie
 # (klucze API, kopie zapasowe, pliki robocze).
-<FilesMatch "(^kontakt\.config.*\.php$|\.(bak|old|orig|save|swp|tmp|log|ini|sql|md|gs|yml|yaml|py|mjs)$|~$)">
+<FilesMatch "(^kontakt\.config.*\.php$|\.(bak|old|orig|save|swp|tmp|log|ini|sql|csv|md|gs|yml|yaml|py|mjs)$|~$)">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
