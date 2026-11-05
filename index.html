@@ -430,7 +430,7 @@
 
     /* ─── HERO (mobile first) ─────────────────────────────────── */
     /* Phones: hero is shorter than the screen so the next section peeks out
-       (and the compact cookie bar covers that strip, not the CTA). */
+       (the offer heading; the compact cookie bar covers that strip, not the CTA). */
     .hero {
       padding: 0;
       min-height: calc(100vh - 7.5rem);
@@ -549,6 +549,7 @@
       white-space: nowrap;
     }
     .stat-item:last-child { border-right: none; }
+    @media (max-width: 900px) { .stat-item:nth-child(5) { display: none; } .stat-item:nth-child(4) { border-right: none; } }
     .stat-label {
       font-size: .7rem;
       font-weight: 600;
@@ -1290,8 +1291,8 @@
     .attraction { transition: color .2s, padding-left .2s; }
     .attraction:hover { padding-left: .5rem; }
 
-    .stat-item, .mobile-stat { display: block; color: inherit; transition: background .2s; }
-    .stat-item:hover, .mobile-stat:active { background: rgba(247,243,236,.07); }
+    .stat-item { display: block; color: inherit; transition: background .2s; }
+    .stat-item:hover { background: rgba(247,243,236,.07); }
 
     /* Count-up target */
     .countup { display: inline-block; }
@@ -2257,54 +2258,13 @@
       .footer-social-block { flex-wrap: wrap; gap: .6rem; }
     }
 
-    /* ─── MOBILE STATS SECTION (only on mobile) ──────────────── */
-    .mobile-stats-section {
-      display: none;
-      background: var(--forest);
-      padding: 0;
-    }
-    .mobile-stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    .mobile-stat {
-      padding: 1.4rem 1.25rem;
-      position: relative;
-    }
-    .mobile-stat::after {
-      content: '';
-      position: absolute;
-      background: rgba(247,243,236,.1);
-    }
-    .mobile-stat:nth-child(odd)::after  { right: 0; top: 12%; bottom: 12%; width: 1px; }
-    .mobile-stat:nth-child(-n+4)::before {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 8%; right: 8%; height: 1px;
-      background: rgba(247,243,236,.1);
-    }
-    .mobile-stat-label {
-      font-size: .66rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--gold-light);
-      margin-bottom: .35rem;
-    }
-    .mobile-stat-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: var(--cream);
-      line-height: 1.2;
-    }
-
     @media (max-width: 600px) {
       /* Hide desktop stats bar inside hero */
       .hero-stats { display: none; }
+      /* the offer heading is what peeks out under the hero */
+      #oferta { padding-top: 1.75rem; }
+      #oferta .section-inner > .reveal:first-child { opacity: 1; transform: none; }
       .domy-text .btn { width: 100%; }
-
-      /* ── Mobile stats section ── */
-      .mobile-stats-section { display: block; }
 
       /* Other layout fixes */
       .domy-specs, .amenities { grid-template-columns: 1fr 1fr; gap: .6rem; }
@@ -2412,63 +2372,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="hero-stats">
     <div class="hero-stats-inner">
       <a class="stat-item" href="#oferta">
-        <div class="stat-label">Powierzchnia domu</div>
-        <div class="stat-value">51 – 56 m²</div>
+        <div class="stat-label">Na własność</div>
+        <div class="stat-value">Własna księga wieczysta</div>
       </a>
       <a class="stat-item" href="#oferta">
-        <div class="stat-label">Działka</div>
-        <div class="stat-value">176 – 289 m²</div>
+        <div class="stat-label">Działka 176 – 289 m²</div>
+        <div class="stat-value">Taras i parking</div>
       </a>
       <a class="stat-item" href="#lokalizacja">
-        <div class="stat-label">Bytów</div>
-        <div class="stat-value">30 min</div>
+        <div class="stat-label">Jezioro Graniczne</div>
+        <div class="stat-value">2 plaże</div>
       </a>
-      <a class="stat-item" href="#lokalizacja">
-        <div class="stat-label">Słupsk</div>
-        <div class="stat-value">45 min</div>
-      </a>
-      <a class="stat-item" href="#lokalizacja">
-        <div class="stat-label">Morze Bałtyckie</div>
-        <div class="stat-value">1h 10 min</div>
+      <a class="stat-item" href="#o-projekcie">
+        <div class="stat-label">Dom całoroczny</div>
+        <div class="stat-value">2 piętra · 51 – 56 m²</div>
       </a>
       <a class="stat-item" href="#inwestycja">
-        <div class="stat-label">Stopa zwrotu</div>
-        <div class="stat-value">~7,5%</div>
+        <div class="stat-label">Najem pod klucz</div>
+        <div class="stat-value">Obsługa Rental24</div>
       </a>
     </div>
   </div>
 
 </section>
-
-<!-- ─── MOBILE STATS (visible only on mobile, after hero) ─────── -->
-<div class="mobile-stats-section">
-  <div class="mobile-stats-grid">
-    <a class="mobile-stat" href="#oferta">
-      <div class="mobile-stat-label">Powierzchnia domu</div>
-      <div class="mobile-stat-value">51 – 56 m²</div>
-    </a>
-    <a class="mobile-stat" href="#oferta">
-      <div class="mobile-stat-label">Powierzchnia działki</div>
-      <div class="mobile-stat-value">176 – 289 m²</div>
-    </a>
-    <a class="mobile-stat" href="#lokalizacja">
-      <div class="mobile-stat-label">Bytów</div>
-      <div class="mobile-stat-value">30 min</div>
-    </a>
-    <a class="mobile-stat" href="#lokalizacja">
-      <div class="mobile-stat-label">Słupsk</div>
-      <div class="mobile-stat-value">45 min</div>
-    </a>
-    <a class="mobile-stat" href="#lokalizacja">
-      <div class="mobile-stat-label">Morze Bałtyckie</div>
-      <div class="mobile-stat-value">1h 10 min</div>
-    </a>
-    <a class="mobile-stat" href="#inwestycja">
-      <div class="mobile-stat-label">Stopa zwrotu</div>
-      <div class="mobile-stat-value">~7,5%</div>
-    </a>
-  </div>
-</div>
 
 <!-- ─── OFERTA ─────────────────────────────────────────────────── -->
 <section id="oferta">
