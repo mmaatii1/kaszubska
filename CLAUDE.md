@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Single-file static landing page for **Kaszubska Osada** — a real estate project selling 8 year-round holiday homes in Kashubia, Poland. The site is `index.html` (+ images in `zdjecia/`, self-hosted fonts in `assets/fonts/`). No build system, no package manager, no framework. Push to `main` = FTP deploy to production (`.github/workflows/deploy-ftp.yml`); work on a branch.
+Single-file static landing page for **Kaszubska Osada** — a real estate project selling 8 year-round holiday homes in Kashubia, Poland. The site is `index.html` (+ images in `zdjecia/`, self-hosted fonts in `assets/fonts/`). No build system, no package manager, no framework. Push to `main` runs the FTP deploy (`.github/workflows/deploy-ftp.yml`), but it has never succeeded: the server (s44.cyber-folks.pl) drops FTPS connections from GitHub runners right after the TLS handshake, while from Poland it answers normally (likely a foreign-IP block on the hosting side). Until that is fixed the owner uploads manually; the live site may lag `main`. Work on a branch.
 
 To preview: serve the folder (`python3 -m http.server`), or use `httpd:2.4` with `AllowOverride All` to test `.htaccess` (cache headers, gzip, 403 rules). The only external origins are Google (GTM/gtag/Consent Mode), Clarity (via GTM), Meta Pixel (after consent) and the Maps iframe.
 
