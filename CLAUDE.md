@@ -37,7 +37,7 @@ Everything lives in one file with three logical zones:
 
 ## Availability and price (single source of truth: the cards)
 
-When a house is sold or a price changes, update the card, then everything the check lists: hero/menu/popup counts (`data-avail-text`), meta/OG/Twitter descriptions, JSON-LD (`offerCount`, `lowPrice`, `highPrice`, `priceRange`), `SOLD` map of the lot selector, `marketing/google-ads.md`. Run `python3 tools/check_consistency.py` before every push (WARNs when promo claims like "do −7%" exceed what the available cards show). Once the owner installs `tools/ci/*.yml` it also runs in CI and blocks the FTP deploy on a mismatch. The automation token cannot push `.github/workflows/` changes.
+When a house is sold or a price changes, update the card, then everything the check lists: hero/menu/popup counts (`data-avail-text`), meta/OG/Twitter descriptions, JSON-LD (`offerCount`, `lowPrice`, `highPrice`, `priceRange`), `SOLD` map of the lot selector, `marketing/google-ads.md`. Run `python3 tools/check_consistency.py` before every push (WARNs when promo claims like "do −7%" exceed what the available cards show). CI runs it too (`.github/workflows/check.yml`, and as the first step of `deploy-ftp.yml`), so a mismatch blocks the FTP deploy.
 
 ## Testing
 

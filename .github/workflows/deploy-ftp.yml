@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Consistency check (no deploy with mismatched availability or prices)
+        run: python3 tools/check_consistency.py
+
       - name: Show FTPS certificate names
         continue-on-error: true
         env:
@@ -48,5 +51,6 @@ jobs:
             kontakt.config.example.php
             marketing/**
             apps-script/**
+            tools/**
             **/*:Zone.Identifier
             **/*:sec.endpointdlp

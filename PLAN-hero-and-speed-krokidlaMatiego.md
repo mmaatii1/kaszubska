@@ -22,7 +22,7 @@
 
 ## After the code changes (branch `perf-conversion-fixes`, 2026-11-02)
 
-- [ ] Install the CI files from `tools/ci/` (see `tools/ci/README.md`; my token cannot write `.github/workflows/`): new `check.yml`, replaced `deploy-ftp.yml` (consistency check before the upload, `tools/**` not uploaded).
+- [x] CI files installed by me in `.github/workflows/` (new token has the workflow scope).
 - [ ] Review the branch and merge it to `main` (merge = FTP deploy).
 - [ ] After the deploy, on your phone: first screen (price, 6 z 8, CTA), menu (open, tap "Oferta i ceny", Esc/outside), gallery + lightbox, both forms with one real test lead (check the e-mail / `leady.gs` log), popup (wait 25 s, scroll past half the page, stop scrolling).
 - [x] **Promo claims**: owner chose "do −5%" / "do 22 000 zł"; changed in index.html, `marketing/google-ads.md`, `marketing/brevo-oferta.html` header.
