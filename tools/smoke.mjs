@@ -82,8 +82,19 @@ async function run(width, ua, consent) {
   check(ctx, 'no horizontal page scroll', hs <= 0, hs);
 
   // consistency of first-screen copy
-  const heroTxt = await page.evaluate(() => (document.querySelector('.hero') || document.body).innerText);
-  check(ctx, 'hero mentions 387 000 + 6 z 8', /387\s?000/.test(heroTxt) && /6 z 8/.test(heroTxt), heroTxt.slice(0, 200));
+  // (expected values come from the cards, the single source of truth)
+  const { heroTxt, nAvail, nAll, low } = await page.evaluate(() => {
+    const cards = Array.from(document.querySelectorAll('#aptGrid .ko-card'));
+    const avail = cards.filter(c => c.dataset.status === 'avail');
+    return {
+      heroTxt: (document.querySelector('.hero') || document.body).innerText,
+      nAvail: avail.length, nAll: cards.length,
+      low: Math.min(...avail.map(c => +c.dataset.price))
+    };
+  });
+  const lowTxt = String(low).replace(/(\d{3})$/, '\\s?$1');
+  check(ctx, `hero mentions ${low} + ${nAvail} z ${nAll}`,
+    new RegExp(lowTxt).test(heroTxt) && heroTxt.includes(`${nAvail} z ${nAll}`), heroTxt.slice(0, 200));
 
   // cookie banner
   const bannerShown = await isVisible(page, '#koPrefs');
@@ -173,7 +184,7 @@ async function run(width, ua, consent) {
   await page.evaluate(() => document.querySelector('.ko-pill[data-filter="avail"]').click());
   await sleep(300);
   const shown = await page.evaluate(() => Array.from(document.querySelectorAll('#aptGrid .ko-card')).filter(c => !c.hidden).length);
-  check(ctx, 'filter avail shows 6', shown === 6, shown);
+  check(ctx, `filter avail shows ${nAvail}`, shown === nAvail, shown);
   await page.evaluate(() => document.querySelector('.ko-pill[data-filter="all"]').click());
 
   });

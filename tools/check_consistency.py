@@ -2,12 +2,13 @@
 
     python3 tools/check_consistency.py [path/to/index.html]   (stdlib only; exit 1 on any FAIL)
 
-Source of truth: the `article.ko-card` elements in #aptGrid (`data-status`, `data-price`).
+Source of truth: the `article.ko-card` elements in #aptGrid (`data-status`: avail | reserved | sold,
+`data-price`). Reserved houses are not counted as available.
 Checked against it:
 - every "N z M" count in index.html (hero, menu note, popup …) and every [data-avail-text],
 - JSON-LD AggregateOffer offerCount / lowPrice / highPrice and RealEstateAgent priceRange,
 - every "od X zł" / "od X tys. zł" price (title, OG/Twitter, meta description, hero, FAQ, popup …),
-- the lot-selector SOLD map in the script vs. the sold cards,
+- the lot-selector SOLD / RESERVED maps in the script vs. the sold / reserved cards,
 - marketing/google-ads.md counts.
 Promo claims that the cards cannot back ("do −N%", "do N zł" savings) are reported as WARN:
 they are the owner's call, but they should be re-checked after every sale.
@@ -66,9 +67,14 @@ for attrs, body in cards:
 total = len(units)
 avail = [u for u in units if u["status"] == "avail"]
 sold = [u for u in units if u["status"] == "sold"]
+reserved = [u for u in units if u["status"] == "reserved"]
+for u in units:
+    if u["status"] not in ("avail", "reserved", "sold"):
+        fail(f'{u["title"]}: unknown data-status "{u["status"]}"')
 n_avail = len(avail)
 low, high = min(u["price"] for u in avail), max(u["price"] for u in avail)
-print(f"cards: {total}, available: {n_avail}, sold: {', '.join(u['title'] for u in sold) or '-'}; "
+print(f"cards: {total}, available: {n_avail}, reserved: {', '.join(u['title'] for u in reserved) or '-'}, "
+      f"sold: {', '.join(u['title'] for u in sold) or '-'}; "
       f"price {fmt(low)} – {fmt(high)} zł")
 for u in avail:
     if u["price"] <= 0:
@@ -119,21 +125,29 @@ for where, txt in (("head (title/meta/OG/Twitter)", meta_text), ("body", page_te
 if not re.search(rf"od {fmt(low)} zł", meta_text):
     fail(f"title/description do not mention the starting price od {fmt(low)} zł")
 
-# ── lot selector SOLD map in the script ─────────────────────────────────
-sold_map = re.search(r"const SOLD = (\{[^;]*\});", HTML)
-if sold_map:
-    js_sold = set()
-    for bld, pair in re.findall(r"(\d+)\s*:\s*\[([^\]]*)\]", sold_map.group(1)):
+# ── lot selector SOLD / RESERVED maps in the script ──────────────────────
+def lot_map(name):
+    m = re.search(rf"const {name} = (\{{[^;]*\}});", HTML)
+    if not m:
+        return None
+    out = set()
+    for bld, pair in re.findall(r"(\d+)\s*:\s*\[([^\]]*)\]", m.group(1)):
         left, right = [p.strip() == "true" for p in pair.split(",")]
         if left:
-            js_sold.add(f"Domek {bld}")
+            out.add(f"Domek {bld}")
         if right:
-            js_sold.add(f"Domek {bld}a")
-    card_sold = {u["title"] for u in sold}
-    if js_sold != card_sold:
-        fail(f"lot selector SOLD map {sorted(js_sold)} != sold cards {sorted(card_sold)}")
-else:
-    fail("lot selector SOLD map not found")
+            out.add(f"Domek {bld}a")
+    return out
+
+
+for name, group in (("SOLD", sold), ("RESERVED", reserved)):
+    js = lot_map(name)
+    cards_set = {u["title"] for u in group}
+    if js is None:
+        if cards_set or name == "SOLD":
+            fail(f"lot selector {name} map not found")
+    elif js != cards_set:
+        fail(f"lot selector {name} map {sorted(js)} != {name.lower()} cards {sorted(cards_set)}")
 
 # ── promo claims the cards cannot back (owner decision → warning) ───────
 max_pct = max(u["pct"] for u in avail)

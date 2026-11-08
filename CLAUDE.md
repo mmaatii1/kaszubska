@@ -37,7 +37,7 @@ Everything lives in one file with three logical zones:
 
 ## Availability and price (single source of truth: the cards)
 
-When a house is sold or a price changes, update the card, then everything the check lists: hero/menu/popup counts (`data-avail-text`), meta/OG/Twitter descriptions, JSON-LD (`offerCount`, `lowPrice`, `highPrice`, `priceRange`), `SOLD` map of the lot selector, `marketing/google-ads.md`. Run `python3 tools/check_consistency.py` before every push (WARNs when promo claims like "do −7%" exceed what the available cards show). CI runs it too (`.github/workflows/check.yml`, and as the first step of `deploy-ftp.yml`), so a mismatch blocks the FTP deploy.
+When a house is sold or a price changes, update the card, then everything the check lists: hero/menu/popup counts (`data-avail-text`), meta/OG/Twitter descriptions, JSON-LD (`offerCount`, `lowPrice`, `highPrice`, `priceRange`), `SOLD` / `RESERVED` maps of the lot selector, `marketing/brevo-oferta*.html`, `marketing/google-ads.md`. Run `python3 tools/check_consistency.py` before every push (WARNs when promo claims like "do −7%" exceed what the available cards show). CI runs it too (`.github/workflows/check.yml`, and as the first step of `deploy-ftp.yml`), so a mismatch blocks the FTP deploy.
 
 ## Testing
 
@@ -58,8 +58,9 @@ When a house is sold or a price changes, update the card, then everything the ch
 
 Cards are a static grid (`#aptGrid`, 4/3/2 columns at >1100/≤1100/≤900px; at ≤600px it becomes a swipe carousel with dots) of `article.ko-card` elements, one per unit. Key patterns:
 
-- Data attributes drive filtering/sorting JS: `data-num` (display order), `data-status` (`avail` | `sold`), `data-price` (promo price, 0 when sold), `data-plot` (m²). Status counts in the filter pills are computed from these.
+- Data attributes drive filtering/sorting JS: `data-num` (display order), `data-status` (`avail` | `reserved` | `sold`; reserved is not counted as available), `data-price` (promo price, 0 when sold), `data-plot` (m²). Status counts in the filter pills are computed from these.
 - **Promo pricing**: `.ko-price` is the current (promo) price, `<s class="ko-old">` is the catalogue price before the promotion, `.ko-pct` is the discount badge, `.ko-save` the saving, followed by price per m². Keep the promo panel (`.ko-promo`) and "od X zł" headline copy (title, OG/Twitter meta, JSON-LD, hero, lead, atuty, SEO text, popup) in sync.
+- **Reserved unit**: `ko-reserved` class + `data-status="reserved"`, status "Zarezerwowany", keep the price box, add `.ko-reserved-note` before `.ko-actions`, primary CTA "Zostaw kontakt"; add it to the `RESERVED` map of the lot selector and drop it from the "Zapytaj o podobny układ" lists in sold notes.
 - **Sold unit**: add `ko-sold` class + `data-status="sold"`, replace the price box with `.ko-sold-note`, drop `.ko-actions`.
 - Image: the 3D model `zdjecia/budynek-wiz-new-size-768x509.webp` twice — grey base + coloured copy clipped to one half (`.ko-left` for units 1–4, `.ko-right` for 1a–4a; split position via `--split` on `.ko-card`).
 - PDF data sheets are in `karty/` (`karty/{n}-{n}A-New.pdf`, one per building).

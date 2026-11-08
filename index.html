@@ -101,7 +101,7 @@
 
   <meta http-equiv="Content-Language" content="pl" />
   <title>Kaszubska Osada – Domy całoroczne na Kaszubach od 387 000 zł</title>
-  <meta name="description" content="Domy całoroczne na Kaszubach nad jeziorem Granicznym (gm. Kołczygłowy) od 387 000 zł brutto. Zostało 6 z 8 domów z działką i tarasem – do zamieszkania lub pod wynajem, ~7,5% rocznie. Pompa ciepła 3 kW z klimatyzacją w cenie." />
+  <meta name="description" content="Domy całoroczne na Kaszubach nad jeziorem Granicznym (gm. Kołczygłowy) od 387 000 zł brutto. Zostało 5 z 8 domów z działką i tarasem – do zamieszkania lub pod wynajem, ~7,5% rocznie. Pompa ciepła 3 kW z klimatyzacją w cenie." />
 
   <!-- SEO -->
   <link rel="canonical" href="https://kaszubskaosada.com.pl/" />
@@ -115,7 +115,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kaszubskaosada.com.pl/" />
   <meta property="og:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 000 zł" />
-  <meta property="og:description" content="Zostało 6 z 8 domów nad jeziorem Granicznym na Kaszubach, od 387 000 zł brutto. Pompa ciepła 3 kW z klimatyzacją w cenie. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
+  <meta property="og:description" content="Zostało 5 z 8 domów nad jeziorem Granicznym na Kaszubach, od 387 000 zł brutto. Pompa ciepła 3 kW z klimatyzacją w cenie. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
   <meta property="og:image" content="https://kaszubskaosada.com.pl/zdjecia/hero_3.webp" />
   <meta property="og:image:width" content="2560" />
   <meta property="og:image:height" content="1440" />
@@ -126,7 +126,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kaszubska Osada – Domy całoroczne na Kaszubach od 387 000 zł" />
-  <meta name="twitter:description" content="Zostało 6 z 8 domów nad jeziorem Granicznym na Kaszubach, od 387 000 zł brutto. Pompa ciepła 3 kW z klimatyzacją w cenie. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
+  <meta name="twitter:description" content="Zostało 5 z 8 domów nad jeziorem Granicznym na Kaszubach, od 387 000 zł brutto. Pompa ciepła 3 kW z klimatyzacją w cenie. Zamieszkaj lub zainwestuj – ~7,5% roczna stopa zwrotu." />
   <meta name="twitter:image" content="https://kaszubskaosada.com.pl/zdjecia/hero_3.webp" />
 
   <!-- Favicon -->
@@ -214,7 +214,7 @@
           "priceCurrency": "PLN",
           "lowPrice": 387000,
           "highPrice": 413000,
-          "offerCount": 6,
+          "offerCount": 5,
           "availability": "https://schema.org/InStock",
           "seller": {
             "@id": "https://kaszubskaosada.com.pl/#organization"
@@ -803,6 +803,7 @@
       pointer-events: none; white-space: nowrap;
     }
     .half-unit.half-sold .half-label { background: rgba(100,100,100,.8); }
+    .half-unit.half-reserved .half-label { background: var(--gold-light); color: var(--forest); }
     @media (max-width: 600px) {
       .half-label { font-size: .72rem; padding: .3rem .7rem; }
     }
@@ -1499,6 +1500,7 @@
     .ko-media-top { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .ko-status { background: #e7f1ea; color: var(--forest); font-size: .75rem; font-weight: 700; padding: .35rem .65rem; border-radius: 999px; }
     .ko-sold .ko-status { background: #7a2e14; color: var(--white); }
+    .ko-reserved .ko-status { background: var(--gold-light); color: var(--forest); }
     .ko-pct { background: var(--gold-light); color: var(--forest); font-weight: 800; font-size: .95rem; padding: .4rem .7rem; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.12); }
     .ko-side { position: absolute; bottom: 12px; font-size: .7rem; font-weight: 600; color: var(--text-mid); background: rgba(247,243,236,.95); padding: .25rem .5rem; border-radius: 6px; }
     .ko-side-left { left: 78px; }
@@ -1520,7 +1522,7 @@
     .ko-save { font-weight: 700; color: #7a2e14; background: #f6dfd3; padding: .25rem .5rem; border-radius: 6px; }
     .ko-lowest { margin-top: .45rem; font-size: .72rem; color: var(--text-mid); }
     .ko-nw { white-space: nowrap; }
-    .ko-sold-note { background: #f1efe9; border-radius: 12px; padding: .9rem; font-size: .88rem; color: var(--text-mid); }
+    .ko-sold-note, .ko-reserved-note { background: #f1efe9; border-radius: 12px; padding: .9rem; font-size: .88rem; color: var(--text-mid); }
     .ko-specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem .75rem; }
     .ko-spec { display: flex; gap: .55rem; align-items: center; }
     .ko-spec i { font-size: 1.25rem; color: var(--forest-light); flex-shrink: 0; }
@@ -2321,7 +2323,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="tel:+48500299775" class="nav-phone"><i class="ph-bold ph-phone" aria-hidden="true"><svg><use href="#b-phone"></use></svg></i> <span class="nav-m-only">Zadzwoń</span><span class="nav-d-only">+48 500 299 775</span></a>
       <a href="#kontakt" class="nav-cta">Zapytaj</a>
     </li>
-    <li class="nav-note nav-m-only"><span data-avail-text>6 z 8 domów dostępnych</span> · pompa ciepła w cenie</li>
+    <li class="nav-note nav-m-only"><span data-avail-text>5 z 8 domów dostępnych</span> · pompa ciepła w cenie</li>
   </ul>
   <button type="button" class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
     <span></span><span></span><span></span>
@@ -2360,7 +2362,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <em class="hero-price">od 387&nbsp;000&nbsp;zł <small>brutto</small></em>
     </h1>
     <p class="hero-loc"><i class="ph-bold ph-map-pin" aria-hidden="true"><svg><use href="#b-map-pin"></use></svg></i> gm. Kołczygłowy · Bytów 30&nbsp;min · Słupsk 45&nbsp;min</p>
-    <p class="hero-left"><strong data-avail-text>Zostało 6 z 8 domów</strong> · odbiór kluczy w&nbsp;2026</p>
+    <p class="hero-left"><strong data-avail-text>Zostało 5 z 8 domów</strong> · odbiór kluczy w&nbsp;2026</p>
     <a class="hero-promo" href="#oferta"><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i> <span>Pompa ciepła 3&nbsp;kW z&nbsp;klimatyzacją w&nbsp;cenie + rabat do&nbsp;−5%</span></a>
     <a class="hero-osada" href="#o-osadzie">Ostatni etap Kaszubskiej Osady – gotowa infrastruktura: jezioro, restauracja, plac zabaw <span aria-hidden="true">→</span></a>
     <div class="hero-btns">
@@ -2458,6 +2460,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="ko-pills" role="group" aria-label="Filtr statusu">
         <button type="button" class="ko-pill active" data-filter="all">Wszystkie <span data-count="all"></span></button>
         <button type="button" class="ko-pill" data-filter="avail">Dostępne <span data-count="avail"></span></button>
+        <button type="button" class="ko-pill" data-filter="reserved">Zarezerwowane <span data-count="reserved"></span></button>
         <button type="button" class="ko-pill" data-filter="sold">Sprzedane <span data-count="sold"></span></button>
       </div>
       <div class="ko-pills" role="group" aria-label="Sortowanie">
@@ -2589,7 +2592,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <h3 class="ko-title">Domek 2a</h3>
             <div class="ko-sub">Bliźniak · 2 kondygnacje · układ lustrzany</div>
           </div>
-          <div class="ko-sold-note">Ten dom znalazł już właściciela. Zapytaj o podobny układ – domki 1a, 3a, 4a.</div>
+          <div class="ko-sold-note">Ten dom znalazł już właściciela. Zapytaj o podobny układ – domki 1a, 3a.</div>
           <div class="ko-specs">
             <div class="ko-spec"><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><div><strong>54,92 m²</strong><span>pow. użytkowa</span></div></div>
             <div class="ko-spec"><i class="ph-bold ph-tree" aria-hidden="true"><svg><use href="#b-tree"></use></svg></i><div><strong>219 m²</strong><span>własna działka</span></div></div>
@@ -2717,12 +2720,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </article>
 
       <!-- 4a -->
-      <article class="ko-card" data-num="7" data-status="avail" data-price="409000" data-plot="238">
+      <article class="ko-card ko-reserved" data-num="7" data-status="reserved" data-price="409000" data-plot="238">
         <div class="ko-media">
           <img class="ko-img-base" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="" loading="lazy" width="768" height="509" />
           <img class="ko-img-color ko-right" src="zdjecia/budynek-wiz-new-size-768x509.webp" alt="Model 3D budynku – zaznaczony Domek 4a" loading="lazy" width="768" height="509" />
           <div class="ko-media-top">
-            <span class="ko-status">Dostępny</span>
+            <span class="ko-status">Zarezerwowany</span>
             <span class="ko-pct">−5%</span>
           </div>
           <span class="ko-side ko-side-right">Prawa część bliźniaka</span>
@@ -2745,8 +2748,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="ko-spec"><i class="ph-bold ph-umbrella" aria-hidden="true"><svg><use href="#b-umbrella"></use></svg></i><div><strong>Taras</strong><span>deska sosnowa</span></div></div>
             <div class="ko-spec"><i class="ph-bold ph-car" aria-hidden="true"><svg><use href="#b-car"></use></svg></i><div><strong>1 miejsce</strong><span>parking</span></div></div>
           </div>
+          <div class="ko-reserved-note">Dom jest zarezerwowany. Jeśli rezerwacja nie dojdzie do skutku, wróci do sprzedaży – zostaw kontakt, a damy znać.</div>
           <div class="ko-actions">
-            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zapytaj o domek 4a</a>
+            <a class="ko-btn-primary" href="#kontakt"><i class="ph-bold ph-chat-circle-text" aria-hidden="true"><svg><use href="#b-chat-circle-text"></use></svg></i> Zostaw kontakt</a>
             <div class="ko-btn-row">
               <a class="ko-btn-ghost" href="karty/4-4A-New.pdf" target="_blank"><i class="ph-bold ph-file-pdf" aria-hidden="true"><svg><use href="#b-file-pdf"></use></svg></i> Karta + rzut</a>
               <a class="ko-btn-ghost" href="#standard"><i class="ph-bold ph-download-simple" aria-hidden="true"><svg><use href="#b-download-simple"></use></svg></i> Standard</a>
@@ -3368,9 +3372,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="offer-popup-left">
       <div class="offer-popup-eyebrow">Kaszubska Osada</div>
-      <div class="offer-popup-title"><span data-avail-text>Zostało 6 z 8 domów</span><br>nad jeziorem <em>na Kaszubach</em></div>
+      <div class="offer-popup-title"><span data-avail-text>Zostało 5 z 8 domów</span><br>nad jeziorem <em>na Kaszubach</em></div>
       <ul class="offer-popup-points">
-        <li><i class="ph-bold ph-house-simple" aria-hidden="true"><svg><use href="#b-house-simple"></use></svg></i><span>8 domów w zabudowie bliźniaczej, <strong data-avail-text>6 dostępnych</strong> – każdy z odrębną działką i tarasem</span></li>
+        <li><i class="ph-bold ph-house-simple" aria-hidden="true"><svg><use href="#b-house-simple"></use></svg></i><span>8 domów w zabudowie bliźniaczej, <strong data-avail-text>5 dostępnych</strong> – każdy z odrębną działką i tarasem</span></li>
         <li><i class="ph-bold ph-tag" aria-hidden="true"><svg><use href="#b-tag"></use></svg></i><span>Ceny brutto od <strong>387 000 zł</strong> (w tym 8% VAT) – własna działka, parking w cenie</span></li>
         <li><i class="ph-bold ph-thermometer" aria-hidden="true"><svg><use href="#b-thermometer"></use></svg></i><span><strong>Pompa ciepła 3 kW z klimatyzacją</strong> w cenie domu</span></li>
         <li><i class="ph-bold ph-ruler" aria-hidden="true"><svg><use href="#b-ruler"></use></svg></i><span>51–56 m² użytkowej, działki 176-289 m²</span></li>
@@ -4002,7 +4006,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const cards = Array.from(grid.querySelectorAll('.ko-card'));
     const state = { filter: 'all', sort: 'num' };
 
-    const counts = { all: cards.length, avail: 0, sold: 0 };
+    const counts = { all: cards.length, avail: 0, reserved: 0, sold: 0 };
     cards.forEach(c => counts[c.dataset.status]++);
     document.querySelectorAll('[data-count]').forEach(el => { el.textContent = counts[el.dataset.count]; });
 
@@ -4235,6 +4239,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     };
     // [left sold, right sold] per building
     const SOLD = { 2: [true, true] };
+    // [left reserved, right reserved]: still opens the data sheet
+    const RESERVED = { 4: [false, true] };
 
     let activeBld = null;
     const modal    = document.getElementById('halfModal');
@@ -4250,10 +4256,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       bldSpan.textContent = building;
       const names = NAMES[building];
       const sold  = SOLD[building] || [false, false];
-      leftLbl.textContent  = sold[0] ? names[0] + ' — sprzedany' : names[0];
-      rightLbl.textContent = sold[1] ? names[1] + ' — sprzedany' : names[1];
+      const resv  = RESERVED[building] || [false, false];
+      const label = (name, i) => sold[i] ? name + ' — sprzedany' : resv[i] ? name + ' — rezerwacja' : name;
+      leftLbl.textContent  = label(names[0], 0);
+      rightLbl.textContent = label(names[1], 1);
       leftUnit.classList.toggle('half-sold', sold[0]);
       rightUnit.classList.toggle('half-sold', sold[1]);
+      leftUnit.classList.toggle('half-reserved', !sold[0] && resv[0]);
+      rightUnit.classList.toggle('half-reserved', !sold[1] && resv[1]);
       modal.style.display = 'flex';
       requestAnimationFrame(() => modal.classList.add('visible'));
       scrollLock.add('half');
