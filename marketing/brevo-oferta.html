@@ -10,7 +10,10 @@
   Templates → New template → Paste your code (HTML).
   Zdjęcia ładują się z https://kaszubskaosada.com.pl/zdjecia/mail/ (JPG, bo Outlook nie wyświetla WebP),
   więc katalog zdjecia/mail musi być wgrany na serwer przed wysyłką.
-  Ceny / dostępność aktualizować w sekcji „Dostępne domki”.
+  Ceny / dostępność aktualizować w sekcji „Dostępne domki” (tylko domy ze statusem avail na stronie;
+  zarezerwowane i sprzedane nie wchodzą) oraz karty katalogowe w „Dokumentacja”.
+  Jeden szablon na telefon i komputer: sekcje „Wnętrza” i „Zobacz więcej” to kolumny inline-block,
+  które same łamią się jedna pod drugą na wąskim ekranie (także w klientach bez media queries).
 -->
 <style>
   body { margin:0; padding:0; background:#ede7db; }
@@ -19,6 +22,8 @@
   @media only screen and (max-width:620px) {
     .wrap { width:100% !important; }
     .px { padding-left:20px !important; padding-right:20px !important; }
+    .px2 { padding-left:13px !important; padding-right:13px !important; }
+    .hc { max-width:100% !important; }
     .col { display:block !important; width:100% !important; padding:0 0 14px 0 !important; }
     .col img { width:100% !important; height:auto !important; }
     .h1 { font-size:24px !important; }
@@ -30,19 +35,19 @@
 <body style="margin:0;padding:0;background:#ede7db;">
 <div style="display:none;max-height:0;overflow:hidden;">Dostępne domki w Kaszubskiej Osadzie – ceny, lokalizacja i dokumentacja.</div>
 
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ede7db;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ede7db" style="background:#ede7db;">
 <tr><td align="center" style="padding:24px 10px;">
 
-<table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:#ffffff;border-radius:12px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;color:#1a1a18;">
+<table role="presentation" class="wrap" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="max-width:600px;margin:0 auto;table-layout:fixed;background:#ffffff;border-radius:12px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;color:#1a1a18;">
 
   <!-- Logo -->
   <tr><td align="center" style="background:#f7f3ec;padding:22px 20px;">
-    <a href="https://kaszubskaosada.com.pl/" target="_blank"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/logo.png" width="200" alt="Kaszubska Osada" style="width:200px;height:auto;"></a>
+    <a href="https://kaszubskaosada.com.pl/" target="_blank"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/logo.png" width="200" alt="Kaszubska Osada" style="max-width:100%;display:block;width:200px;height:auto;margin:0 auto;"></a>
   </td></tr>
 
   <!-- Zdjęcie główne -->
   <tr><td>
-    <img src="https://kaszubskaosada.com.pl/zdjecia/mail/naglowek.jpg" width="600" alt="Domek w Kaszubskiej Osadzie" style="width:100%;max-width:600px;height:auto;">
+    <img src="https://kaszubskaosada.com.pl/zdjecia/mail/naglowek.jpg" width="600" alt="Domek w Kaszubskiej Osadzie" style="display:block;width:100%;max-width:100%;height:auto;">
   </td></tr>
 
   <!-- Wstęp -->
@@ -71,7 +76,7 @@
       <tr>
         <td class="cl" style="padding:14px 16px;font-size:14px;color:#4a4a44;line-height:1.5;">
           <strong style="font-size:17px;color:#1e3d2b;">Domek nr 1</strong> <span style="display:inline-block;margin-left:4px;padding:2px 7px;background:#e8b86d;border-radius:6px;font-size:12px;font-weight:bold;color:#1e3d2b;">−3%</span><br>
-          51 m² pow. użytkowej · działka 213 m²<br>
+          51 m² pow.&nbsp;użytkowej · działka&nbsp;213&nbsp;m²<br>
           ekspozycja południowa
         </td>
         <td class="cr" align="right" style="padding:14px 16px;white-space:nowrap;line-height:1.45;">
@@ -87,7 +92,7 @@
       <tr>
         <td class="cl" style="padding:14px 16px;font-size:14px;color:#4a4a44;line-height:1.5;">
           <strong style="font-size:17px;color:#1e3d2b;">Domek nr 1A</strong> <span style="display:inline-block;margin-left:4px;padding:2px 7px;background:#e8b86d;border-radius:6px;font-size:12px;font-weight:bold;color:#1e3d2b;">−5%</span><br>
-          54,92 m² pow. użytkowej · działka 194 m²<br>
+          54,92 m² pow.&nbsp;użytkowej · działka&nbsp;194&nbsp;m²<br>
           ekspozycja południowa
         </td>
         <td class="cr" align="right" style="padding:14px 16px;white-space:nowrap;line-height:1.45;">
@@ -102,39 +107,68 @@
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;background:#f7f3ec;border-left:4px solid #c9953a;border-radius:8px;">
       <tr>
         <td class="cl" style="padding:14px 16px;font-size:14px;color:#4a4a44;line-height:1.5;">
-          <strong style="font-size:17px;color:#1e3d2b;">Domek nr 2</strong> <span style="display:inline-block;margin-left:4px;padding:2px 7px;background:#e8b86d;border-radius:6px;font-size:12px;font-weight:bold;color:#1e3d2b;">−7%</span><br>
-          51 m² pow. użytkowej · działka 258 m²<br>
+          <strong style="font-size:17px;color:#1e3d2b;">Domek nr 3</strong> <span style="display:inline-block;margin-left:4px;padding:2px 7px;background:#e8b86d;border-radius:6px;font-size:12px;font-weight:bold;color:#1e3d2b;">−3%</span><br>
+          51 m² pow.&nbsp;użytkowej · działka&nbsp;176&nbsp;m²<br>
           ekspozycja południowa
         </td>
         <td class="cr" align="right" style="padding:14px 16px;white-space:nowrap;line-height:1.45;">
-          <strong style="font-size:18px;color:#1a1a18;">425 000 zł</strong><br>
-          <s style="font-size:13px;color:#6b6b63;">457 000 zł</s><br>
-          <span style="display:inline-block;margin-top:3px;padding:2px 7px;background:#f6dfd3;border-radius:6px;font-size:12px;font-weight:bold;color:#7a2e14;">Oszczędzasz 32 000 zł</span><br>
-          <span style="font-size:12px;color:#7a7a72;">8 333 zł/m²</span>
+          <strong style="font-size:18px;color:#1a1a18;">388 000 zł</strong><br>
+          <s style="font-size:13px;color:#6b6b63;">400 000 zł</s><br>
+          <span style="display:inline-block;margin-top:3px;padding:2px 7px;background:#f6dfd3;border-radius:6px;font-size:12px;font-weight:bold;color:#7a2e14;">Oszczędzasz 12 000 zł</span><br>
+          <span style="font-size:12px;color:#7a7a72;">7 608 zł/m²</span>
         </td>
       </tr>
     </table>
 
-    <p style="margin:16px 0 0;font-size:15px;line-height:1.65;color:#4a4a44;">Wszystkie domki to nowo powstałe budynki w&nbsp;centralnej, prestiżowej części osiedla. <strong style="color:#1a1a18;">Domki nr 1 i 2 zostaną oddane do użytkowania do końca 2026&nbsp;r.</strong></p>
-  </td></tr>
-
-  <!-- Wnętrza -->
-  <tr><td class="px" style="padding:24px 40px 4px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;background:#f7f3ec;border-left:4px solid #c9953a;border-radius:8px;">
       <tr>
-        <td class="col" width="50%" style="padding-right:7px;"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/interior_1.jpg" width="253" alt="Wykończony pod klucz apartament – salon" style="width:100%;height:auto;border-radius:8px;"></td>
-        <td class="col" width="50%" style="padding-left:7px;"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/interior_2.jpg" width="253" alt="Wykończony pod klucz apartament – strefa dzienna" style="width:100%;height:auto;border-radius:8px;"></td>
-      </tr>
-      <tr>
-        <td colspan="2" style="padding-top:10px;font-size:13px;line-height:1.55;color:#7a7a72;"><strong style="color:#1e3d2b;">Wykończony pod klucz apartament w&nbsp;Kaszubskiej Osadzie</strong> – zdjęcia gotowego wnętrza. Wykończenie pod klucz to opcja dodatkowa, wyceniana indywidualnie.</td>
+        <td class="cl" style="padding:14px 16px;font-size:14px;color:#4a4a44;line-height:1.5;">
+          <strong style="font-size:17px;color:#1e3d2b;">Domek nr 3A</strong> <span style="display:inline-block;margin-left:4px;padding:2px 7px;background:#e8b86d;border-radius:6px;font-size:12px;font-weight:bold;color:#1e3d2b;">−5%</span><br>
+          54,92 m² pow.&nbsp;użytkowej · działka&nbsp;262&nbsp;m²<br>
+          ekspozycja południowa
+        </td>
+        <td class="cr" align="right" style="padding:14px 16px;white-space:nowrap;line-height:1.45;">
+          <strong style="font-size:18px;color:#1a1a18;">413 000 zł</strong><br>
+          <s style="font-size:13px;color:#6b6b63;">435 000 zł</s><br>
+          <span style="display:inline-block;margin-top:3px;padding:2px 7px;background:#f6dfd3;border-radius:6px;font-size:12px;font-weight:bold;color:#7a2e14;">Oszczędzasz 22 000 zł</span><br>
+          <span style="font-size:12px;color:#7a7a72;">7 520 zł/m²</span>
+        </td>
       </tr>
     </table>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;background:#f7f3ec;border-left:4px solid #c9953a;border-radius:8px;">
+      <tr>
+        <td class="cl" style="padding:14px 16px;font-size:14px;color:#4a4a44;line-height:1.5;">
+          <strong style="font-size:17px;color:#1e3d2b;">Domek nr 4</strong> <span style="display:inline-block;margin-left:4px;padding:2px 7px;background:#e8b86d;border-radius:6px;font-size:12px;font-weight:bold;color:#1e3d2b;">−3%</span><br>
+          51 m² pow.&nbsp;użytkowej · działka&nbsp;289&nbsp;m²<br>
+          ekspozycja południowa
+        </td>
+        <td class="cr" align="right" style="padding:14px 16px;white-space:nowrap;line-height:1.45;">
+          <strong style="font-size:18px;color:#1a1a18;">387 000 zł</strong><br>
+          <s style="font-size:13px;color:#6b6b63;">399 000 zł</s><br>
+          <span style="display:inline-block;margin-top:3px;padding:2px 7px;background:#f6dfd3;border-radius:6px;font-size:12px;font-weight:bold;color:#7a2e14;">Oszczędzasz 12 000 zł</span><br>
+          <span style="font-size:12px;color:#7a7a72;">7 588 zł/m²</span>
+        </td>
+      </tr>
+    </table>
+
+    <p style="margin:16px 0 0;font-size:15px;line-height:1.65;color:#4a4a44;">Wszystkie domki to nowo powstałe budynki w&nbsp;centralnej, prestiżowej części osiedla. <strong style="color:#1a1a18;">Domki zostaną oddane do użytkowania do końca 2026&nbsp;r.</strong> W&nbsp;cenie każdego domku jest już <strong style="color:#1a1a18;">pompa ciepła 3&nbsp;kW z&nbsp;klimatyzacją</strong>.</p>
+  </td></tr>
+
+  <!-- Wnętrza: two columns on desktop, one on phones (inline-block, works without media queries) -->
+  <tr><td class="px2" style="padding:24px 33px 4px;font-size:0;text-align:center;">
+    <!--[if mso]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td width="50%" valign="top"><![endif]-->
+    <div class="hc" style="display:inline-block;width:100%;max-width:260px;vertical-align:top;"><div style="padding:0 7px 14px;"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/interior_1.jpg" width="246" alt="Wykończony pod klucz apartament – salon" style="display:block;width:100%;max-width:100%;height:auto;border-radius:8px;"></div></div>
+    <!--[if mso]></td><td width="50%" valign="top"><![endif]-->
+    <div class="hc" style="display:inline-block;width:100%;max-width:260px;vertical-align:top;"><div style="padding:0 7px 14px;"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/interior_2.jpg" width="246" alt="Wykończony pod klucz apartament – strefa dzienna" style="display:block;width:100%;max-width:100%;height:auto;border-radius:8px;"></div></div>
+    <!--[if mso]></td></tr></table><![endif]-->
+    <div style="padding:0 7px;font-size:13px;line-height:1.55;color:#7a7a72;text-align:left;"><strong style="color:#1e3d2b;">Wykończony pod klucz apartament w&nbsp;Kaszubskiej Osadzie</strong> – zdjęcia gotowego wnętrza. Wykończenie pod klucz to opcja dodatkowa, wyceniana indywidualnie.</div>
   </td></tr>
 
   <!-- Lokalizacja -->
   <tr><td class="px" style="padding:28px 40px 8px;">
     <h2 class="h1" style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:normal;color:#1e3d2b;">Lokalizacja</h2>
-    <a href="https://maps.app.goo.gl/Kt3oBoHQArY2ZgNQA" target="_blank"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/lokalizacja.jpg" width="520" alt="Widok z lotu ptaka na osiedle" style="width:100%;height:auto;border-radius:8px;"></a>
+    <a href="https://maps.app.goo.gl/Kt3oBoHQArY2ZgNQA" target="_blank"><img src="https://kaszubskaosada.com.pl/zdjecia/mail/lokalizacja.jpg" width="520" alt="Widok z lotu ptaka na osiedle" style="max-width:100%;display:block;width:100%;height:auto;border-radius:8px;"></a>
     <p style="margin:14px 0 4px;font-size:16px;color:#1a1a18;"><strong>Barkocin 145</strong>, gmina Kołczygłowy</p>
     <p style="margin:0 0 16px;font-size:14px;color:#4a4a44;">45 minut od Słupska · 30 minut od Bytowa</p>
     <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
@@ -157,7 +191,10 @@
         <a href="https://kaszubskaosada.com.pl/karty/1-1A-New.pdf" target="_blank" style="color:#2d5a3d;font-weight:bold;text-decoration:none;">📄 Karta katalogowa – domki 1 i 1A</a>
       </td></tr>
       <tr><td style="padding:10px 0;border-bottom:1px solid #ede7db;">
-        <a href="https://kaszubskaosada.com.pl/karty/2-2A-New.pdf" target="_blank" style="color:#2d5a3d;font-weight:bold;text-decoration:none;">📄 Karta katalogowa – domki 2 i 2A</a>
+        <a href="https://kaszubskaosada.com.pl/karty/3-3A-New.pdf" target="_blank" style="color:#2d5a3d;font-weight:bold;text-decoration:none;">📄 Karta katalogowa – domki 3 i 3A</a>
+      </td></tr>
+      <tr><td style="padding:10px 0;border-bottom:1px solid #ede7db;">
+        <a href="https://kaszubskaosada.com.pl/karty/4-4A-New.pdf" target="_blank" style="color:#2d5a3d;font-weight:bold;text-decoration:none;">📄 Karta katalogowa – domek 4</a>
       </td></tr>
       <tr><td style="padding:10px 0;">
         <a href="https://kaszubskaosada.com.pl/Informator_Kaszubska_Osada_2026.pdf" target="_blank" style="color:#2d5a3d;font-weight:bold;text-decoration:none;">📄 Informator Kaszubska Osada 2026</a>
@@ -166,36 +203,37 @@
     </table>
   </td></tr>
 
-  <!-- Dwie strony -->
-  <tr><td class="px" style="padding:32px 40px 8px;">
+  <!-- Dwie strony: two columns on desktop, one on phones -->
+  <tr><td class="px" style="padding:32px 40px 0;">
     <h2 class="h1" style="margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:26px;font-weight:normal;color:#1e3d2b;">Zobacz więcej w sieci</h2>
     <p style="margin:0 0 18px;font-size:15px;line-height:1.65;color:#4a4a44;">Mamy dwie strony – każda pokazuje coś innego:</p>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-      <tr>
-        <td class="col" width="50%" valign="top" style="padding-right:8px;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f3ec;border-radius:8px;">
-            <tr><td><img src="https://kaszubskaosada.com.pl/zdjecia/mail/domek.jpg" width="252" alt="Kaszubska Osada" style="width:100%;height:auto;border-radius:8px 8px 0 0;"></td></tr>
-            <tr><td style="padding:14px 16px 18px;font-size:14px;line-height:1.55;color:#4a4a44;">
-              <p style="margin:0 0 4px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#c9953a;font-weight:bold;">Zakup domku</p>
-              <p style="margin:0 0 8px;font-size:17px;color:#1e3d2b;font-weight:bold;">kaszubskaosada.com.pl</p>
-              <p style="margin:0 0 14px;">Strona inwestycji: dostępne domki, ceny, standard, galeria i&nbsp;formularz kontaktowy.</p>
-              <a href="https://kaszubskaosada.com.pl/" target="_blank" style="display:inline-block;padding:10px 16px;background:#1e3d2b;border-radius:6px;color:#ffffff;font-weight:bold;text-decoration:none;">Zobacz ofertę →</a>
-            </td></tr>
-          </table>
-        </td>
-        <td class="col" width="50%" valign="top" style="padding-left:8px;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f3ec;border-radius:8px;">
-            <tr><td><img src="https://kaszubskaosada.com.pl/zdjecia/mail/jezioro.jpg" width="252" alt="Jezioro Graniczne" style="width:100%;height:auto;border-radius:8px 8px 0 0;"></td></tr>
-            <tr><td style="padding:14px 16px 18px;font-size:14px;line-height:1.55;color:#4a4a44;">
-              <p style="margin:0 0 4px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#c9953a;font-weight:bold;">Wynajem i&nbsp;zarabianie</p>
-              <p style="margin:0 0 8px;font-size:17px;color:#1e3d2b;font-weight:bold;">kaszubskaostoja.pl</p>
-              <p style="margin:0 0 14px;">Osiedle wakacyjne Kaszubska Ostoja, w&nbsp;którym stoją domki. Tu goście rezerwują pobyty – zobaczą Państwo, jak działa wynajem i&nbsp;jaki potencjał inwestycyjny mają domki.</p>
-              <a href="https://kaszubskaostoja.pl/" target="_blank" style="display:inline-block;padding:10px 16px;background:#c9953a;border-radius:6px;color:#ffffff;font-weight:bold;text-decoration:none;">Zobacz wynajem →</a>
-            </td></tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+  </td></tr>
+  <tr><td class="px2" style="padding:0 33px 8px;font-size:0;text-align:center;">
+    <!--[if mso]><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td width="50%" valign="top"><![endif]-->
+    <div class="hc" style="display:inline-block;width:100%;max-width:260px;vertical-align:top;"><div style="padding:0 7px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f3ec;border-radius:8px;text-align:left;">
+        <tr><td><img src="https://kaszubskaosada.com.pl/zdjecia/mail/domek.jpg" width="246" alt="Kaszubska Osada" style="display:block;width:100%;max-width:100%;height:auto;border-radius:8px 8px 0 0;"></td></tr>
+        <tr><td style="padding:14px 16px 18px;font-size:14px;line-height:1.55;color:#4a4a44;">
+          <p style="margin:0 0 4px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#c9953a;font-weight:bold;">Zakup domku</p>
+          <p style="margin:0 0 8px;font-size:17px;color:#1e3d2b;font-weight:bold;">kaszubskaosada.com.pl</p>
+          <p style="margin:0 0 14px;">Strona inwestycji: dostępne domki, ceny, standard, galeria i&nbsp;formularz kontaktowy.</p>
+          <a href="https://kaszubskaosada.com.pl/" target="_blank" style="display:inline-block;padding:10px 16px;background:#1e3d2b;border-radius:6px;color:#ffffff;font-size:14px;font-weight:bold;text-decoration:none;">Zobacz ofertę →</a>
+        </td></tr>
+      </table>
+    </div></div>
+    <!--[if mso]></td><td width="50%" valign="top"><![endif]-->
+    <div class="hc" style="display:inline-block;width:100%;max-width:260px;vertical-align:top;"><div style="padding:0 7px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f3ec;border-radius:8px;text-align:left;">
+        <tr><td><img src="https://kaszubskaosada.com.pl/zdjecia/mail/jezioro.jpg" width="246" alt="Jezioro Graniczne" style="display:block;width:100%;max-width:100%;height:auto;border-radius:8px 8px 0 0;"></td></tr>
+        <tr><td style="padding:14px 16px 18px;font-size:14px;line-height:1.55;color:#4a4a44;">
+          <p style="margin:0 0 4px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#c9953a;font-weight:bold;">Wynajem i&nbsp;zarabianie</p>
+          <p style="margin:0 0 8px;font-size:17px;color:#1e3d2b;font-weight:bold;">kaszubskaostoja.pl</p>
+          <p style="margin:0 0 14px;">Osiedle wakacyjne Kaszubska Ostoja, w&nbsp;którym stoją domki. Tu goście rezerwują pobyty – zobaczą Państwo, jak działa wynajem i&nbsp;jaki potencjał inwestycyjny mają domki.</p>
+          <a href="https://kaszubskaostoja.pl/" target="_blank" style="display:inline-block;padding:10px 16px;background:#c9953a;border-radius:6px;color:#ffffff;font-size:14px;font-weight:bold;text-decoration:none;">Zobacz wynajem →</a>
+        </td></tr>
+      </table>
+    </div></div>
+    <!--[if mso]></td></tr></table><![endif]-->
   </td></tr>
 
   <!-- Prezentacja na miejscu -->
@@ -204,7 +242,7 @@
       <tr><td align="center" style="padding:28px 24px;color:#ffffff;">
         <p style="margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:22px;color:#ffffff;">Zapraszamy na prezentację na miejscu</p>
         <p style="margin:0 0 18px;font-size:14px;line-height:1.6;color:#e8e3d8;">Termin dopasujemy do Państwa możliwości. Prosimy o&nbsp;telefon do Pana Jarka:</p>
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+        <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0"><tr>
           <td style="background:#c9953a;border-radius:6px;">
             <a href="tel:+48500299775" style="display:inline-block;padding:13px 26px;font-size:18px;font-weight:bold;color:#ffffff;text-decoration:none;">📞 500 299 775</a>
           </td>
