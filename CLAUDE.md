@@ -37,7 +37,7 @@ Everything lives in one file with three logical zones:
 
 ## Availability and price (single source of truth: the cards)
 
-When a house is sold or a price changes, update the card, then everything the check lists: hero/menu/popup counts (`data-avail-text`), meta/OG/Twitter descriptions, JSON-LD (`offerCount`, `lowPrice`, `highPrice`, `priceRange`), `SOLD` / `RESERVED` maps of the lot selector, `marketing/brevo-oferta*.html`, `marketing/google-ads.md`. Run `python3 tools/check_consistency.py` before every push (WARNs when promo claims like "do −7%" exceed what the available cards show). CI runs it too (`.github/workflows/check.yml`, and as the first step of `deploy-ftp.yml`), so a mismatch blocks the FTP deploy.
+When a house is sold or a price changes, update the card, then everything the check lists: hero/menu/popup counts (`data-avail-text`), meta/OG/Twitter descriptions, JSON-LD (`offerCount`, `lowPrice`, `highPrice`, `priceRange`), `SOLD` / `RESERVED` maps of the lot selector, `mail/brevo-oferta.html` (also the form auto-reply, read by `kontakt.php`), `marketing/google-ads.md`. Run `python3 tools/check_consistency.py` before every push (WARNs when promo claims like "do −7%" exceed what the available cards show). CI runs it too (`.github/workflows/check.yml`, and as the first step of `deploy-ftp.yml`), so a mismatch blocks the FTP deploy.
 
 ## Testing
 

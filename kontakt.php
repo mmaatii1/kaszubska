@@ -194,6 +194,21 @@ if ($brevoKey !== '' && $email !== false) {
         ? 'dziękujemy za prośbę o kontakt. Oddzwonimy najszybciej, jak to możliwe.'
         : 'dziękujemy za wiadomość. Odpowiemy najszybciej, jak to możliwe.';
 
+    // Oferta (mail/brevo-oferta.html) z powitaniem po imieniu; bez pliku – prosty mail poniżej.
+    $offerHtml = null;
+    $offerTpl  = @file_get_contents(__DIR__ . '/mail/brevo-oferta.html');
+    $introRe   = '/<!-- autoreply:intro:start -->.*?<!-- autoreply:intro:end -->/s';
+    if ($offerTpl !== false && preg_match($introRe, $offerTpl)) {
+        $offerIntro = '<p style="margin:0 0 14px;color:#1a1a18;">Dzień dobry ' . $name . ',</p>'
+            . '<p style="margin:0 0 14px;">' . $intro . ' Poniżej przesyłamy szczegółowe informacje o domkach, '
+            . 'które są obecnie dostępne w&nbsp;inwestycji <strong style="color:#1a1a18;">Kaszubska Osada</strong>.</p>';
+        $offerHtml = preg_replace_callback($introRe, fn() => $offerIntro, $offerTpl, 1);
+        // Notatki dla redaktora z <head> nie trafiają do klienta (komentarze [if mso] zostają).
+        $offerHtml = preg_replace('/<!--(?!\[if).*?-->/s', '', $offerHtml);
+    } else {
+        error_log('kontakt.php: mail/brevo-oferta.html missing or without autoreply markers, sending the plain auto-reply');
+    }
+
     // Materiały do pobrania – linki tylko do plików, które faktycznie leżą na serwerze.
     $docs = [
         'Informator_Kaszubska_Osada_2026.pdf'    => 'Informator Kaszubska Osada 2026',
@@ -243,7 +258,7 @@ if ($brevoKey !== '' && $email !== false) {
         // Kopia wysłanej autoodpowiedzi ląduje w skrzynce kontakt@.
         'bcc'         => [['email' => 'kontakt@kaszubskaosada.com.pl']],
         'subject'     => 'Dziękujemy za kontakt – Kaszubska Osada',
-        'htmlContent' => $html,
+        'htmlContent' => $offerHtml ?? $html,
         'textContent' => $text,
     ], ['api-key: ' . $brevoKey]);
 

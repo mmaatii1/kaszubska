@@ -6,8 +6,11 @@
 <meta name="x-apple-disable-message-reformatting">
 <title>Kaszubska Osada – dostępne domki</title>
 <!--
-  Szablon maila z ofertą do wklejenia w Brevo:
-  Templates → New template → Paste your code (HTML).
+  Szablon maila z ofertą. Dwa zastosowania:
+  1. Autoodpowiedź na formularz: kontakt.php czyta ten plik z serwera i podmienia fragment między
+     znacznikami autoreply:intro:start / autoreply:intro:end na powitanie z imieniem. Znaczników nie usuwać.
+     Plik musi być wgrany na serwer (mail/brevo-oferta.html); bez niego idzie prosty mail tekstowy.
+  2. Kampania w Brevo: Templates → New template → Paste your code (HTML).
   Zdjęcia ładują się z https://kaszubskaosada.com.pl/zdjecia/mail/ (JPG, bo Outlook nie wyświetla WebP),
   więc katalog zdjecia/mail musi być wgrany na serwer przed wysyłką.
   Ceny / dostępność aktualizować w sekcji „Dostępne domki” (tylko domy ze statusem avail na stronie;
@@ -52,8 +55,10 @@
 
   <!-- Wstęp -->
   <tr><td class="px" style="padding:32px 40px 8px;font-size:15px;line-height:1.65;color:#4a4a44;">
+    <!-- autoreply:intro:start -->
     <p style="margin:0 0 14px;color:#1a1a18;">Dzień dobry,</p>
     <p style="margin:0 0 14px;">dziękujemy za zainteresowanie naszą ofertą. Poniżej przesyłamy szczegółowe informacje o domkach, które są obecnie dostępne w&nbsp;inwestycji <strong style="color:#1a1a18;">Kaszubska Osada</strong>.</p>
+    <!-- autoreply:intro:end -->
   </td></tr>
 
   <!-- Dostępne domki -->
