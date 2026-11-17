@@ -26,7 +26,7 @@ Everything lives in one file with three logical zones:
 - **No layout reads at start-up** (`getBoundingClientRect`, `offsetParent`, `scrollWidth` …): they force a synchronous layout of the whole page (the old 4.8 s "inline script" cost). Measure lazily (IntersectionObserver / on interaction). Animate only `transform`/`opacity`; no infinite `box-shadow` animations; everything must respect `prefers-reduced-motion`.
 - **Icons**: `<i class="ph-bold ph-NAME" aria-hidden="true"><svg><use href="#b-NAME"></use></svg></i>` (`ph` + `#r-NAME` for regular). After adding a new icon run `uv run --with fonttools --with brotli tools/build_assets.py icons`; the same script rebuilds the font subsets (`fonts`).
 - **Colours**: text on `--gold` uses `--on-gold` (white fails contrast); small gold text on light backgrounds uses `--gold-text`.
-- **GA4 events** (via `gaEvent`): `menu_open`, `menu_click` (`link_target`, `menu_type`), `popup_view` (legacy, for comparison) + `popup_shown` (`scroll_percent`, `max_scroll_percent`, `popup_layout`), `popup_call`, `popup_lead`, `popup_dismiss` (`method`, `seconds_open`), `generate_lead` (`form_name`), `phone_click` + `ads_conversion_phone_call_lead`, `cookie_consent_accept`, `js_error` (`error_kind`, `error_message`, `browser_family`).
+- **GA4 events** (via `gaEvent`): `menu_open`, `menu_click` (`link_target`, `menu_type`), `popup_view` (legacy, for comparison) + `popup_shown` (`scroll_percent`, `max_scroll_percent`, `popup_layout`), `popup_call`, `popup_lead`, `popup_dismiss` (`method`, `seconds_open`), `generate_lead` (`form_name`, `value` 5 PLN), `phone_click` + `ads_conversion_phone_call_lead` (`value` 1 PLN), `cookie_consent_accept`, `js_error` (`error_kind`, `error_message`, `browser_family`).
 
 ## Hero, menu, popup
 
