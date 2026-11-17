@@ -4046,7 +4046,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // ── Offer popup
   // Konwersja Google Ads „Przesłanie formularza kontaktowego” (oba formularze; wysyłka przez fetch, bez przeładowania)
   function adsFormConversion() {
-    gaEvent('conversion', { send_to: 'AW-18508894435/Khi4COKZwZwdEOOh3flE', value: 1.0, currency: 'PLN' });
+    gaEvent('conversion', { send_to: 'AW-18508894435/Khi4COKZwZwdEOOh3flE', value: 5.0, currency: 'PLN' });
   }
 
   // Desktop: centred modal with scroll lock. Phones (<= 600 px): non-blocking bottom sheet.
@@ -4135,7 +4135,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
       const json = await r.json();
       if (json.ok) {
-        gaEvent('generate_lead', { form_name: 'contact_form' });
+        gaEvent('generate_lead', { form_name: 'contact_form', value: 5.0, currency: 'PLN' });
         adsFormConversion();
         btn.classList.remove('btn-submit-loading');
         btn.classList.add('btn-submit-success');
@@ -4177,7 +4177,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
       const json = await r.json();
       if (!json.ok) throw new Error(json.error || 'Błąd');
-      gaEvent('generate_lead', { form_name: 'callback_popup' });
+      gaEvent('generate_lead', { form_name: 'callback_popup', value: 5.0, currency: 'PLN' });
       gaEvent('popup_lead');
       adsFormConversion();
     } catch {
@@ -4311,7 +4311,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     link.addEventListener('click', function() {
       if (typeof fbq === 'function') fbq('track', 'Contact', { content_name: 'phone_click_' + (link.className || 'link') });
       gaEvent('phone_click', { link_location: link.className || 'link' });
-      gaEvent('ads_conversion_phone_call_lead', { link_location: link.className || 'link' });
+      gaEvent('ads_conversion_phone_call_lead', { link_location: link.className || 'link', value: 1.0, currency: 'PLN' });
     });
   });
 
